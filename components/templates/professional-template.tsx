@@ -2,6 +2,7 @@
 
 import React from "react";
 import type { ResumeData, ExperienceItem, EducationItem, SkillItem, ProjectItem, LanguageItem, CertificationItem, AwardItem, VolunteerItem } from "@/types/resume";
+import { Phone, Mail, Linkedin, Github, Globe, MapPin } from "lucide-react";
 
 interface TemplateProps {
   resumeData: ResumeData;
@@ -35,19 +36,40 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
             <h2 className="text-[9pt] font-bold uppercase tracking-wider mb-3 text-gray-300">Contact</h2>
             <div className="space-y-2 text-[9pt]">
               {personalInfo.phone && (
-                <p className="break-words">{personalInfo.phone}</p>
+                <div className="flex items-center gap-2">
+                  <Phone className="h-3 w-3 text-gray-400 shrink-0" />
+                  <span className="break-words">{personalInfo.phone}</span>
+                </div>
               )}
               {personalInfo.email && (
-                <p className="break-words">{personalInfo.email}</p>
+                <div className="flex items-center gap-2">
+                  <Mail className="h-3 w-3 text-gray-400 shrink-0" />
+                  <span className="break-words">{personalInfo.email}</span>
+                </div>
               )}
               {personalInfo.location && (
-                <p>{personalInfo.location}</p>
+                <div className="flex items-center gap-2">
+                  <MapPin className="h-3 w-3 text-gray-400 shrink-0" />
+                  <span>{personalInfo.location}</span>
+                </div>
               )}
               {personalInfo.linkedin && (
-                <p className="break-words">{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</p>
+                <div className="flex items-center gap-2">
+                  <Linkedin className="h-3 w-3 text-gray-400 shrink-0" />
+                  <span className="break-words">{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                </div>
+              )}
+              {personalInfo.github && (
+                <div className="flex items-center gap-2">
+                  <Github className="h-3 w-3 text-gray-400 shrink-0" />
+                  <span className="break-words">{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                </div>
               )}
               {personalInfo.website && (
-                <p className="break-words">{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</p>
+                <div className="flex items-center gap-2">
+                  <Globe className="h-3 w-3 text-gray-400 shrink-0" />
+                  <span className="break-words">{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                </div>
               )}
             </div>
           </div>

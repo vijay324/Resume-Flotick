@@ -15,6 +15,7 @@ import {
   TestTube,
 } from "lucide-react";
 import { ApiKeyModal } from "./api-key-modal";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 
 export function ApiKeySettings() {
   const {
@@ -34,21 +35,18 @@ export function ApiKeySettings() {
     valid: boolean;
     error?: string;
   } | null>(null);
+  const [showRemoveConfirm, setShowRemoveConfirm] = useState(false);
 
   const handleRemoveKey = async () => {
-    if (
-      !confirm(
-        "Are you sure you want to remove your API key? You'll need to add it again to use AI features."
-      )
-    ) {
-      return;
-    }
-
     setIsRemoving(true);
-    await removeApiKey();
-    await refreshStatus();
-    setIsRemoving(false);
-    setTestResult(null);
+    try {
+      await removeApiKey();
+      await refreshStatus();
+      setTestResult(null);
+      setShowRemoveConfirm(false);
+    } finally {
+      setIsRemoving(false);
+    }
   };
 
   const handleTestKey = async () => {
@@ -210,7 +208,7 @@ export function ApiKeySettings() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={handleRemoveKey}
+                onClick={() => setShowRemoveConfirm(true)}
                 disabled={isRemoving}
                 className="h-9 rounded-lg border-gray-200 text-gray-700 hover:text-red-600 hover:bg-red-50 hover:border-red-100"
               >
@@ -223,6 +221,18 @@ export function ApiKeySettings() {
       </div>
 
       <ApiKeyModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      
+      <ConfirmDialog
+        isOpen={showRemoveConfirm}
+        onClose={() => setShowRemoveConfirm(false)}
+        onConfirm={handleRemoveKey}
+        title="Remove API Key"
+        description="Are you sure you want to remove your API key? You'll need to add it again to use AI features."
+        confirmText="Remove Key"
+        cancelText="Cancel"
+        variant="danger"
+        isLoading={isRemoving}
+      />
     </>
   );
 }

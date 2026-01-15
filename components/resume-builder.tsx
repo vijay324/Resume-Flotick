@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { SaveStatusIndicator } from "@/components/ui/save-status-indicator";
 import { UndoRedoControls } from "@/components/ui/undo-redo-controls";
 import { ZoomControls } from "@/components/ui/zoom-controls";
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Download, PanelLeftClose, PanelLeft, ChevronLeft, Trash2 } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import Link from "next/link";
@@ -19,15 +20,22 @@ export function ResumeBuilder() {
   const reactToPrintFn = useReactToPrint({ contentRef });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [zoom, setZoom] = useState(0.9); // Default scale
+  const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
+  const [isClearing, setIsClearing] = useState(false);
   const { clearAllData } = useResume();
 
   const handleClearResume = async () => {
-    if (window.confirm("Are you sure you want to clear all resume data? This action cannot be undone.")) {
+    setIsClearing(true);
+    try {
       await clearAllData();
+      setIsClearDialogOpen(false);
+    } finally {
+      setIsClearing(false);
     }
   };
 
   return (
+    <>
       <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-gray-50/50">
         {/* Left Side - Editor */}
         <div 
@@ -91,7 +99,7 @@ export function ResumeBuilder() {
                   variant="ghost"
                   size="sm"
                   className="h-9 gap-2 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-red-50 hover:border-red-200 hover:text-red-600 text-gray-600 transition-all"
-                  onClick={handleClearResume}
+                  onClick={() => setIsClearDialogOpen(true)}
                   title="Clear Resume"
                 >
                   <Trash2 className="h-3.5 w-3.5" />
@@ -129,5 +137,20 @@ export function ResumeBuilder() {
             </div>
         </div>
       </div>
+
+      {/* Clear Resume Confirmation Dialog */}
+      <ConfirmDialog
+        isOpen={isClearDialogOpen}
+        onClose={() => setIsClearDialogOpen(false)}
+        onConfirm={handleClearResume}
+        title="Clear Resume Data"
+        description="Are you sure you want to clear all resume data? This will remove all your information and reset the resume to a blank state. This action cannot be undone."
+        confirmText="Clear All Data"
+        cancelText="Cancel"
+        variant="danger"
+        isLoading={isClearing}
+      />
+    </>
   );
 }
+

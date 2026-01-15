@@ -2,6 +2,7 @@
 
 import React from "react";
 import type { ResumeData, ExperienceItem, EducationItem, SkillItem, ProjectItem, LanguageItem, CertificationItem, AwardItem, VolunteerItem } from "@/types/resume";
+import { Phone, Mail, Linkedin, Github, Globe, MapPin } from "lucide-react";
 
 interface TemplateProps {
   resumeData: ResumeData;
@@ -27,31 +28,54 @@ export function ClassicTemplate({ resumeData }: TemplateProps) {
           </p>
         )}
         
-        <div className="flex justify-center items-center flex-wrap text-[9pt] text-gray-600 mt-2">
+        <div className="flex justify-center items-center flex-wrap text-[9pt] text-gray-600 mt-2 gap-y-1">
            {personalInfo.phone && (
-             <div className="flex items-center gap-1.5">
+             <div className="flex items-center gap-1">
+               <Phone className="h-3 w-3 text-gray-500" />
                <span className="text-gray-900 font-medium">{personalInfo.phone}</span>
              </div>
            )}
            {personalInfo.phone && personalInfo.email && <Separator />}
            {personalInfo.email && (
-             <div className="flex items-center gap-1.5">
+             <div className="flex items-center gap-1">
+               <Mail className="h-3 w-3 text-gray-500" />
                <span className="text-gray-900 font-medium">{personalInfo.email}</span>
              </div>
            )}
-           {(personalInfo.email || personalInfo.phone) && personalInfo.linkedin && <Separator />}
-           {personalInfo.linkedin && (
-             <div className="flex items-center gap-1.5">
-               <span className="text-gray-900 underline decoration-gray-300 underline-offset-2">{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</span>
-             </div>
-           )}
-           {(personalInfo.linkedin || personalInfo.email) && personalInfo.website && <Separator />}
-           {personalInfo.website && (
-             <div className="flex items-center gap-1.5">
-               <span className="text-gray-900 underline decoration-gray-300 underline-offset-2">{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</span>
+           {(personalInfo.email || personalInfo.phone) && personalInfo.location && <Separator />}
+           {personalInfo.location && (
+             <div className="flex items-center gap-1">
+               <MapPin className="h-3 w-3 text-gray-500" />
+               <span className="text-gray-900 font-medium">{personalInfo.location}</span>
              </div>
            )}
         </div>
+
+        {/* Second row for links */}
+        {(personalInfo.linkedin || personalInfo.github || personalInfo.website) && (
+          <div className="flex justify-center items-center flex-wrap text-[9pt] text-gray-600 mt-1.5 gap-y-1">
+             {personalInfo.linkedin && (
+               <div className="flex items-center gap-1">
+                 <Linkedin className="h-3 w-3 text-gray-500" />
+                 <span className="text-gray-900 underline decoration-gray-300 underline-offset-2">{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</span>
+               </div>
+             )}
+             {personalInfo.linkedin && personalInfo.github && <Separator />}
+             {personalInfo.github && (
+               <div className="flex items-center gap-1">
+                 <Github className="h-3 w-3 text-gray-500" />
+                 <span className="text-gray-900 underline decoration-gray-300 underline-offset-2">{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</span>
+               </div>
+             )}
+             {(personalInfo.linkedin || personalInfo.github) && personalInfo.website && <Separator />}
+             {personalInfo.website && (
+               <div className="flex items-center gap-1">
+                 <Globe className="h-3 w-3 text-gray-500" />
+                 <span className="text-gray-900 underline decoration-gray-300 underline-offset-2">{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</span>
+               </div>
+             )}
+          </div>
+        )}
       </div>
 
       {/* Summary */}
