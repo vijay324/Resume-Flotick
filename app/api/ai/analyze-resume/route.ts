@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { z } from "zod";
 import { createAIService } from "@/lib/server/ai-service";
 import { checkRateLimit } from "@/lib/server/rate-limiter";
-import { getDecryptedApiKey } from "@/lib/server/api-key-store";
 
 const AnalyzeResumeSchema = z.object({
   resumeData: z.any(), // ResumeData type
   deviceId: z.string().min(5, "Device ID is required"),
+  apiKey: z.string().min(10, "API key is required"),
 });
 
 export async function POST(request: NextRequest) {
@@ -21,7 +21,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { resumeData, deviceId } = validation.data;
+    const { resumeData, deviceId, apiKey } = validation.data;
 
     // Check rate limit
     const rateLimitError = await checkRateLimit(deviceId);
@@ -29,16 +29,15 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: rateLimitError }, { status: 429 });
     }
 
-    // Get API key
-    const apiKey = getDecryptedApiKey(deviceId);
-    if (!apiKey) {
+    // Validate API key format
+    if (!apiKey.startsWith("AIza")) {
       return NextResponse.json(
-        { error: "No API key found. Please add your Gemini API key first." },
+        { error: "Invalid API key format. Gemini API keys should start with 'AIza'" },
         { status: 401 }
       );
     }
 
-    // Use AI service
+    // Use AI service with provided API key
     const aiService = createAIService(apiKey);
     const result = await aiService.analyzeResume(resumeData);
 
@@ -54,3 +53,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+

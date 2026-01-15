@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useAI } from "@/context/ai-context";
+import { getApiKeyClient } from "@/lib/client/client-api-key-store";
 import type {
   SummarizeResponse,
   RewriteResponse,
@@ -9,6 +10,14 @@ import type {
   LinkedInAnalysis,
 } from "@/types/ai";
 import type { ResumeData } from "@/types/resume";
+
+/**
+ * Helper to get the API key for requests
+ */
+async function getApiKey(): Promise<string | null> {
+  const keyData = await getApiKeyClient();
+  return keyData?.key || null;
+}
 
 /**
  * Custom hook for AI content summarization
@@ -31,10 +40,15 @@ export function useSummarize() {
     setError(null);
 
     try {
+      const apiKey = await getApiKey();
+      if (!apiKey) {
+        throw new Error("No API key found. Please add your Gemini API key first.");
+      }
+
       const response = await fetch("/api/ai/summarize", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, context, deviceId }),
+        body: JSON.stringify({ text, context, deviceId, apiKey }),
       });
 
       const data = await response.json();
@@ -77,10 +91,15 @@ export function useRewrite() {
     setError(null);
 
     try {
+      const apiKey = await getApiKey();
+      if (!apiKey) {
+        throw new Error("No API key found. Please add your Gemini API key first.");
+      }
+
       const response = await fetch("/api/ai/rewrite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, tone, deviceId }),
+        body: JSON.stringify({ text, tone, deviceId, apiKey }),
       });
 
       const data = await response.json();
@@ -122,10 +141,15 @@ export function useResumeAnalysis() {
     setError(null);
 
     try {
+      const apiKey = await getApiKey();
+      if (!apiKey) {
+        throw new Error("No API key found. Please add your Gemini API key first.");
+      }
+
       const response = await fetch("/api/ai/analyze-resume", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ resumeData, deviceId }),
+        body: JSON.stringify({ resumeData, deviceId, apiKey }),
       });
 
       const data = await response.json();
@@ -168,10 +192,15 @@ export function useLinkedInAnalysis() {
     setError(null);
 
     try {
+      const apiKey = await getApiKey();
+      if (!apiKey) {
+        throw new Error("No API key found. Please add your Gemini API key first.");
+      }
+
       const response = await fetch("/api/ai/analyze-linkedin", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ profileText, profileUrl, deviceId }),
+        body: JSON.stringify({ profileText, profileUrl, deviceId, apiKey }),
       });
 
       const data = await response.json();
