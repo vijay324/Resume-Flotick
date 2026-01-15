@@ -1,27 +1,38 @@
 @import "tailwindcss";
 
 :root {
+  /* Premium Light Mode */
   --background: #ffffff;
-  --foreground: #09090b;
+  --foreground: #09090b; /* Zinc 950 */
+  
   --card: #ffffff;
   --card-foreground: #09090b;
+  
   --popover: #ffffff;
   --popover-foreground: #09090b;
-  --primary: #18181b;
-  --primary-foreground: #fafafa;
-  --secondary: #f4f4f5;
+  
+  --primary: #18181b; /* Zinc 950 */
+  --primary-foreground: #fafafa; /* Zinc 50 */
+  
+  --secondary: #f4f4f5; /* Zinc 100 */
   --secondary-foreground: #18181b;
+  
   --muted: #f4f4f5;
-  --muted-foreground: #71717a;
+  --muted-foreground: #71717a; /* Zinc 500 */
+  
   --accent: #f4f4f5;
   --accent-foreground: #18181b;
+  
   --destructive: #ef4444;
   --destructive-foreground: #fafafa;
-  --border: #e4e4e7;
+  
+  --border: #e4e4e7; /* Zinc 200 */
   --input: #e4e4e7;
   --ring: #18181b;
-  --radius: 0.5rem;
+  
+  --radius: 0.75rem; /* Slightly more rounded for modern feel */
 }
+
 
 @theme inline {
   --color-background: var(--background);
@@ -44,16 +55,28 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --radius-sm: calc(var(--radius) - 2px);
-  --radius-md: calc(var(--radius) - 2px);
+  --radius-md: calc(var(--radius) - 1px);
   --radius-lg: var(--radius);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
-
-
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+
+/* Smooth Scrolling */
+html {
+  scroll-behavior: smooth;
 }
