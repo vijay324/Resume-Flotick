@@ -41,7 +41,7 @@ export function ResumeBuilder() {
                     <h1 className="text-xl font-bold tracking-tight text-gray-900">Resume Template</h1>
                     <div className="flex items-center justify-between mt-1">
                       <div>
-                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-0.5">BY SREECHARANDESU</p>
+                          <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-0.5">BY Flotick</p>
                           <p className="text-xs text-gray-500">Personal ATS format</p>
                       </div>
                       <Button size="sm" variant="outline" className="h-8 gap-2 ml-2" onClick={() => reactToPrintFn()}>

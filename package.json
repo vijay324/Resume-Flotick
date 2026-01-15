@@ -10,6 +10,7 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@google/genai": "^1.36.0",
     "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^7.2.0",
     "clsx": "^2.1.1",
