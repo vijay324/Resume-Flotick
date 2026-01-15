@@ -8,16 +8,24 @@ import { Button } from "@/components/ui/button";
 import { SaveStatusIndicator } from "@/components/ui/save-status-indicator";
 import { UndoRedoControls } from "@/components/ui/undo-redo-controls";
 import { ZoomControls } from "@/components/ui/zoom-controls";
-import { Download, PanelLeftClose, PanelLeft, ChevronLeft } from "lucide-react";
+import { Download, PanelLeftClose, PanelLeft, ChevronLeft, Trash2 } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import Link from "next/link";
 import Image from "next/image";
+import { useResume } from "@/context/resume-context";
 
 export function ResumeBuilder() {
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [zoom, setZoom] = useState(0.9); // Default scale
+  const { clearAllData } = useResume();
+
+  const handleClearResume = async () => {
+    if (window.confirm("Are you sure you want to clear all resume data? This action cannot be undone.")) {
+      await clearAllData();
+    }
+  };
 
   return (
       <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-gray-50/50">
@@ -78,6 +86,17 @@ export function ResumeBuilder() {
         <div className={`flex-1 bg-[#F8F9FA] h-full overflow-auto overflow-x-auto relative flex flex-col items-center p-8 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent`}>
             {/* Template Selector & Download Button (Floating) */}
             <div className={`fixed top-6 right-8 z-30 flex items-center gap-3 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
+                {/* Clear Resume Button */}
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="h-9 gap-2 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-red-50 hover:border-red-200 hover:text-red-600 text-gray-600 transition-all"
+                  onClick={handleClearResume}
+                  title="Clear Resume"
+                >
+                  <Trash2 className="h-3.5 w-3.5" />
+                  <span className="font-medium">Clear</span>
+                </Button>
                 <ZoomControls zoom={zoom} onZoomChange={setZoom} />
                 <TemplateSelector />
                 <Button 
