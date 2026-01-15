@@ -8,10 +8,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, X } from "lucide-react";
 
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+
 export function SkillsForm() {
   const { resumeData, updateSection } = useResume();
   const { skills } = resumeData;
   const [newSkill, setNewSkill] = React.useState("");
+  const [deleteId, setDeleteId] = React.useState<string | null>(null);
 
   const addSkill = () => {
     if (!newSkill.trim()) return;
@@ -24,8 +27,10 @@ export function SkillsForm() {
     setNewSkill("");
   };
 
-  const removeSkill = (id: string) => {
-    updateSection("skills", skills.filter((s) => s.id !== id));
+  const confirmDelete = () => {
+    if (deleteId === null) return;
+    updateSection("skills", skills.filter((s) => s.id !== deleteId));
+    setDeleteId(null);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -74,7 +79,7 @@ export function SkillsForm() {
                  >
                    {skill.name}
                    <button 
-                     onClick={() => removeSkill(skill.id)}
+                     onClick={() => setDeleteId(skill.id)}
                      className="ml-1 text-gray-400 hover:text-red-500 transition-colors rounded-full p-0.5 hover:bg-red-50"
                    >
                      <X className="h-3 w-3" />
@@ -91,6 +96,16 @@ export function SkillsForm() {
             <p className="text-sm text-gray-400">No skills added yet. Add your key skills above.</p>
          </div>
       )}
+
+      <ConfirmDialog
+        isOpen={deleteId !== null}
+        onClose={() => setDeleteId(null)}
+        onConfirm={confirmDelete}
+        title="Remove Skill"
+        description="Are you sure you want to remove this skill? This action cannot be undone."
+        confirmText="Remove"
+        variant="danger"
+      />
     </div>
   );
 }

@@ -149,6 +149,7 @@ export function ResumeBuilder() {
         cancelText="Cancel"
         variant="danger"
         isLoading={isClearing}
+        waitDuration={4}
       />
     </>
   );

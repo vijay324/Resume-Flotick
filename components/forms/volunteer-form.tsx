@@ -10,9 +10,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { DescriptionRewriteButton } from "@/components/ai/description-rewrite-button";
 
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+
 export function VolunteerForm() {
   const { resumeData, updateSection } = useResume();
   const { volunteer } = resumeData;
+  const [deleteId, setDeleteId] = React.useState<string | null>(null);
 
   const addVolunteer = () => {
     const newItem = {
@@ -28,9 +31,10 @@ export function VolunteerForm() {
     updateSection("volunteer", [...volunteer, newItem]);
   };
 
-  const removeVolunteer = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    updateSection("volunteer", volunteer.filter((i) => i.id !== id));
+  const confirmDelete = () => {
+    if (deleteId === null) return;
+    updateSection("volunteer", volunteer.filter((i) => i.id !== deleteId));
+    setDeleteId(null);
   };
 
   const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -50,7 +54,10 @@ export function VolunteerForm() {
         <div key={item.id} className="group relative p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.05)] transition-all duration-300">
              <button
                 className="absolute top-3 right-3 p-1.5 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
-                onClick={(e) => removeVolunteer(item.id, e)}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setDeleteId(item.id);
+                }}
                 title="Remove"
              >
                 <Trash2 className="h-4 w-4" />
@@ -110,6 +117,16 @@ export function VolunteerForm() {
       <Button onClick={addVolunteer} variant="outline" className="w-full h-11 border-dashed border-gray-300 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50/50 rounded-xl transition-all">
         <Plus className="mr-2 h-4 w-4" /> Add Volunteer Exp
       </Button>
+
+      <ConfirmDialog
+        isOpen={deleteId !== null}
+        onClose={() => setDeleteId(null)}
+        onConfirm={confirmDelete}
+        title="Remove Volunteer Experience"
+        description="Are you sure you want to remove this volunteer experience? This action cannot be undone."
+        confirmText="Remove"
+        variant="danger"
+      />
     </div>
   );
 }

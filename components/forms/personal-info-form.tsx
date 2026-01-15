@@ -95,14 +95,20 @@ export function PersonalInfoForm() {
            <Input id="linkedin" name="linkedin" value={personalInfo.linkedin || ""} onChange={handleChange} className={inputClass} placeholder="linkedin.com/in/username" />
          </div>
          <div className="space-y-1">
-           <label className={labelClass} htmlFor="website">Portfolio / Website</label>
-           <Input id="website" name="website" value={personalInfo.website || ""} onChange={handleChange} className={inputClass} placeholder="www.yourname.com" />
+           <label className={labelClass} htmlFor="github">GitHub</label>
+           <Input id="github" name="github" value={personalInfo.github || ""} onChange={handleChange} className={inputClass} placeholder="github.com/username" />
          </div>
       </div>
       
-      <div className="space-y-1">
-         <label className={labelClass} htmlFor="location">Location</label>
-         <Input id="location" name="location" value={personalInfo.location || ""} onChange={handleChange} className={inputClass} placeholder="City, Country" />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-1">
+            <label className={labelClass} htmlFor="website">Portfolio / Website</label>
+            <Input id="website" name="website" value={personalInfo.website || ""} onChange={handleChange} className={inputClass} placeholder="www.yourname.com" />
+          </div>
+          <div className="space-y-1">
+             <label className={labelClass} htmlFor="location">Location</label>
+             <Input id="location" name="location" value={personalInfo.location || ""} onChange={handleChange} className={inputClass} placeholder="City, Country" />
+          </div>
       </div>
 
     </div>

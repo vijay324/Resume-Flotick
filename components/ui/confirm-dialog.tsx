@@ -14,6 +14,7 @@ interface ConfirmDialogProps {
   cancelText?: string;
   variant?: "danger" | "warning" | "info";
   isLoading?: boolean;
+  waitDuration?: number;
 }
 
 /**
@@ -30,14 +31,36 @@ export function ConfirmDialog({
   cancelText = "Cancel",
   variant = "danger",
   isLoading = false,
+  waitDuration = 0,
 }: ConfirmDialogProps) {
+  const [timeLeft, setTimeLeft] = React.useState(waitDuration);
+
+  React.useEffect(() => {
+    if (isOpen && waitDuration > 0) {
+      setTimeLeft(waitDuration);
+      const timer = setInterval(() => {
+        setTimeLeft((prev: number) => {
+          if (prev <= 1) {
+            clearInterval(timer);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
+      return () => clearInterval(timer);
+    } else if (!isOpen) {
+      // Reset when closed
+      setTimeLeft(waitDuration);
+    }
+  }, [isOpen, waitDuration]);
+
   const handleClose = () => {
     if (isLoading) return;
     onClose();
   };
 
   const handleConfirm = () => {
-    if (isLoading) return;
+    if (isLoading || timeLeft > 0) return;
     onConfirm();
   };
 
@@ -75,7 +98,7 @@ export function ConfirmDialog({
       />
 
       {/* Dialog */}
-      <div className="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl p-6 animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-md mx-4 bg-white rounded-2xl shadow-2xl p-6 animate-in fade-in zoom-in-95 duration-200 text-center">
         {/* Close button */}
         <button
           onClick={handleClose}
@@ -87,7 +110,7 @@ export function ConfirmDialog({
         </button>
 
         {/* Warning icon */}
-        <div className={`flex h-12 w-12 items-center justify-center rounded-full ${styles.iconBg} mb-4`}>
+        <div className={`flex h-12 w-12 items-center justify-center rounded-full ${styles.iconBg} mb-4 mx-auto`}>
           <AlertTriangle className={`h-6 w-6 ${styles.iconColor}`} />
         </div>
 
@@ -113,7 +136,7 @@ export function ConfirmDialog({
           </Button>
           <Button
             onClick={handleConfirm}
-            disabled={isLoading}
+            disabled={isLoading || timeLeft > 0}
             className={`flex-1 ${styles.buttonBg} text-white`}
           >
             {isLoading ? (
@@ -121,6 +144,8 @@ export function ConfirmDialog({
                 <span className="animate-spin mr-2">⏳</span>
                 Processing...
               </>
+            ) : timeLeft > 0 ? (
+              `${confirmText} (${timeLeft}s)`
             ) : (
               confirmText
             )}

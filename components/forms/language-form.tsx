@@ -8,11 +8,14 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, X } from "lucide-react";
 
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+
 export function LanguageForm() {
   const { resumeData, updateSection } = useResume();
   const { languages } = resumeData;
   const [newLanguage, setNewLanguage] = React.useState("");
   const [proficiency, setProficiency] = React.useState("Professional");
+  const [deleteId, setDeleteId] = React.useState<string | null>(null);
 
   const addLanguage = () => {
     if (!newLanguage.trim()) return;
@@ -25,8 +28,10 @@ export function LanguageForm() {
     setNewLanguage("");
   };
 
-  const removeLanguage = (id: string) => {
-    updateSection("languages", languages.filter((l) => l.id !== id));
+  const confirmDelete = () => {
+    if (deleteId === null) return;
+    updateSection("languages", languages.filter((l) => l.id !== deleteId));
+    setDeleteId(null);
   };
 
   const inputClass = "rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-11 transition-all duration-200 ease-in-out font-medium text-gray-800 placeholder:text-gray-400 text-sm";
@@ -73,7 +78,7 @@ export function LanguageForm() {
                >
                  <span>{lang.name} <span className="text-gray-400 font-normal group-hover:text-indigo-400">({lang.proficiency})</span></span>
                  <button 
-                   onClick={() => removeLanguage(lang.id)}
+                   onClick={() => setDeleteId(lang.id)}
                    className="ml-1 text-gray-400 hover:text-red-500 transition-colors rounded-full p-0.5 hover:bg-red-50"
                  >
                    <X className="h-3 w-3" />
@@ -88,6 +93,16 @@ export function LanguageForm() {
              <p className="text-sm text-gray-400">Add languages to showcase your communication skills.</p>
           </div>
         )}
+
+        <ConfirmDialog
+          isOpen={deleteId !== null}
+          onClose={() => setDeleteId(null)}
+          onConfirm={confirmDelete}
+          title="Remove Language"
+          description="Are you sure you want to remove this language? This action cannot be undone."
+          confirmText="Remove"
+          variant="danger"
+        />
     </div>
   );
 }

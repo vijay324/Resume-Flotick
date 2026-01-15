@@ -9,9 +9,12 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { EducationItem } from "@/types/resume";
 
+import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+
 export function EducationForm() {
   const { resumeData, updateSection } = useResume();
   const { education } = resumeData;
+  const [deleteIndex, setDeleteIndex] = React.useState<number | null>(null);
 
   const handleChange = (index: number, e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,10 +37,12 @@ export function EducationForm() {
     updateSection("education", [...education, newItem]);
   };
 
-  const removeEducation = (index: number) => {
+  const confirmDelete = () => {
+    if (deleteIndex === null) return;
     const newEducation = [...education];
-    newEducation.splice(index, 1);
+    newEducation.splice(deleteIndex, 1);
     updateSection("education", newEducation);
+    setDeleteIndex(null);
   };
 
   const inputClass = "rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-10 transition-all duration-200 ease-in-out font-medium text-gray-800 placeholder:text-gray-400 text-sm";
@@ -49,7 +54,7 @@ export function EducationForm() {
         <div key={item.id} className="group relative p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.05)] transition-all duration-300">
             <button
                className="absolute top-3 right-3 p-1.5 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
-               onClick={() => removeEducation(index)}
+               onClick={() => setDeleteIndex(index)}
                title="Remove"
             >
                <Trash2 className="h-4 w-4" />
@@ -90,6 +95,16 @@ export function EducationForm() {
       <Button onClick={addEducation} variant="outline" className="w-full h-11 border-dashed border-gray-300 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50/50 rounded-xl transition-all">
         <Plus className="mr-2 h-4 w-4" /> Add Education
       </Button>
+
+      <ConfirmDialog
+        isOpen={deleteIndex !== null}
+        onClose={() => setDeleteIndex(null)}
+        onConfirm={confirmDelete}
+        title="Remove Education"
+        description="Are you sure you want to remove this education entry? This action cannot be undone."
+        confirmText="Remove"
+        variant="danger"
+      />
     </div>
   );
 }
