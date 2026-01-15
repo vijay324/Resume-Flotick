@@ -3,17 +3,44 @@
 import React, { useState } from "react";
 import { useAI } from "@/context/ai-context";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Key, Trash2, RefreshCw, CheckCircle2, Settings } from "lucide-react";
+import {
+  Key,
+  Trash2,
+  RefreshCw,
+  CheckCircle2,
+  AlertTriangle,
+  Shield,
+  Eye,
+  EyeOff,
+  TestTube,
+} from "lucide-react";
 import { ApiKeyModal } from "./api-key-modal";
 
 export function ApiKeySettings() {
-  const { hasApiKey, isApiKeyValid, removeApiKey, refreshStatus } = useAI();
+  const {
+    hasApiKey,
+    isApiKeyValid,
+    maskedKey,
+    removeApiKey,
+    testCurrentKey,
+    refreshStatus,
+    consentGiven,
+    setConsentGiven,
+  } = useAI();
   const [showModal, setShowModal] = useState(false);
   const [isRemoving, setIsRemoving] = useState(false);
+  const [isTesting, setIsTesting] = useState(false);
+  const [testResult, setTestResult] = useState<{
+    valid: boolean;
+    error?: string;
+  } | null>(null);
 
   const handleRemoveKey = async () => {
-    if (!confirm("Are you sure you want to remove your API key? You'll need to add it again to use AI features.")) {
+    if (
+      !confirm(
+        "Are you sure you want to remove your API key? You'll need to add it again to use AI features."
+      )
+    ) {
       return;
     }
 
@@ -21,11 +48,60 @@ export function ApiKeySettings() {
     await removeApiKey();
     await refreshStatus();
     setIsRemoving(false);
+    setTestResult(null);
+  };
+
+  const handleTestKey = async () => {
+    setIsTesting(true);
+    setTestResult(null);
+    const result = await testCurrentKey();
+    setTestResult(result);
+    setIsTesting(false);
   };
 
   const handleUpdateKey = () => {
+    setTestResult(null);
     setShowModal(true);
   };
+
+  // Security warning banner (always shown first time)
+  if (!consentGiven) {
+    return (
+      <div className="p-5 bg-amber-50 border border-amber-200 rounded-xl">
+        <div className="flex gap-3">
+          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-amber-100">
+            <Shield className="h-5 w-5 text-amber-600" />
+          </div>
+          <div className="flex-1">
+            <h3 className="font-semibold text-amber-900 mb-2">
+              Security Notice
+            </h3>
+            <div className="text-sm text-amber-800 space-y-2 mb-4">
+              <p>
+                <strong>Your API key is stored securely in your browser</strong>{" "}
+                using encryption. It never leaves your device or is sent to any
+                server.
+              </p>
+              <p className="text-amber-700 text-xs flex items-start gap-1.5">
+                <AlertTriangle className="h-3.5 w-3.5 shrink-0 mt-0.5" />
+                <span>
+                  As this is an open-source client-side app, determined users
+                  with browser dev tools could potentially access stored keys.
+                  Use a key with appropriate quota limits.
+                </span>
+              </p>
+            </div>
+            <Button
+              onClick={() => setConsentGiven(true)}
+              className="bg-amber-600 hover:bg-amber-700 text-white"
+            >
+              I Understand, Continue
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!hasApiKey) {
     return (
@@ -40,7 +116,10 @@ export function ApiKeySettings() {
               Add your Gemini API key to use AI features
             </p>
           </div>
-          <Button onClick={() => setShowModal(true)} className="bg-black hover:bg-gray-800 text-white rounded-lg">
+          <Button
+            onClick={() => setShowModal(true)}
+            className="bg-black hover:bg-gray-800 text-white rounded-lg"
+          >
             Add API Key
           </Button>
         </div>
@@ -53,24 +132,72 @@ export function ApiKeySettings() {
     <>
       <div className="p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
         <div className="flex items-start gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-50 border border-green-100">
-            <CheckCircle2 className="h-5 w-5 text-green-600" />
+          <div
+            className={`flex h-10 w-10 items-center justify-center rounded-full ${
+              isApiKeyValid
+                ? "bg-green-50 border border-green-100"
+                : "bg-yellow-50 border border-yellow-100"
+            }`}
+          >
+            {isApiKeyValid ? (
+              <CheckCircle2 className="h-5 w-5 text-green-600" />
+            ) : (
+              <AlertTriangle className="h-5 w-5 text-yellow-600" />
+            )}
           </div>
-          
+
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-semibold text-gray-900">API Key Configured</h3>
-              {isApiKeyValid && (
-                <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider bg-green-50 text-green-700 rounded-full border border-green-100">
-                  Active
-                </span>
-              )}
+              <h3 className="font-semibold text-gray-900">
+                API Key Configured
+              </h3>
+              <span
+                className={`px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full border ${
+                  isApiKeyValid
+                    ? "bg-green-50 text-green-700 border-green-100"
+                    : "bg-yellow-50 text-yellow-700 border-yellow-100"
+                }`}
+              >
+                {isApiKeyValid ? "Active" : "Needs Testing"}
+              </span>
             </div>
-            <p className="text-sm text-gray-500 mb-4">
-              Your Gemini API key is encrypted and ready to use
+
+            {/* Masked key display */}
+            <div className="text-sm text-gray-500 mb-1 font-mono">
+              {maskedKey}
+            </div>
+
+            <p className="text-xs text-gray-400 mb-4 flex items-center gap-1">
+              <Shield className="h-3 w-3" />
+              Encrypted in browser storage
             </p>
 
-            <div className="flex gap-2">
+            {/* Test result */}
+            {testResult && (
+              <div
+                className={`text-sm mb-4 p-2 rounded-lg ${
+                  testResult.valid
+                    ? "bg-green-50 text-green-700"
+                    : "bg-red-50 text-red-700"
+                }`}
+              >
+                {testResult.valid
+                  ? "✓ API key is valid and working"
+                  : `✗ ${testResult.error}`}
+              </div>
+            )}
+
+            <div className="flex flex-wrap gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleTestKey}
+                disabled={isTesting}
+                className="h-9 rounded-lg border-gray-200 text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+              >
+                <TestTube className="h-4 w-4 mr-2" />
+                {isTesting ? "Testing..." : "Test Key"}
+              </Button>
               <Button
                 variant="outline"
                 size="sm"
@@ -95,10 +222,7 @@ export function ApiKeySettings() {
         </div>
       </div>
 
-      <ApiKeyModal 
-        isOpen={showModal} 
-        onClose={() => setShowModal(false)} 
-      />
+      <ApiKeyModal isOpen={showModal} onClose={() => setShowModal(false)} />
     </>
   );
 }

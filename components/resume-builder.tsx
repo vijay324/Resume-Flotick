@@ -5,9 +5,11 @@ import { ResumeForm } from "@/components/resume-form";
 import { ResumePreview } from "@/components/resume-preview";
 import { TemplateSelector } from "@/components/template-selector";
 import { Button } from "@/components/ui/button";
+import { SaveStatusIndicator } from "@/components/ui/save-status-indicator";
 import { Download, PanelLeftClose, PanelLeft, ChevronLeft } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import Link from "next/link";
+import Image from "next/image";
 
 export function ResumeBuilder() {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -30,8 +32,8 @@ export function ResumeBuilder() {
                 <Link href="/" className="p-2 -ml-2 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all">
                   <ChevronLeft className="h-5 w-5" />
                 </Link>
-                <div className="h-8 w-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm">
-                   SD
+                <div className="h-10 w-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm">
+                   <Image src="/logo-black.svg" alt="Logo" width={22} height={22} />
                 </div>
                 <div>
                    <h1 className="text-sm font-semibold text-gray-900 leading-tight">Professional Resume</h1>
@@ -40,6 +42,7 @@ export function ResumeBuilder() {
              </div>
 
              <div className="flex items-center gap-2">
+                <SaveStatusIndicator />
                 <Button 
                   size="sm" 
                   variant="ghost"

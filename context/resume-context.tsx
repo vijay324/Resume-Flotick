@@ -1,15 +1,68 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react";
-import type { ResumeData, ExperienceItem, EducationItem, SkillItem, ProjectItem, LanguageItem, CertificationItem, AwardItem, VolunteerItem } from "@/types/resume";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  type ReactNode,
+} from "react";
+import type {
+  ResumeData,
+  ExperienceItem,
+  EducationItem,
+  SkillItem,
+  ProjectItem,
+  LanguageItem,
+  CertificationItem,
+  AwardItem,
+  VolunteerItem,
+} from "@/types/resume";
+import {
+  loadResume,
+  debouncedSaveResume,
+  clearAllResumeData,
+  hasStoredResume,
+} from "@/lib/client/resume-persistence";
 
 interface ResumeContextType {
   resumeData: ResumeData;
   setResumeData: React.Dispatch<React.SetStateAction<ResumeData>>;
-  updateSection: <K extends keyof ResumeData>(section: K, data: ResumeData[K]) => void;
+  updateSection: <K extends keyof ResumeData>(
+    section: K,
+    data: ResumeData[K]
+  ) => void;
+  isLoading: boolean;
+  clearAllData: () => Promise<void>;
+  hasStoredData: boolean;
 }
 
 const initialResumeData: ResumeData = {
+  personalInfo: {
+    fullName: "",
+    email: "",
+    phone: "",
+    linkedin: "",
+    github: "",
+    website: "",
+    location: "",
+    summary: "",
+  },
+  experience: [],
+  education: [],
+  skills: [],
+  projects: [],
+  languages: [],
+  certifications: [],
+  awards: [],
+  volunteer: [],
+};
+
+/**
+ * Default sample data for new users
+ */
+const sampleResumeData: ResumeData = {
   personalInfo: {
     fullName: "John Doe",
     email: "john.doe@example.com",
@@ -18,7 +71,8 @@ const initialResumeData: ResumeData = {
     github: "github.com/johndoe",
     website: "johndoe.com",
     location: "New York, NY",
-    summary: "Experienced Full Stack Developer with a passion for building scalable web applications. Proven track record of delivering high-quality code and leading development teams.",
+    summary:
+      "Experienced Full Stack Developer with a passion for building scalable web applications. Proven track record of delivering high-quality code and leading development teams.",
   },
   experience: [
     {
@@ -29,7 +83,8 @@ const initialResumeData: ResumeData = {
       endDate: "Present",
       current: true,
       location: "San Francisco, CA",
-      description: "Led the development of a microservices-based architecture handling 1M+ daily requests.",
+      description:
+        "Led the development of a microservices-based architecture handling 1M+ daily requests.",
     },
   ],
   education: [
@@ -53,7 +108,8 @@ const initialResumeData: ResumeData = {
     {
       id: "1",
       name: "E-commerce Platform",
-      description: "Built a fully functional e-commerce site with cart and payment integration.",
+      description:
+        "Built a fully functional e-commerce site with cart and payment integration.",
       technologies: ["Next.js", "Stripe", "PostgreSQL"],
       link: "github.com/johndoe/ecommerce",
     },
@@ -63,7 +119,12 @@ const initialResumeData: ResumeData = {
     { id: "2", name: "Spanish", proficiency: "Intermediate" },
   ],
   certifications: [
-    { id: "1", name: "AWS Certified Solutions Architect", issuer: "Amazon Web Services", date: "2022-05" },
+    {
+      id: "1",
+      name: "AWS Certified Solutions Architect",
+      issuer: "Amazon Web Services",
+      date: "2022-05",
+    },
   ],
   awards: [],
   volunteer: [],
@@ -73,30 +134,78 @@ const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
 export function ResumeProvider({ children }: { children: ReactNode }) {
   const [resumeData, setResumeData] = useState<ResumeData>(initialResumeData);
+  const [isLoading, setIsLoading] = useState(true);
+  const [hasStoredData, setHasStoredData] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
-  // Load from local storage on mount (optional enhancement)
+  /**
+   * Load data on mount (encrypted from storage)
+   */
   useEffect(() => {
-    const saved = localStorage.getItem("resumeData");
-    if (saved) {
+    async function initializeData() {
       try {
-        setResumeData(JSON.parse(saved));
-      } catch (e) {
-        console.error("Failed to parse resume data", e);
+        setIsLoading(true);
+        const stored = await loadResume();
+        if (stored) {
+          setResumeData(stored);
+          setHasStoredData(true);
+        } else {
+          // Use sample data for new users
+          setResumeData(sampleResumeData);
+          setHasStoredData(false);
+        }
+      } catch (error) {
+        console.error("[ResumeContext] Failed to load resume:", error);
+        // Fall back to sample data
+        setResumeData(sampleResumeData);
+      } finally {
+        setIsLoading(false);
+        setIsInitialized(true);
       }
     }
+
+    initializeData();
   }, []);
 
-  // Save to local storage on change
+  /**
+   * Auto-save on data changes (encrypted, debounced)
+   */
   useEffect(() => {
-    localStorage.setItem("resumeData", JSON.stringify(resumeData));
-  }, [resumeData]);
+    if (!isInitialized) return;
+    debouncedSaveResume(resumeData);
+    setHasStoredData(true);
+  }, [resumeData, isInitialized]);
 
-  const updateSection = <K extends keyof ResumeData>(section: K, data: ResumeData[K]) => {
-    setResumeData((prev) => ({ ...prev, [section]: data }));
-  };
+  /**
+   * Update a specific section
+   */
+  const updateSection = useCallback(
+    <K extends keyof ResumeData>(section: K, data: ResumeData[K]) => {
+      setResumeData((prev) => ({ ...prev, [section]: data }));
+    },
+    []
+  );
+
+  /**
+   * Clear all stored data
+   */
+  const clearAllData = useCallback(async () => {
+    await clearAllResumeData();
+    setResumeData(initialResumeData);
+    setHasStoredData(false);
+  }, []);
 
   return (
-    <ResumeContext.Provider value={{ resumeData, setResumeData, updateSection }}>
+    <ResumeContext.Provider
+      value={{
+        resumeData,
+        setResumeData,
+        updateSection,
+        isLoading,
+        clearAllData,
+        hasStoredData,
+      }}
+    >
       {children}
     </ResumeContext.Provider>
   );

@@ -26,13 +26,13 @@ export function ATSScore() {
   };
 
   return (
-    <Card className="border-2 border-primary/20 bg-primary/5 mb-4">
+    <Card className="border-1 border-zinc-200 bg-zinc-50 mb-4">
       <div 
          className="p-4 flex items-center justify-between cursor-pointer"
          onClick={() => setIsOpen(!isOpen)}
       >
          <div className="flex items-center gap-4">
-             <div className={cn("relative flex items-center justify-center w-12 h-12 rounded-full font-bold text-lg border-4", getColor(result.score), getBgColor(result.score).replace("bg-", "border-").replace("100", "200"))}>
+             <div className={cn("relative flex items-center justify-center w-12 h-12 rounded-full font-bold text-lg border-4 shadow-md", getColor(result.score), getBgColor(result.score).replace("bg-", "border-").replace("100", "200"))}>
                  {result.score}
              </div>
              <div>
@@ -46,7 +46,7 @@ export function ATSScore() {
       </div>
       
       {isOpen && (
-         <CardContent className="border-t pt-4">
+         <CardContent className="border-t pt-4 border-dashed border-zinc-300">
             <h4 className="font-semibold mb-2">Suggestions</h4>
             {result.suggestions.length === 0 && (
                 <p className="text-green-600 flex items-center gap-2"><CheckCircle className="h-4 w-4" /> Great job! Your resume looks good.</p>

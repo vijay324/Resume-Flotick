@@ -1,7 +1,26 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, type ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+  type ReactNode,
+} from "react";
 import type { AIUsageStats } from "@/types/ai";
+import {
+  getSecureDeviceId,
+  getApiKeyClient,
+  storeApiKeyClient,
+  removeApiKeyClient,
+  hasApiKeyClient,
+  testApiKey,
+  markApiKeyTested,
+  getMaskedApiKey,
+  validateApiKeyFormat,
+  type ApiKeyData,
+} from "@/lib/client/client-api-key-store";
 
 interface AIContextType {
   hasApiKey: boolean;
@@ -9,61 +28,77 @@ interface AIContextType {
   aiEnabled: boolean;
   usageStats: AIUsageStats | null;
   deviceId: string;
+  maskedKey: string;
   addApiKey: (key: string) => Promise<{ success: boolean; error?: string }>;
   removeApiKey: () => Promise<void>;
+  testCurrentKey: () => Promise<{ valid: boolean; error?: string }>;
   refreshStatus: () => Promise<void>;
   isLoading: boolean;
+  consentGiven: boolean;
+  setConsentGiven: (value: boolean) => void;
 }
+
+const CONSENT_STORAGE_KEY = "api_key_consent";
 
 const AIContext = createContext<AIContextType | undefined>(undefined);
-
-/**
- * Generate a device ID for the user
- */
-function getDeviceId(): string {
-  if (typeof window === "undefined") return "";
-
-  let deviceId = localStorage.getItem("deviceId");
-
-  if (!deviceId) {
-    // Generate a unique device ID
-    deviceId = `device_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
-    localStorage.setItem("deviceId", deviceId);
-  }
-
-  return deviceId;
-}
 
 export function AIProvider({ children }: { children: ReactNode }) {
   const [hasApiKey, setHasApiKey] = useState(false);
   const [isApiKeyValid, setIsApiKeyValid] = useState(false);
   const [usageStats, setUsageStats] = useState<AIUsageStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [deviceId] = useState(getDeviceId);
+  const [deviceId, setDeviceId] = useState("");
+  const [maskedKey, setMaskedKey] = useState("");
+  const [consentGiven, setConsentGivenState] = useState(false);
 
   /**
-   * Check API key status on mount
+   * Initialize on mount
    */
   useEffect(() => {
-    refreshStatus();
+    async function initialize() {
+      setIsLoading(true);
+      try {
+        // Get secure device ID
+        const id = getSecureDeviceId();
+        setDeviceId(id);
+
+        // Load consent
+        const consent = localStorage.getItem(CONSENT_STORAGE_KEY);
+        setConsentGivenState(consent === "true");
+
+        // Check for existing API key
+        await refreshStatus();
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    initialize();
   }, []);
 
   /**
-   * Refresh API key status from server
+   * Refresh API key status from client storage
    */
-  const refreshStatus = async () => {
-    if (!deviceId) return;
-
-    setIsLoading(true);
+  const refreshStatus = useCallback(async () => {
     try {
-      const response = await fetch(`/api/ai-keys?deviceId=${deviceId}`);
-      const data = await response.json();
+      const hasKey = hasApiKeyClient();
+      setHasApiKey(hasKey);
 
-      setHasApiKey(data.hasKey || false);
-      setIsApiKeyValid(data.isValid || false);
+      if (hasKey) {
+        const keyData = await getApiKeyClient();
+        if (keyData) {
+          setIsApiKeyValid(keyData.isValid);
+          setMaskedKey(getMaskedApiKey(keyData.key));
+        } else {
+          setIsApiKeyValid(false);
+          setMaskedKey("");
+        }
+      } else {
+        setIsApiKeyValid(false);
+        setMaskedKey("");
+      }
 
-      // TODO: Fetch usage stats
-      // For now, use default values
+      // Set default usage stats (client-side doesn't track server usage)
       setUsageStats({
         requestsToday: 0,
         limit: 50,
@@ -71,64 +106,99 @@ export function AIProvider({ children }: { children: ReactNode }) {
         resetAt: new Date(),
       });
     } catch (error) {
-      console.error("Error checking API key status:", error);
+      console.error("[AI Context] Error refreshing status:", error);
       setHasApiKey(false);
       setIsApiKeyValid(false);
-    } finally {
-      setIsLoading(false);
     }
-  };
+  }, []);
 
   /**
-   * Add or update API key
+   * Set consent with persistence
    */
-  const addApiKey = async (
-    key: string
-  ): Promise<{ success: boolean; error?: string }> => {
-    if (!deviceId) {
-      return { success: false, error: "Device ID not available" };
-    }
+  const setConsentGiven = useCallback((value: boolean) => {
+    setConsentGivenState(value);
+    localStorage.setItem(CONSENT_STORAGE_KEY, value ? "true" : "false");
+  }, []);
 
-    try {
-      const response = await fetch("/api/ai-keys", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ apiKey: key, deviceId }),
-      });
+  /**
+   * Add or update API key (client-side encrypted)
+   */
+  const addApiKey = useCallback(
+    async (key: string): Promise<{ success: boolean; error?: string }> => {
+      try {
+        // Validate format
+        const validation = validateApiKeyFormat(key);
+        if (!validation.valid) {
+          return { success: false, error: validation.error };
+        }
 
-      const data = await response.json();
+        // Store encrypted key
+        await storeApiKeyClient(key.trim());
 
-      if (response.ok) {
+        // Test the key
+        const testResult = await testApiKey(key.trim());
+        await markApiKeyTested(testResult.valid);
+
         await refreshStatus();
-        return { success: true };
-      }
 
-      return { success: false, error: data.error || "Failed to add API key" };
-    } catch (error) {
-      console.error("Error adding API key:", error);
-      return { success: false, error: "Network error. Please try again." };
-    }
-  };
+        if (!testResult.valid) {
+          return {
+            success: true,
+            error: `Key stored but test failed: ${testResult.error}`,
+          };
+        }
+
+        return { success: true };
+      } catch (error) {
+        console.error("[AI Context] Error adding API key:", error);
+        return {
+          success: false,
+          error: error instanceof Error ? error.message : "Failed to add key",
+        };
+      }
+    },
+    [refreshStatus]
+  );
 
   /**
    * Remove API key
    */
-  const removeApiKey = async () => {
-    if (!deviceId) return;
-
+  const removeApiKey = useCallback(async () => {
     try {
-      await fetch(`/api/ai-keys?deviceId=${deviceId}`, {
-        method: "DELETE",
-      });
-
-      setHasApiKey(false);
-      setIsApiKeyValid(false);
+      removeApiKeyClient();
+      await refreshStatus();
     } catch (error) {
-      console.error("Error removing API key:", error);
+      console.error("[AI Context] Error removing API key:", error);
     }
-  };
+  }, [refreshStatus]);
 
-  const aiEnabled = hasApiKey && isApiKeyValid;
+  /**
+   * Test current API key
+   */
+  const testCurrentKey = useCallback(async (): Promise<{
+    valid: boolean;
+    error?: string;
+  }> => {
+    try {
+      const keyData = await getApiKeyClient();
+      if (!keyData) {
+        return { valid: false, error: "No API key found" };
+      }
+
+      const result = await testApiKey(keyData.key);
+      await markApiKeyTested(result.valid);
+      await refreshStatus();
+
+      return result;
+    } catch (error) {
+      return {
+        valid: false,
+        error: error instanceof Error ? error.message : "Test failed",
+      };
+    }
+  }, [refreshStatus]);
+
+  const aiEnabled = hasApiKey && isApiKeyValid && consentGiven;
 
   return (
     <AIContext.Provider
@@ -138,10 +208,14 @@ export function AIProvider({ children }: { children: ReactNode }) {
         aiEnabled,
         usageStats,
         deviceId,
+        maskedKey,
         addApiKey,
         removeApiKey,
+        testCurrentKey,
         refreshStatus,
         isLoading,
+        consentGiven,
+        setConsentGiven,
       }}
     >
       {children}
