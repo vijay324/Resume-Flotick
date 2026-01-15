@@ -97,9 +97,17 @@ html {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
     color-adjust: exact !important;
+    margin: 0 !important;
+    padding: 0 !important;
   }
   
-  /* Resume page sizing */
+  /* Resume container - preserve layout */
+  .resume-pages-container {
+    margin: 0 !important;
+    gap: 0 !important;
+  }
+  
+  /* Resume page sizing - keep original padding from templates */
   .resume-page {
     width: 210mm !important;
     min-height: 297mm !important;
@@ -107,7 +115,8 @@ html {
     page-break-after: always;
     page-break-inside: avoid;
     box-shadow: none !important;
-    margin: 0 !important;
+    margin: 0 auto !important;
+    /* DO NOT override padding - preserve template styling */
   }
   
   .resume-page:last-child {
