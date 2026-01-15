@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useRef } from "react";
-import { ResumeProvider } from "@/context/resume-context";
 import { ResumeForm } from "@/components/resume-form";
 import { ResumePreview } from "@/components/resume-preview";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,6 @@ export function ResumeBuilder() {
   const [isSidebarOpen, setIsSidebarOpen] = React.useState(true);
 
   return (
-    <ResumeProvider>
       <div className="flex flex-col md:flex-row h-screen overflow-hidden">
         {/* Left Side - Editor */}
         <div 
@@ -87,6 +85,5 @@ export function ResumeBuilder() {
            </div>
         </div>
       </div>
-    </ResumeProvider>
   );
 }

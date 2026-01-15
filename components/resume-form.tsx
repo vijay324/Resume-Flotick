@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { User, Wrench, History, Briefcase, GraduationCap, FileText } from "lucide-react";
+import { User, Wrench, History, Briefcase, Sparkles, GraduationCap } from "lucide-react";
 import { PersonalInfoForm } from "./forms/personal-info-form";
 import { ExperienceForm } from "./forms/experience-form";
 import { EducationForm } from "./forms/education-form";
@@ -13,6 +13,9 @@ import { LanguageForm } from "./forms/language-form";
 import { CertificationForm } from "./forms/certification-form";
 import { AwardForm } from "./forms/award-form";
 import { VolunteerForm } from "./forms/volunteer-form";
+import { ResumeAIPanel } from "./ai/resume-ai-panel";
+import { LinkedInAnalyzer } from "./ai/linkedin-analyzer";
+import { ApiKeySettings } from "./ai/api-key-settings";
 
 export function ResumeForm() {
   const [activeTab, setActiveTab] = React.useState("identity");
@@ -22,6 +25,7 @@ export function ResumeForm() {
     { id: "toolkit", label: "Toolkit", icon: Wrench },
     { id: "history", label: "History", icon: History }, 
     { id: "works", label: "Works", icon: Briefcase }, 
+    { id: "ai-tools", label: "AI Tools", icon: Sparkles },
   ];
 
   return (
@@ -124,15 +128,38 @@ export function ResumeForm() {
              </div>
           )}
 
-          {activeTab === "works" && (
-             <div className="space-y-6 animate-in fade-in duration-300">
-                <div>
-                   <h2 className="text-lg font-bold text-gray-900">Selected Works</h2>
-                   <p className="text-sm text-gray-500">Projects and achievements</p>
-                </div>
-                <ProjectsForm />
-             </div>
-          )}
+           {activeTab === "works" && (
+              <div className="space-y-6 animate-in fade-in duration-300">
+                 <div>
+                    <h2 className="text-lg font-bold text-gray-900">Selected Works</h2>
+                    <p className="text-sm text-gray-500">Projects and achievements</p>
+                 </div>
+                 <ProjectsForm />
+              </div>
+           )}
+
+           {activeTab === "ai-tools" && (
+              <div className="space-y-8 animate-in fade-in duration-300">
+                 <div>
+                    <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                      <Sparkles className="h-5 w-5 text-primary" />
+                      AI-Powered Tools
+                    </h2>
+                    <p className="text-sm text-gray-500">Enhance your resume and LinkedIn profile with AI</p>
+                 </div>
+                 
+                 <ApiKeySettings />
+                 
+                 <hr className="border-dashed border-gray-200" />
+                 <ResumeAIPanel />
+                 <hr className="border-dashed border-gray-200" />
+                 <div>
+                    <h3 className="text-md font-bold text-gray-900">LinkedIn Profile Optimizer</h3>
+                    <p className="text-xs text-gray-500 mb-4">Get AI-powered suggestions to improve your LinkedIn presence</p>
+                    <LinkedInAnalyzer />
+                 </div>
+              </div>
+           )}
        </div>
     </div>
   );

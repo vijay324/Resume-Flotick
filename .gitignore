@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+/lib/generated/prisma
+
+# API keys storage (contains encrypted keys - do not commit)
+/.api-keys/
+
+# Test files
+test-api-key.js
