@@ -121,7 +121,7 @@ export function AIProvider({ children }: { children: ReactNode }) {
   }, []);
 
   /**
-   * Add or update API key (client-side encrypted)
+   * Add or update API key (client-side encrypted + server sync)
    */
   const addApiKey = useCallback(
     async (key: string): Promise<{ success: boolean; error?: string }> => {
@@ -132,11 +132,33 @@ export function AIProvider({ children }: { children: ReactNode }) {
           return { success: false, error: validation.error };
         }
 
-        // Store encrypted key
-        await storeApiKeyClient(key.trim());
+        const trimmedKey = key.trim();
+
+        // Store encrypted key on client
+        await storeApiKeyClient(trimmedKey);
+
+        // Sync to server for API route access
+        try {
+          const response = await fetch("/api/ai-keys", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              apiKey: trimmedKey,
+              deviceId,
+            }),
+          });
+
+          if (!response.ok) {
+            const data = await response.json();
+            console.warn("[AI Context] Server sync warning:", data.error);
+          }
+        } catch (syncError) {
+          console.warn("[AI Context] Server sync failed:", syncError);
+          // Continue anyway - client-side storage is primary
+        }
 
         // Test the key
-        const testResult = await testApiKey(key.trim());
+        const testResult = await testApiKey(trimmedKey);
         await markApiKeyTested(testResult.valid);
 
         await refreshStatus();
@@ -157,7 +179,7 @@ export function AIProvider({ children }: { children: ReactNode }) {
         };
       }
     },
-    [refreshStatus]
+    [deviceId, refreshStatus]
   );
 
   /**

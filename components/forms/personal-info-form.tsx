@@ -5,6 +5,7 @@ import { useResume } from "@/context/resume-context";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { DescriptionRewriteButton } from "@/components/ai/description-rewrite-button";
 
 export function PersonalInfoForm() {
   const { resumeData, updateSection } = useResume();
@@ -48,7 +49,14 @@ export function PersonalInfoForm() {
       </div>
 
       <div className="space-y-1">
-        <label className={labelClass} htmlFor="summary">Professional Summary</label>
+        <div className="flex items-center justify-between">
+          <label className={labelClass} htmlFor="summary">Professional Summary</label>
+          <DescriptionRewriteButton
+            description={personalInfo.summary}
+            title={personalInfo.jobTitle || "Professional"}
+            onApply={(newSummary) => updateSection("personalInfo", { ...personalInfo, summary: newSummary })}
+          />
+        </div>
         <Textarea 
            id="summary" 
            name="summary" 

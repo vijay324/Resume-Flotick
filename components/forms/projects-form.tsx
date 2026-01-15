@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { ProjectItem } from "@/types/resume";
+import { DescriptionRewriteButton } from "@/components/ai/description-rewrite-button";
 
 export function ProjectsForm() {
   const { resumeData, updateSection } = useResume();
@@ -81,10 +82,17 @@ export function ProjectsForm() {
             </div>
              
             <div className="space-y-1">
-               <Label className={labelClass}>
-                   Description
-                   <span className="text-gray-300 font-normal ml-1 lowercase">(brief summary)</span>
-               </Label>
+               <div className="flex items-center justify-between">
+                 <Label className={labelClass}>
+                    Description
+                    <span className="text-gray-300 font-normal ml-1 lowercase">(brief summary)</span>
+                 </Label>
+                 <DescriptionRewriteButton
+                   description={item.description}
+                   title={item.name}
+                   onApply={(newDesc) => handleChange(index, "description", newDesc)}
+                 />
+               </div>
                <Textarea 
                  value={item.description} 
                  onChange={(e) => handleChange(index, "description", e.target.value)} 

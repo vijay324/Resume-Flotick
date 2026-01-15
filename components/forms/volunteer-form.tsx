@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
+import { DescriptionRewriteButton } from "@/components/ai/description-rewrite-button";
 
 export function VolunteerForm() {
   const { resumeData, updateSection } = useResume();
@@ -83,7 +84,19 @@ export function VolunteerForm() {
              </div>
 
             <div className="space-y-1">
-               <Label className={labelClass}>Description</Label>
+               <div className="flex items-center justify-between">
+                 <Label className={labelClass}>Description</Label>
+                 <DescriptionRewriteButton
+                   description={item.description}
+                   title={item.role}
+                   context={item.organization}
+                   onApply={(newDesc) => {
+                     const newItems = [...volunteer];
+                     newItems[index] = { ...newItems[index], description: newDesc };
+                     updateSection("volunteer", newItems);
+                   }}
+                 />
+               </div>
                <Textarea 
                  name="description" 
                  value={item.description} 

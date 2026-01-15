@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Plus, Trash2 } from "lucide-react";
 import { ExperienceItem } from "@/types/resume";
+import { DescriptionRewriteButton } from "@/components/ai/description-rewrite-button";
 
 export function ExperienceForm() {
   const { resumeData, updateSection } = useResume();
@@ -110,10 +111,22 @@ export function ExperienceForm() {
              </div>
 
             <div className="space-y-1">
-               <Label className={labelClass}>
-                  Description 
-                  <span className="text-gray-300 font-normal ml-1 lowercase">(bullet points recommended)</span>
-               </Label>
+               <div className="flex items-center justify-between">
+                 <Label className={labelClass}>
+                    Description 
+                    <span className="text-gray-300 font-normal ml-1 lowercase">(bullet points recommended)</span>
+                 </Label>
+                 <DescriptionRewriteButton
+                   description={item.description}
+                   title={item.position}
+                   context={item.company}
+                   onApply={(newDesc) => {
+                     const newExperience = [...experience];
+                     newExperience[index] = { ...newExperience[index], description: newDesc };
+                     updateSection("experience", newExperience);
+                   }}
+                 />
+               </div>
                <Textarea 
                  name="description" 
                  value={item.description} 
