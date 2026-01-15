@@ -6,6 +6,7 @@ import { ResumePreview } from "@/components/resume-preview";
 import { TemplateSelector } from "@/components/template-selector";
 import { Button } from "@/components/ui/button";
 import { SaveStatusIndicator } from "@/components/ui/save-status-indicator";
+import { UndoRedoControls } from "@/components/ui/undo-redo-controls";
 import { Download, PanelLeftClose, PanelLeft, ChevronLeft } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import Link from "next/link";
@@ -42,6 +43,7 @@ export function ResumeBuilder() {
              </div>
 
              <div className="flex items-center gap-2">
+                <UndoRedoControls />
                 <SaveStatusIndicator />
                 <Button 
                   size="sm" 
