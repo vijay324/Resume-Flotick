@@ -80,3 +80,101 @@ body {
 html {
   scroll-behavior: smooth;
 }
+
+/* ===========================================
+   PRINT & PAGINATION STYLES
+   =========================================== */
+
+/* A4 Page Configuration */
+@page {
+  size: A4;
+  margin: 0;
+}
+
+@media print {
+  /* Reset for print */
+  html, body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+  
+  /* Resume page sizing */
+  .resume-page {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    height: auto !important;
+    page-break-after: always;
+    page-break-inside: avoid;
+    box-shadow: none !important;
+    margin: 0 !important;
+  }
+  
+  .resume-page:last-child {
+    page-break-after: auto;
+  }
+  
+  /* Prevent awkward breaks */
+  .break-inside-avoid,
+  .break-inside-avoid-print {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+  
+  /* Section headers should stay with content */
+  h2, h3 {
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+}
+
+/* Visual Page Separator (Preview Only) */
+.page-separator {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent,
+    transparent 8px,
+    #cbd5e1 8px,
+    #cbd5e1 16px
+  );
+  margin: 8px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-separator::before {
+  content: 'Page Break';
+  position: absolute;
+  background: #f1f5f9;
+  color: #64748b;
+  font-size: 10px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 2px 12px;
+  border-radius: 4px;
+}
+
+/* Resume Container Styles */
+.resume-pages-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media print {
+  .page-separator,
+  .page-number-indicator,
+  .page-break-indicator,
+  .page-count-indicator {
+    display: none !important;
+  }
+  
+  .resume-pages-container {
+    gap: 0;
+  }
+}
