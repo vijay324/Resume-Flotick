@@ -21,7 +21,6 @@ export function ExperienceForm() {
     updateSection("experience", newExperience);
   };
   
-  // Explicitly typed helper for checkbox
   const handleCheckboxChange = (index: number, checked: boolean) => {
       const newExperience = [...experience];
       newExperience[index] = { ...newExperience[index], current: checked };
@@ -48,82 +47,85 @@ export function ExperienceForm() {
     updateSection("experience", newExperience);
   };
 
+  const inputClass = "rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-10 transition-all duration-200 ease-in-out font-medium text-gray-800 placeholder:text-gray-400 text-sm";
+  const labelClass = "text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 block ml-0.5";
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {experience.map((item, index) => (
-        <Card key={item.id} className="relative">
-          <CardContent className="pt-6 space-y-4">
-            <Button
-               variant="ghost"
-               size="icon"
-               className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+        <div key={item.id} className="group relative p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.05)] transition-all duration-300">
+            <button
+               className="absolute top-3 right-3 p-1.5 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                onClick={() => removeExperience(index)}
+               title="Remove"
             >
                <Trash2 className="h-4 w-4" />
-            </Button>
+            </button>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Company</Label>
-                 <Input name="company" value={item.company} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+                 <Label className={labelClass}>Company Name</Label>
+                 <Input name="company" value={item.company} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Google" />
                </div>
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Position</Label>
-                 <Input name="position" value={item.position} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+                 <Label className={labelClass}>Job Title</Label>
+                 <Input name="position" value={item.position} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Software Engineer" />
                </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Start Date</Label>
-                 <Input name="startDate" type="text" placeholder="YYYY-MM" value={item.startDate} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+                 <Label className={labelClass}>Start Date</Label>
+                 <Input name="startDate" type="text" placeholder="Jan 2022" value={item.startDate} onChange={(e) => handleChange(index, e)} className={inputClass} />
                </div>
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">End Date</Label>
+                 <Label className={labelClass}>End Date</Label>
                  <div className="flex items-center gap-2">
                     <Input 
                        name="endDate" 
                        type="text" 
-                       placeholder="YYYY-MM" 
+                       placeholder="Present" 
                        value={item.endDate} 
                        disabled={item.current}
                        onChange={(e) => handleChange(index, e)} 
-                       className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12"
+                       className={`${inputClass} disabled:opacity-50`}
                     />
-                    <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 shrink-0">
                        <input 
                           type="checkbox" 
                           id={`current-${item.id}`}
                           checked={item.current}
                           onChange={(e) => handleCheckboxChange(index, e.target.checked)}
-                          className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
+                          className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500 cursor-pointer"
                        />
-                       <Label htmlFor={`current-${item.id}`} className="text-xs font-normal">Present</Label>
+                       <Label htmlFor={`current-${item.id}`} className="text-[10px] font-medium text-gray-500 cursor-pointer select-none">Current</Label>
                     </div>
                  </div>
                </div>
             </div>
             
-             <div className="space-y-1">
-               <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Location</Label>
-               <Input name="location" value={item.location || ""} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+             <div className="space-y-1 mb-4">
+               <Label className={labelClass}>Location</Label>
+               <Input name="location" value={item.location || ""} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Mountain View, CA (Remote)" />
              </div>
 
             <div className="space-y-1">
-               <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Description</Label>
+               <Label className={labelClass}>
+                  Description 
+                  <span className="text-gray-300 font-normal ml-1 lowercase">(bullet points recommended)</span>
+               </Label>
                <Textarea 
                  name="description" 
                  value={item.description} 
                  onChange={(e) => handleChange(index, e)} 
-                 className="min-h-[100px] rounded-xl border-gray-200 focus:ring-black focus:border-black p-4"
-                 placeholder="• Achieved X by doing Y..."
+                 className="min-h-[100px] rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 resize-none p-3 font-normal text-sm text-gray-700 leading-relaxed"
+                 placeholder="• Developed scalable web applications using React and Next.js&#10;• Improved site performance by 25% through code optimization"
                />
             </div>
-          </CardContent>
-        </Card>
+        </div>
       ))}
-      <Button onClick={addExperience} variant="outline" className="w-full">
-        <Plus className="mr-2 h-4 w-4" /> Add Experience
+      <Button onClick={addExperience} variant="outline" className="w-full h-11 border-dashed border-gray-300 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50/50 rounded-xl transition-all">
+        <Plus className="mr-2 h-4 w-4" /> Add Work Experience
       </Button>
     </div>
   );

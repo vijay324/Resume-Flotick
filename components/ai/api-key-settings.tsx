@@ -29,44 +29,44 @@ export function ApiKeySettings() {
 
   if (!hasApiKey) {
     return (
-      <Card className="p-6">
+      <div className="p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted">
-            <Key className="h-5 w-5 text-muted-foreground" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 border border-gray-100">
+            <Key className="h-5 w-5 text-gray-500" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold">No API Key Added</h3>
-            <p className="text-sm text-muted-foreground">
+            <h3 className="font-semibold text-gray-900">No API Key Added</h3>
+            <p className="text-sm text-gray-500">
               Add your Gemini API key to use AI features
             </p>
           </div>
-          <Button onClick={() => setShowModal(true)}>
+          <Button onClick={() => setShowModal(true)} className="bg-black hover:bg-gray-800 text-white rounded-lg">
             Add API Key
           </Button>
         </div>
         <ApiKeyModal isOpen={showModal} onClose={() => setShowModal(false)} />
-      </Card>
+      </div>
     );
   }
 
   return (
     <>
-      <Card className="p-6">
+      <div className="p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
         <div className="flex items-start gap-4">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-100">
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-green-50 border border-green-100">
             <CheckCircle2 className="h-5 w-5 text-green-600" />
           </div>
           
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-semibold">API Key Configured</h3>
+              <h3 className="font-semibold text-gray-900">API Key Configured</h3>
               {isApiKeyValid && (
-                <span className="px-2 py-0.5 text-xs bg-green-100 text-green-700 rounded-full">
+                <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider bg-green-50 text-green-700 rounded-full border border-green-100">
                   Active
                 </span>
               )}
             </div>
-            <p className="text-sm text-muted-foreground mb-4">
+            <p className="text-sm text-gray-500 mb-4">
               Your Gemini API key is encrypted and ready to use
             </p>
 
@@ -75,6 +75,7 @@ export function ApiKeySettings() {
                 variant="outline"
                 size="sm"
                 onClick={handleUpdateKey}
+                className="h-9 rounded-lg border-gray-200 text-gray-700 hover:text-gray-900 hover:bg-gray-50"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Update Key
@@ -84,6 +85,7 @@ export function ApiKeySettings() {
                 size="sm"
                 onClick={handleRemoveKey}
                 disabled={isRemoving}
+                className="h-9 rounded-lg border-gray-200 text-gray-700 hover:text-red-600 hover:bg-red-50 hover:border-red-100"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
                 {isRemoving ? "Removing..." : "Remove Key"}
@@ -91,7 +93,7 @@ export function ApiKeySettings() {
             </div>
           </div>
         </div>
-      </Card>
+      </div>
 
       <ApiKeyModal 
         isOpen={showModal} 

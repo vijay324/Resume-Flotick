@@ -29,25 +29,26 @@ export function LanguageForm() {
     updateSection("languages", languages.filter((l) => l.id !== id));
   };
 
+  const inputClass = "rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-11 transition-all duration-200 ease-in-out font-medium text-gray-800 placeholder:text-gray-400 text-sm";
+  const labelClass = "text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 block ml-0.5";
 
   return (
-    <Card>
-      <CardContent className="pt-6 space-y-4">
-        <div className="grid grid-cols-[1fr,auto,auto] gap-2 items-end">
+    <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="grid grid-cols-[1fr,140px,auto] gap-3 items-end">
           <div className="space-y-1">
-             <Label htmlFor="lang-input" className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Language</Label>
+             <Label htmlFor="lang-input" className={labelClass}>Language</Label>
              <Input 
                id="lang-input"
                placeholder="e.g. French" 
                value={newLanguage} 
                onChange={(e) => setNewLanguage(e.target.value)}
-               className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12"
+               className={inputClass}
              />
           </div>
-          <div className="space-y-1 w-32">
-             <Label htmlFor="prof-input" className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Proficiency</Label>
+          <div className="space-y-1">
+             <Label htmlFor="prof-input" className={labelClass}>Proficiency</Label>
              <select 
-               className="w-full h-12 rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black text-sm px-3"
+               className="w-full h-11 rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-sm px-3 font-medium text-gray-700 outline-none transition-all"
                value={proficiency}
                onChange={(e) => setProficiency(e.target.value)}
              >
@@ -58,28 +59,35 @@ export function LanguageForm() {
                 <option value="Basic">Basic</option>
              </select>
           </div>
-          <Button onClick={addLanguage} size="icon" className="h-12 w-12 rounded-xl bg-black hover:bg-gray-800 shrink-0">
+          <Button onClick={addLanguage} size="icon" className="h-11 w-11 rounded-xl bg-gray-900 hover:bg-black text-white shadow-lg shadow-gray-200 transition-all hover:scale-105 active:scale-95 mb-[1px]">
             <Plus className="h-5 w-5" />
           </Button>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {languages.map((lang) => (
-            <div 
-              key={lang.id} 
-              className="bg-gray-100/50 hover:bg-gray-100 flex items-center gap-2 rounded-lg border border-gray-200 pl-3 pr-2 py-1.5 text-xs font-medium transition-colors"
-            >
-              <span>{lang.name} <span className="text-gray-400 font-normal">({lang.proficiency})</span></span>
-              <button 
-                onClick={() => removeLanguage(lang.id)}
-                className="ml-1 p-0.5 hover:bg-gray-200 rounded-full transition-colors"
-              >
-                <X className="h-3 w-3 text-gray-500" />
-              </button>
-            </div>
-          ))}
-        </div>
-      </CardContent>
-    </Card>
+        {languages.length > 0 && (
+           <div className="p-4 bg-gray-50/50 rounded-2xl border border-gray-100 flex flex-wrap gap-2">
+             {languages.map((lang) => (
+               <div 
+                 key={lang.id} 
+                 className="group bg-white hover:bg-indigo-50 text-gray-700 hover:text-indigo-700 flex items-center gap-2 rounded-lg border border-gray-200 hover:border-indigo-200 pl-3 pr-2 py-1.5 text-xs font-semibold transition-all shadow-sm"
+               >
+                 <span>{lang.name} <span className="text-gray-400 font-normal group-hover:text-indigo-400">({lang.proficiency})</span></span>
+                 <button 
+                   onClick={() => removeLanguage(lang.id)}
+                   className="ml-1 text-gray-400 hover:text-red-500 transition-colors rounded-full p-0.5 hover:bg-red-50"
+                 >
+                   <X className="h-3 w-3" />
+                 </button>
+               </div>
+             ))}
+           </div>
+        )}
+        
+        {languages.length === 0 && (
+          <div className="text-center py-6 border-2 border-dashed border-gray-100 rounded-xl">
+             <p className="text-sm text-gray-400">Add languages to showcase your communication skills.</p>
+          </div>
+        )}
+    </div>
   );
 }

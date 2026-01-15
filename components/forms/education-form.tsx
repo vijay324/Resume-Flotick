@@ -40,54 +40,54 @@ export function EducationForm() {
     updateSection("education", newEducation);
   };
 
+  const inputClass = "rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-10 transition-all duration-200 ease-in-out font-medium text-gray-800 placeholder:text-gray-400 text-sm";
+  const labelClass = "text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 block ml-0.5";
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {education.map((item, index) => (
-        <Card key={item.id} className="relative">
-          <CardContent className="pt-6 space-y-4">
-            <Button
-               variant="ghost"
-               size="icon"
-               className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+        <div key={item.id} className="group relative p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.05)] transition-all duration-300">
+            <button
+               className="absolute top-3 right-3 p-1.5 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                onClick={() => removeEducation(index)}
+               title="Remove"
             >
                <Trash2 className="h-4 w-4" />
-            </Button>
+            </button>
 
-            <div className="space-y-1">
-               <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Institution</Label>
-               <Input name="institution" value={item.institution} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+            <div className="space-y-1 mb-4">
+               <Label className={labelClass}>Institution / School</Label>
+               <Input name="institution" value={item.institution} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Stanford University" />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Degree</Label>
-                 <Input name="degree" value={item.degree} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+                 <Label className={labelClass}>Degree</Label>
+                 <Input name="degree" value={item.degree} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Bachelor of Science" />
                </div>
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Field of Study</Label>
-                 <Input name="field" value={item.field} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+                 <Label className={labelClass}>Field of Study</Label>
+                 <Input name="field" value={item.field} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Computer Science" />
                </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Start Date</Label>
-                 <Input name="startDate" placeholder="YYYY" value={item.startDate} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+                 <Label className={labelClass}>Start Year</Label>
+                 <Input name="startDate" placeholder="2018" value={item.startDate} onChange={(e) => handleChange(index, e)} className={inputClass} />
                </div>
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">End Date</Label>
-                 <Input name="endDate" placeholder="YYYY" value={item.endDate} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+                 <Label className={labelClass}>End Year</Label>
+                 <Input name="endDate" placeholder="2022" value={item.endDate} onChange={(e) => handleChange(index, e)} className={inputClass} />
                </div>
             </div>
              <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Grade / Score</Label>
-                 <Input name="score" value={item.score || ""} onChange={(e) => handleChange(index, e)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+                 <Label className={labelClass}>Grade / Score / GPA</Label>
+                 <Input name="score" value={item.score || ""} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="3.8/4.0" />
              </div>
-          </CardContent>
-        </Card>
+        </div>
       ))}
-      <Button onClick={addEducation} variant="outline" className="w-full">
+      <Button onClick={addEducation} variant="outline" className="w-full h-11 border-dashed border-gray-300 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50/50 rounded-xl transition-all">
         <Plus className="mr-2 h-4 w-4" /> Add Education
       </Button>
     </div>

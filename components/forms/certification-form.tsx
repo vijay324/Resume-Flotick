@@ -34,46 +34,47 @@ export function CertificationForm() {
     updateSection("certifications", newItems);
   };
 
+  const inputClass = "rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-10 transition-all duration-200 ease-in-out font-medium text-gray-800 placeholder:text-gray-400 text-sm";
+  const labelClass = "text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 block ml-0.5";
+
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
       {certifications.map((item, index) => (
-        <Card key={item.id} className="relative group overflow-hidden border-l-4 border-l-black border-y-gray-100 border-r-gray-100">
-           <CardContent className="pt-6 space-y-4">
-             <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity text-gray-400 hover:text-red-500 hover:bg-red-50"
+        <div key={item.id} className="group relative p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.05)] transition-all duration-300">
+             <button
+                className="absolute top-3 right-3 p-1.5 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                 onClick={(e) => removeCertification(item.id, e)}
+                title="Remove"
              >
                 <Trash2 className="h-4 w-4" />
-             </Button>
+             </button>
 
-            <div className="space-y-1">
-               <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Certification Name</Label>
-               <Input value={item.name} onChange={(e) => handleChange(index, "name", e.target.value)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+            <div className="space-y-1 mb-4">
+               <Label className={labelClass}>Certification Name</Label>
+               <Input value={item.name} onChange={(e) => handleChange(index, "name", e.target.value)} className={inputClass} placeholder="AWS Certified Solutions Architect" />
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Issuer</Label>
-                 <Input value={item.issuer} onChange={(e) => handleChange(index, "issuer", e.target.value)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+                 <Label className={labelClass}>Issuer</Label>
+                 <Input value={item.issuer} onChange={(e) => handleChange(index, "issuer", e.target.value)} className={inputClass} placeholder="Amazon Web Services" />
                </div>
                <div className="space-y-1">
-                 <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Date (YYYY-MM)</Label>
-                 <Input value={item.date} onChange={(e) => handleChange(index, "date", e.target.value)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" placeholder="e.g. 2023-05" />
+                 <Label className={labelClass}>Date (YYYY-MM)</Label>
+                 <Input value={item.date} onChange={(e) => handleChange(index, "date", e.target.value)} className={inputClass} placeholder="e.g. 2023-05" />
                </div>
             </div>
             
              <div className="space-y-1">
-               <Label className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-1.5 block">Credential Link</Label>
-               <Input value={item.link || ""} onChange={(e) => handleChange(index, "link", e.target.value)} className="rounded-xl border-gray-200 bg-white focus:ring-black focus:border-black h-12" />
+               <Label className={labelClass}>Credential Link</Label>
+               <Input value={item.link || ""} onChange={(e) => handleChange(index, "link", e.target.value)} className={inputClass} placeholder="https://..." />
              </div>
-           </CardContent>
-        </Card>
+        </div>
       ))}
       
-      <Button onClick={addCertification} variant="outline" className="w-full py-6 border-dashed border-2 hover:border-black hover:bg-gray-50 transition-all rounded-xl gap-2 text-gray-500 font-medium">
-        <Plus className="h-4 w-4" /> Add Certification
+      <Button onClick={addCertification} variant="outline" className="w-full h-11 border-dashed border-gray-300 text-gray-500 hover:text-indigo-600 hover:border-indigo-300 hover:bg-indigo-50/50 rounded-xl transition-all">
+        <Plus className="mr-2 h-4 w-4" /> Add Certification
       </Button>
     </div>
   );
