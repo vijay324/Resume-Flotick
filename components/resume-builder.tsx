@@ -3,6 +3,7 @@
 import React, { useRef, useState } from "react";
 import { ResumeForm } from "@/components/resume-form";
 import { ResumePreview } from "@/components/resume-preview";
+import { TemplateSelector } from "@/components/template-selector";
 import { Button } from "@/components/ui/button";
 import { Download, PanelLeftClose, PanelLeft, ChevronLeft } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
@@ -68,8 +69,9 @@ export function ResumeBuilder() {
 
         {/* Right Side - Preview */}
         <div className={`flex-1 bg-[#F8F9FA] h-full overflow-auto overflow-x-auto relative flex flex-col items-center p-8 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent`}>
-            {/* Download Button (Floating) */}
-            <div className={`fixed top-6 right-8 z-30 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
+            {/* Template Selector & Download Button (Floating) */}
+            <div className={`fixed top-6 right-8 z-30 flex items-center gap-3 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
+                <TemplateSelector />
                 <Button 
                   size="sm" 
                   className="h-9 gap-2 shadow-lg hover:shadow-xl bg-gray-900 hover:bg-black text-white rounded-full px-5 transition-all hover:-translate-y-0.5"

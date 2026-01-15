@@ -90,3 +90,13 @@ export interface ResumeData {
   awards: AwardItem[];
   volunteer: VolunteerItem[];
 }
+
+// Template types for resume layouts
+export type TemplateType = "classic" | "professional" | "modern";
+
+export interface TemplateInfo {
+  id: TemplateType;
+  name: string;
+  description: string;
+  layout: "single-column" | "two-column";
+}
