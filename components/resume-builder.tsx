@@ -7,6 +7,7 @@ import { TemplateSelector } from "@/components/template-selector";
 import { Button } from "@/components/ui/button";
 import { SaveStatusIndicator } from "@/components/ui/save-status-indicator";
 import { UndoRedoControls } from "@/components/ui/undo-redo-controls";
+import { ZoomControls } from "@/components/ui/zoom-controls";
 import { Download, PanelLeftClose, PanelLeft, ChevronLeft } from "lucide-react";
 import { useReactToPrint } from "react-to-print";
 import Link from "next/link";
@@ -16,6 +17,7 @@ export function ResumeBuilder() {
   const contentRef = useRef<HTMLDivElement>(null);
   const reactToPrintFn = useReactToPrint({ contentRef });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [zoom, setZoom] = useState(0.9); // Default scale
 
   return (
       <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-gray-50/50">
@@ -76,6 +78,7 @@ export function ResumeBuilder() {
         <div className={`flex-1 bg-[#F8F9FA] h-full overflow-auto overflow-x-auto relative flex flex-col items-center p-8 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent`}>
             {/* Template Selector & Download Button (Floating) */}
             <div className={`fixed top-6 right-8 z-30 flex items-center gap-3 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
+                <ZoomControls zoom={zoom} onZoomChange={setZoom} />
                 <TemplateSelector />
                 <Button 
                   size="sm" 
@@ -97,7 +100,7 @@ export function ResumeBuilder() {
             />
             
             {/* Resume Container */}
-            <div className="z-10 my-auto transition-transform duration-300 ease-out origin-top scale-[0.85] sm:scale-90 md:scale-100">
+            <div className="z-10 my-auto transition-transform duration-300 ease-out origin-top" style={{ transform: `scale(${zoom})` }}>
                <div 
                   className="shadow-[0_24px_60px_-12px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.02)] print:shadow-none bg-white"
                   ref={contentRef}

@@ -32,9 +32,11 @@ export function SaveStatusIndicator() {
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
 
+  const baseClasses = "flex items-center justify-center gap-1.5 text-xs px-2.5 py-1.5 rounded-full border min-w-[140px] transition-all duration-200";
+
   if (status.error) {
     return (
-      <div className="flex items-center gap-1.5 text-xs text-red-600 bg-red-50 px-2.5 py-1.5 rounded-full border border-red-100">
+      <div className={`${baseClasses} text-red-600 bg-red-50 border-red-100`}>
         <AlertCircle className="h-3.5 w-3.5" />
         <span className="font-medium">Save failed</span>
       </div>
@@ -43,7 +45,7 @@ export function SaveStatusIndicator() {
 
   if (status.isSaving) {
     return (
-      <div className="flex items-center gap-1.5 text-xs text-gray-500 bg-gray-50 px-2.5 py-1.5 rounded-full border border-gray-100">
+      <div className={`${baseClasses} text-gray-500 bg-gray-50 border-gray-100`}>
         <Loader2 className="h-3.5 w-3.5 animate-spin" />
         <span className="font-medium">Saving...</span>
       </div>
@@ -52,7 +54,7 @@ export function SaveStatusIndicator() {
 
   if (status.lastSaved) {
     return (
-      <div className="flex items-center gap-1.5 text-xs text-green-600 bg-green-50 px-2.5 py-1.5 rounded-full border border-green-100">
+      <div className={`${baseClasses} text-green-600 bg-green-50 border-green-100`}>
         <Check className="h-3.5 w-3.5" />
         <span className="font-medium">Saved {formatTime(status.lastSaved)}</span>
       </div>
@@ -60,9 +62,9 @@ export function SaveStatusIndicator() {
   }
 
   return (
-    <div className="flex items-center gap-1.5 text-xs text-gray-400 bg-gray-50 px-2.5 py-1.5 rounded-full border border-gray-100">
+    <div className={`${baseClasses} text-gray-400 bg-gray-50 border-gray-100`}>
       <Cloud className="h-3.5 w-3.5" />
-      <span className="font-medium">Auto-save enabled</span>
+      <span className="font-medium">Auto-save on</span>
     </div>
   );
 }
