@@ -7,9 +7,9 @@ const styles = StyleSheet.create({
   page: {
     padding: 30, // Tighter padding to match preview
     backgroundColor: '#ffffff',
-    fontFamily: 'Times-Roman',
+    fontFamily: 'Times-Roman', // Matches preview's Georgia/Times New Roman serif
     fontSize: 10.5,
-    lineHeight: 1.4, // Tighter line height matching preview
+    lineHeight: 1.45, // Matching preview's leading-[1.45]
   },
   header: {
     marginBottom: 14, // Tightened header spacing
@@ -24,11 +24,11 @@ const styles = StyleSheet.create({
     marginBottom: 6, // Reduced from 14 to match preview
   },
   name: {
-    fontSize: 28,
-    fontWeight: 'bold',
+    fontSize: 28, // Matching preview's text-[28pt]
+    fontFamily: 'Times-Bold', // Bold serif font to match preview
     textTransform: 'uppercase',
     letterSpacing: 1,
-    lineHeight: 1.2, // Tighter line height for the name itself
+    lineHeight: 1.2, // Tighter line height for the name
   },
   jobTitle: {
     fontSize: 11,
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 11,
-    fontWeight: 'bold',
+    fontFamily: 'Times-Bold', // Bold serif to match preview
     textTransform: 'uppercase',
     borderBottomWidth: 1,
     borderBottomColor: '#000',
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   },
   blockTitle: {
     fontSize: 12,
-    fontWeight: 'bold',
+    fontFamily: 'Times-Bold', // Bold serif to match preview
   },
   blockDate: {
     fontSize: 10,
@@ -100,13 +100,12 @@ const styles = StyleSheet.create({
   },
   blockSubtitle: {
     fontSize: 10.5,
-    fontStyle: 'italic',
-    fontWeight: 'bold',
+    fontFamily: 'Times-BoldItalic', // Bold italic serif to match preview
     color: '#333',
   },
   blockLocation: {
     fontSize: 10,
-    fontStyle: 'italic',
+    fontFamily: 'Times-Italic', // Italic serif to match preview
     color: '#666',
   },
   list: {
@@ -146,6 +145,15 @@ const GlobeIcon = () => <Icon path="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z M2 
 interface Props {
   data: ResumeData;
 }
+
+// Helper function to ensure URLs have proper protocol
+const normalizeUrl = (url: string): string => {
+  if (!url) return url;
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+  return `https://${url}`;
+};
 
 export const ClassicPdf = ({ data }: Props) => {
   const { personalInfo, experience, education, skills, projects, languages, certifications, awards, volunteer } = data;
@@ -187,7 +195,7 @@ export const ClassicPdf = ({ data }: Props) => {
              {personalInfo.linkedin && (
                 <View style={styles.contactItem}>
                     <LinkedinIcon />
-                    <Link src={personalInfo.linkedin} style={styles.contactLink}>
+                    <Link src={normalizeUrl(personalInfo.linkedin)} style={styles.contactLink}>
                        {personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}
                     </Link>
                 </View>
@@ -195,7 +203,7 @@ export const ClassicPdf = ({ data }: Props) => {
              {personalInfo.github && (
                 <View style={styles.contactItem}>
                     <GithubIcon />
-                    <Link src={personalInfo.github} style={styles.contactLink}>
+                    <Link src={normalizeUrl(personalInfo.github)} style={styles.contactLink}>
                        {personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}
                     </Link>
                 </View>
@@ -203,7 +211,7 @@ export const ClassicPdf = ({ data }: Props) => {
              {personalInfo.website && (
                 <View style={styles.contactItem}>
                     <GlobeIcon />
-                    <Link src={personalInfo.website} style={styles.contactLink}>
+                    <Link src={normalizeUrl(personalInfo.website)} style={styles.contactLink}>
                        {personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}
                     </Link>
                 </View>
@@ -222,7 +230,7 @@ export const ClassicPdf = ({ data }: Props) => {
           <View style={styles.section}>
             <Text style={styles.sectionTitle}>Skills</Text>
             <Text style={styles.skillsText}>
-              <Text style={{ fontWeight: 'bold' }}>Technical Proficiency: </Text>
+              <Text style={{ fontFamily: 'Times-Bold' }}>Technical Proficiency: </Text>
               {skills.map(s => s.name).join(" • ")}
             </Text>
           </View>
@@ -263,13 +271,13 @@ export const ClassicPdf = ({ data }: Props) => {
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={[styles.blockTitle, { fontSize: 11 }]}>{proj.name}</Text>
                     {proj.link && (
-                      <Link src={proj.link} style={{ marginLeft: 6, fontSize: 9, color: '#666', textDecoration: 'underline' }}>
+                      <Link src={normalizeUrl(proj.link)} style={{ marginLeft: 6, fontSize: 9, color: '#666', textDecoration: 'underline' }}>
                         | {proj.link.replace(/^https?:\/\//, "")}
                       </Link>
                     )}
                   </View>
                 </View>
-                <Text style={{ fontSize: 9.5, fontStyle: 'italic', marginBottom: 2 }}>
+                <Text style={{ fontSize: 9.5, fontFamily: 'Times-Italic', marginBottom: 2 }}>
                   Technologies: {proj.technologies.join(", ")}
                 </Text>
                 <View style={styles.list}>
@@ -292,12 +300,12 @@ export const ClassicPdf = ({ data }: Props) => {
                    {index === 0 && <Text style={styles.sectionTitle}>Education</Text>}
                    <View style={styles.blockHeader}>
                      <View>
-                        <Text style={{ fontWeight: 'bold' }}>{edu.institution}</Text>
+                        <Text style={{ fontFamily: 'Times-Bold' }}>{edu.institution}</Text>
                         <Text>{edu.degree} in {edu.field}</Text>
                      </View>
                      <View style={{ alignItems: 'flex-end' }}>
                         <Text style={styles.blockDate}>{edu.startDate} – {edu.endDate}</Text>
-                        {edu.score && <Text style={{ fontSize: 9, fontStyle: 'italic', color: '#666' }}>Score: {edu.score}</Text>}
+                        {edu.score && <Text style={{ fontSize: 9, fontFamily: 'Times-Italic', color: '#666' }}>Score: {edu.score}</Text>}
                      </View>
                    </View>
                 </View>
@@ -312,7 +320,7 @@ export const ClassicPdf = ({ data }: Props) => {
                     <Text style={styles.sectionTitle}>Certifications</Text>
                     {certifications.map((cert) => (
                        <View key={cert.id} style={{ marginBottom: 4 }}>
-                          <Text style={{ fontWeight: 'bold' }}>{cert.name} <Text style={{ fontWeight: 'normal', color: '#666' }}>— {cert.issuer}</Text></Text>
+                          <Text style={{ fontFamily: 'Times-Bold' }}>{cert.name} <Text style={{ fontFamily: 'Times-Roman', color: '#666' }}>— {cert.issuer}</Text></Text>
                           <Text style={{ fontSize: 9, color: '#666' }}>{cert.date}</Text>
                        </View>
                     ))}
