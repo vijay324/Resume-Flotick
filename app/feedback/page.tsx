@@ -234,7 +234,7 @@ function FeatureFeedbackRow({
               value={feedback.comment}
               onChange={(e) => onCommentChange(e.target.value)}
               rows={2}
-              className="resize-none text-sm bg-white border-neutral-200 focus:border-neutral-300 min-h-[60px]"
+              className="resize-none text-sm bg-white border-neutral-200 focus:border-black focus-visible:ring-0 min-h-[60px] transition-colors"
             />
           </motion.div>
         )}
@@ -312,8 +312,16 @@ export default function FeedbackPage() {
   };
 
   const isStepValid = () => {
-    if (currentStep === 1 && formData.overallRating === 0) return false;
-    return true;
+    switch (currentStep) {
+      case 0:
+        return formData.name.trim().length > 0;
+      case 1:
+        return formData.overallRating > 0;
+      case 2:
+        return Object.values(formData.features).every(f => f.rating !== "");
+      default:
+        return true;
+    }
   };
 
   // Render Step Content
@@ -326,26 +334,32 @@ export default function FeedbackPage() {
                <h2 className="text-xl font-semibold text-neutral-900">Let&#39;s get to know you</h2>
               <p className="text-sm text-neutral-500">This helps us follow up if needed (Optional)</p>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-4 text-left">
               <div className="space-y-2">
-                <Label htmlFor="name">Name</Label>
+                <Label htmlFor="name" className="flex justify-between items-center">
+                  <span>Name</span>
+                  <span className="text-[10px] text-neutral-400 font-medium uppercase tracking-wider">Required</span>
+                </Label>
                 <Input
                   id="name"
                   placeholder="Your Name"
                   value={formData.name}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  className="bg-white border-neutral-200"
+                  className="bg-white border-neutral-200 focus:border-black focus-visible:ring-0 transition-colors"
                 />
               </div>
               <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="email" className="flex justify-between items-center">
+                  <span>Email</span>
+                  <span className="text-[10px] text-neutral-400 font-medium uppercase tracking-wider">Optional</span>
+                </Label>
                 <Input
                   id="email"
                   type="email"
                   placeholder="your@email.com"
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                  className="bg-white border-neutral-200"
+                  className="bg-white border-neutral-200 focus:border-black focus-visible:ring-0 transition-colors"
                 />
               </div>
             </div>
@@ -371,7 +385,7 @@ export default function FeedbackPage() {
           <div className="space-y-6">
             <div className="text-center space-y-2 mb-6">
               <h2 className="text-xl font-semibold text-neutral-900">Feature Breakdown</h2>
-              <p className="text-sm text-neutral-500">Which tools worked well for you?</p>
+              <p className="text-sm text-neutral-500">Please rate all features to continue</p>
             </div>
             <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
               {FEATURES.map((feature) => (
@@ -404,7 +418,7 @@ export default function FeedbackPage() {
                   placeholder="What feature should we build next?"
                   value={formData.improvements}
                   onChange={(e) => setFormData(prev => ({ ...prev, improvements: e.target.value }))}
-                  className="min-h-[100px] resize-none bg-white border-neutral-200 focus:border-neutral-300"
+                  className="min-h-[100px] resize-none bg-white border-neutral-200 focus:border-black focus-visible:ring-0 transition-colors"
                 />
               </div>
               <div className="space-y-1.5">
@@ -416,7 +430,7 @@ export default function FeedbackPage() {
                   placeholder="Did you run into any hiccups?"
                   value={formData.issues}
                   onChange={(e) => setFormData(prev => ({ ...prev, issues: e.target.value }))}
-                  className="min-h-[100px] resize-none bg-white border-neutral-200 focus:border-neutral-300"
+                  className="min-h-[100px] resize-none bg-white border-neutral-200 focus:border-black focus-visible:ring-0 transition-colors"
                 />
               </div>
             </div>

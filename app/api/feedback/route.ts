@@ -9,13 +9,13 @@ const RATE_LIMIT_MAX_REQUESTS = 5; // 5 submissions per hour per IP
 
 // Feature feedback schema
 const featureFeedbackSchema = z.object({
-  rating: z.enum(["very-useful", "useful", "neutral", "not-useful", "not-used", ""]),
+  rating: z.enum(["very-useful", "useful", "neutral", "not-useful", "not-used"]),
   comment: z.string().max(2000).optional(),
 });
 
 // Main feedback schema
 const feedbackSchema = z.object({
-  name: z.string().optional(),
+  name: z.string().min(1, "Name is required"),
   email: z.string().email().optional().or(z.literal("")),
   overallRating: z.number().min(1).max(5),
   features: z.object({
@@ -141,10 +141,17 @@ export async function POST(request: Request) {
 
     // Generate timestamp
     const timestamp = new Date().toISOString();
-    const formattedDate = new Date().toLocaleString("en-US", {
-      dateStyle: "full",
-      timeStyle: "long",
-    });
+    const formattedDateFull = new Date().toLocaleString("en-US", {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: true,
+      timeZoneName: 'short'
+    }).replace(",", " at"); // Matches "Friday, January 16, 2026 at 3:50:31 PM GMT+5:30"
 
     // Build feature feedback text for plain text version
     let featureFeedbackText = "";
@@ -209,9 +216,9 @@ export async function POST(request: Request) {
                   <span style="color: #f59e0b; font-size: 18px;">${"★".repeat(overallRating)}${"☆".repeat(5 - overallRating)}</span>
                 </div>
               </div>
-              <div style="flex: 1;">
+              <div style="flex: 1.5;">
                 <p style="margin: 0; font-size: 13px; color: #737373;">Submitted</p>
-                <p style="margin: 4px 0 0 0; font-size: 14px; font-weight: 500; color: #171717;">${new Date().toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+                <p style="margin: 4px 0 0 0; font-size: 13px; font-weight: 500; color: #171717; line-height: 1.4;">${formattedDateFull}</p>
               </div>
             </div>
 
@@ -271,7 +278,7 @@ export async function POST(request: Request) {
 NEW FEEDBACK RECEIVED - ${companyName}
 ================================================
 
-📅 Submitted: ${formattedDate}
+📅 Submitted: ${formattedDateFull}
 1: ISO: ${timestamp}
 🌐 IP: ${clientIP}
 ${(name || email) ? `\nUSER DETAILS\n------------\nName: ${name || "N/A"}\nEmail: ${email || "N/A"}\n` : ""}
