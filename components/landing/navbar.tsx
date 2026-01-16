@@ -31,9 +31,7 @@ export function LandingNavbar() {
         <Link href="#templates" className="hover:text-primary transition-colors">
           Templates
         </Link>
-        <Link href="#pricing" className="hover:text-primary transition-colors">
-          Pricing
-        </Link>
+
       </div>
 
       <div className="flex items-center gap-4">

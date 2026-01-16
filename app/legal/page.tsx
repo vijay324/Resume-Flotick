@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function LegalPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white dark:bg-neutral-950 py-12 px-4 sm:px-6 lg:px-8 pt-24">
       <div className="max-w-3xl mx-auto prose dark:prose-invert">
         <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white mb-8">Privacy Policy</h1>
         

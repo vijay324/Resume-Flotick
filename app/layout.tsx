@@ -3,6 +3,7 @@ import { DM_Sans } from "next/font/google";
 import "./globals.css";
 import { AIProvider } from "@/context/ai-context";
 import { ResumeProvider } from "@/context/resume-context";
+import { SiteLayout } from "@/components/site-layout";
 
 const dmSans = DM_Sans({
   variable: "--font-sans",
@@ -109,7 +110,9 @@ export default function RootLayout({
         className={`${dmSans.variable} antialiased`}
       >
         <AIProvider>
-          <ResumeProvider>{children}</ResumeProvider>
+          <ResumeProvider>
+            <SiteLayout>{children}</SiteLayout>
+          </ResumeProvider>
         </AIProvider>
       </body>
     </html>

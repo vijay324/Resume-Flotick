@@ -1,10 +1,8 @@
 import { Metadata } from "next";
-import { LandingNavbar } from "@/components/landing/navbar";
 import { LandingHero } from "@/components/landing/hero";
 import { LandingSocialProof } from "@/components/landing/social-proof";
 import { LandingFeatures } from "@/components/landing/features";
 import { LandingCTA } from "@/components/landing/cta-section";
-import { LandingFooter } from "@/components/landing/footer";
 import { LandingFAQ } from "@/components/landing/faq-section";
 import { LandingValueProposition } from "@/components/landing/value-proposition";
 
@@ -177,14 +175,12 @@ export default function LandingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
-      <LandingNavbar />
       <LandingHero />
       <LandingSocialProof />
       <LandingFeatures />
       <LandingValueProposition />
       <LandingFAQ />
       <LandingCTA />
-      <LandingFooter />
     </main>
   );
 }
