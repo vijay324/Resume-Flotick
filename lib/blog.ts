@@ -14,25 +14,25 @@ export interface BlogPost {
 // Blog post metadata for SEO
 export const blogPosts: BlogPost[] = [
   {
-    slug: "what-is-flotik-resume",
-    title: "What is Flotik Resume? Complete Guide to AI-Powered Resume Building",
-    description: "Discover Flotik Resume, the free AI-powered resume builder from Flotik. Learn how it helps job seekers create professional, ATS-optimized resumes in minutes.",
+    slug: "what-is-Flotick-resume",
+    title: "What is Flotick Resume? Complete Guide to AI-Powered Resume Building",
+    description: "Discover Flotick Resume, the free AI-powered resume builder from Flotick. Learn how it helps job seekers create professional, ATS-optimized resumes in minutes.",
     content: `
-# What is Flotik Resume?
+# What is Flotick Resume?
 
-**Flotik Resume** is a free, AI-powered resume builder developed by Flotik, an enterprise B2B work management platform. It's designed to help job seekers create professional, ATS-optimized resumes quickly and efficiently.
+**Flotick Resume** is a free, AI-powered resume builder developed by Flotick, an enterprise B2B work management platform. It's designed to help job seekers create professional, ATS-optimized resumes quickly and efficiently.
 
-## Key Features of Flotik Resume
+## Key Features of Flotick Resume
 
 ### AI-Powered Content Generation
-Flotik Resume uses advanced artificial intelligence to help you write compelling resume content. The AI can:
+Flotick Resume uses advanced artificial intelligence to help you write compelling resume content. The AI can:
 - Summarize your work experience
 - Rewrite bullet points for maximum impact
 - Generate professional summaries
 - Suggest improvements to your existing content
 
 ### ATS-Friendly Templates
-All templates in Flotik Resume are engineered to pass Applicant Tracking Systems (ATS). This means your resume will:
+All templates in Flotick Resume are engineered to pass Applicant Tracking Systems (ATS). This means your resume will:
 - Use clean, parseable formatting
 - Include proper heading structures
 - Avoid graphics or elements that confuse ATS software
@@ -45,37 +45,37 @@ See exactly how your resume will look as you type. Our real-time preview shows y
 Download your completed resume as a high-quality PDF instantly. No watermarks, no limitations—completely free.
 
 ### Privacy-First Design
-Your data stays on your device. Flotik Resume doesn't store your personal information on servers, ensuring complete privacy and security.
+Your data stays on your device. Flotick Resume doesn't store your personal information on servers, ensuring complete privacy and security.
 
-## Why Choose Flotik Resume?
+## Why Choose Flotick Resume?
 
-Unlike other resume builders that charge subscription fees or add watermarks to free versions, Flotik Resume is genuinely free. It's backed by Flotik, an enterprise work management platform, which allows us to offer premium features at no cost.
+Unlike other resume builders that charge subscription fees or add watermarks to free versions, Flotick Resume is genuinely free. It's backed by Flotick, an enterprise work management platform, which allows us to offer premium features at no cost.
 
 ## Getting Started
 
-1. Visit [resume.flotik.com](https://resume.flotik.com)
+1. Visit [resume.Flotick.com](https://resume.Flotick.com)
 2. Click "Build My Resume"
 3. Fill in your information
 4. Use AI tools to enhance your content
 5. Download your professional resume
 
-Start building your job-winning resume today with Flotik Resume.
+Start building your job-winning resume today with Flotick Resume.
     `,
     date: "2024-01-15",
-    author: "Flotik Team",
+    author: "Flotick Team",
     readingTime: "5 min read",
-    tags: ["Flotik Resume", "AI Resume Builder", "Resume Tips"],
+    tags: ["Flotick Resume", "AI Resume Builder", "Resume Tips"],
   },
   {
-    slug: "how-flotik-uses-ai",
-    title: "How Flotik Resume Uses AI to Optimize Your Resume",
-    description: "Learn how Flotik Resume uses artificial intelligence to help you create better resumes. Discover AI features including content generation, rewriting, and job matching.",
+    slug: "how-Flotick-uses-ai",
+    title: "How Flotick Resume Uses AI to Optimize Your Resume",
+    description: "Learn how Flotick Resume uses artificial intelligence to help you create better resumes. Discover AI features including content generation, rewriting, and job matching.",
     content: `
-# How Flotik Resume Uses AI to Optimize Your Resume
+# How Flotick Resume Uses AI to Optimize Your Resume
 
-Artificial intelligence is transforming how we create resumes. **Flotik Resume** integrates cutting-edge AI technology to help job seekers craft compelling, professional resumes that stand out to both recruiters and automated systems.
+Artificial intelligence is transforming how we create resumes. **Flotick Resume** integrates cutting-edge AI technology to help job seekers craft compelling, professional resumes that stand out to both recruiters and automated systems.
 
-## AI Features in Flotik Resume
+## AI Features in Flotick Resume
 
 ### 1. Intelligent Content Summarization
 Have a lengthy work history? Our AI can condense your experience into concise, impactful bullet points that highlight your key achievements without overwhelming recruiters.
@@ -90,14 +90,14 @@ Not sure how to phrase your accomplishments? The AI rewrite feature transforms o
 Connect your LinkedIn profile and our AI will analyze it, extracting relevant experience and suggesting optimizations based on your career goals.
 
 ### 4. Job Description Matching
-Paste a job description and Flotik Resume's AI will help tailor your resume to match the specific requirements, improving your chances of passing ATS screening.
+Paste a job description and Flotick Resume's AI will help tailor your resume to match the specific requirements, improving your chances of passing ATS screening.
 
 ### 5. Smart Suggestions
 As you build your resume, the AI provides real-time suggestions for improving content, adding relevant keywords, and enhancing readability.
 
 ## The Technology Behind It
 
-Flotik Resume uses Google's Gemini AI, one of the most advanced language models available. This ensures:
+Flotick Resume uses Google's Gemini AI, one of the most advanced language models available. This ensures:
 - High-quality, contextually relevant suggestions
 - Natural-sounding content that doesn't feel robotic
 - Accurate understanding of industry-specific terminology
@@ -111,31 +111,31 @@ Flotik Resume uses Google's Gemini AI, one of the most advanced language models 
 
 ## Conclusion
 
-Flotik Resume's AI features are designed to enhance, not replace, your resume-building expertise. By combining human insight with AI efficiency, you can create resumes that truly represent your professional value.
+Flotick Resume's AI features are designed to enhance, not replace, your resume-building expertise. By combining human insight with AI efficiency, you can create resumes that truly represent your professional value.
 
-Try Flotik Resume today and experience the power of AI-assisted resume building.
+Try Flotick Resume today and experience the power of AI-assisted resume building.
     `,
     date: "2024-01-14",
-    author: "Flotik Team",
+    author: "Flotick Team",
     readingTime: "6 min read",
-    tags: ["AI", "Flotik Resume", "Resume Optimization"],
+    tags: ["AI", "Flotick Resume", "Resume Optimization"],
   },
   {
     slug: "best-resume-builder-enterprise",
     title: "Best Resume Builder for Enterprise & Professionals in 2024",
-    description: "Discover why Flotik Resume is the best resume builder for enterprise professionals. Compare features, learn about ATS optimization, and see how enterprise-grade tools make a difference.",
+    description: "Discover why Flotick Resume is the best resume builder for enterprise professionals. Compare features, learn about ATS optimization, and see how enterprise-grade tools make a difference.",
     content: `
 # Best Resume Builder for Enterprise & Professionals
 
-When you're a professional competing for executive roles or enterprise positions, your resume needs to reflect the caliber of your experience. **Flotik Resume** brings enterprise-grade quality to resume building—completely free.
+When you're a professional competing for executive roles or enterprise positions, your resume needs to reflect the caliber of your experience. **Flotick Resume** brings enterprise-grade quality to resume building—completely free.
 
-## What Makes Flotik Resume Enterprise-Ready?
+## What Makes Flotick Resume Enterprise-Ready?
 
 ### Built by an Enterprise Company
-Flotik Resume is developed by Flotik, an enterprise B2B work management platform trusted by organizations worldwide. We apply the same principles of quality, security, and user experience to our resume builder.
+Flotick Resume is developed by Flotick, an enterprise B2B work management platform trusted by organizations worldwide. We apply the same principles of quality, security, and user experience to our resume builder.
 
 ### Privacy & Security
-Enterprise professionals handle sensitive information. Flotik Resume stores all data locally on your device—your resume content never touches our servers. This privacy-first approach meets the security expectations of enterprise users.
+Enterprise professionals handle sensitive information. Flotick Resume stores all data locally on your device—your resume content never touches our servers. This privacy-first approach meets the security expectations of enterprise users.
 
 ### Professional Templates
 Our templates are designed with input from HR professionals and recruiters at Fortune 500 companies. They're clean, professional, and optimized for ATS systems used by major corporations.
@@ -152,27 +152,27 @@ The same AI technology powering enterprise tools enhances your resume. Get sugge
 
 ## Why Free?
 
-Flotik believes in democratizing access to professional tools. By offering Flotik Resume for free, we help professionals at all levels access the same quality resources typically reserved for expensive career services.
+Flotick believes in democratizing access to professional tools. By offering Flotick Resume for free, we help professionals at all levels access the same quality resources typically reserved for expensive career services.
 
 ## The Bottom Line
 
-For enterprise professionals, Flotik Resume offers the perfect combination of sophisticated AI tools, professional templates, and enterprise-grade security—all at no cost.
+For enterprise professionals, Flotick Resume offers the perfect combination of sophisticated AI tools, professional templates, and enterprise-grade security—all at no cost.
 
-Start building your executive resume today at [resume.flotik.com](https://resume.flotik.com).
+Start building your executive resume today at [resume.Flotick.com](https://resume.Flotick.com).
     `,
     date: "2024-01-13",
-    author: "Flotik Team",
+    author: "Flotick Team",
     readingTime: "5 min read",
-    tags: ["Enterprise", "Professional Resume", "Flotik Resume"],
+    tags: ["Enterprise", "Professional Resume", "Flotick Resume"],
   },
   {
     slug: "optimize-resume-with-ai",
     title: "How Job Seekers Can Optimize Resumes Using AI: A Complete Guide",
-    description: "Learn proven strategies for using AI to optimize your resume. From keyword optimization to content enhancement, discover how AI tools like Flotik Resume can boost your job search.",
+    description: "Learn proven strategies for using AI to optimize your resume. From keyword optimization to content enhancement, discover how AI tools like Flotick Resume can boost your job search.",
     content: `
 # How Job Seekers Can Optimize Resumes Using AI
 
-In today's competitive job market, AI-powered tools give job seekers a significant advantage. Here's how you can use AI, specifically through **Flotik Resume**, to create a resume that gets results.
+In today's competitive job market, AI-powered tools give job seekers a significant advantage. Here's how you can use AI, specifically through **Flotick Resume**, to create a resume that gets results.
 
 ## Understanding ATS Systems
 
@@ -181,7 +181,7 @@ Before optimizing your resume, understand what you're optimizing for. Applicant 
 - Parse and organize candidate information
 - Rank applicants by relevance
 
-AI tools like Flotik Resume are designed to help your resume succeed in these systems.
+AI tools like Flotick Resume are designed to help your resume succeed in these systems.
 
 ## Step-by-Step AI Resume Optimization
 
@@ -193,14 +193,14 @@ Before using AI, gather:
 - Target job descriptions
 
 ### Step 2: Use AI for Content Enhancement
-Flotik Resume's AI can:
+Flotick Resume's AI can:
 - Transform passive language into active statements
 - Suggest powerful action verbs
 - Identify missing keywords from job descriptions
 - Generate compelling professional summaries
 
 ### Step 3: Optimize for Keywords
-Paste your target job description into Flotik Resume. The AI analyzes:
+Paste your target job description into Flotick Resume. The AI analyzes:
 - Required skills and qualifications
 - Industry-specific terminology
 - Soft skills mentioned
@@ -234,27 +234,27 @@ Always review AI suggestions. Ensure:
 
 ## Conclusion
 
-AI-powered resume optimization through Flotik Resume gives you a competitive edge without the cost of professional resume services. Start optimizing your resume today and increase your chances of landing interviews.
+AI-powered resume optimization through Flotick Resume gives you a competitive edge without the cost of professional resume services. Start optimizing your resume today and increase your chances of landing interviews.
 
-Visit [resume.flotik.com](https://resume.flotik.com) to get started.
+Visit [resume.Flotick.com](https://resume.Flotick.com) to get started.
     `,
     date: "2024-01-12",
-    author: "Flotik Team",
+    author: "Flotick Team",
     readingTime: "7 min read",
     tags: ["Job Search", "AI Optimization", "Resume Tips"],
   },
   {
-    slug: "about-flotik-enterprise",
-    title: "About Flotik: Enterprise Work Management Platform",
-    description: "Learn about Flotik, the enterprise B2B work management platform behind Flotik Resume. Discover how Flotik helps organizations streamline workflows and improve collaboration.",
+    slug: "about-Flotick-enterprise",
+    title: "About Flotick: Enterprise Work Management Platform",
+    description: "Learn about Flotick, the enterprise B2B work management platform behind Flotick Resume. Discover how Flotick helps organizations streamline workflows and improve collaboration.",
     content: `
-# About Flotik: Enterprise Work Management Platform
+# About Flotick: Enterprise Work Management Platform
 
-**Flotik** is an enterprise B2B work management platform designed to help organizations of all sizes streamline their workflows, manage projects effectively, and improve team collaboration.
+**Flotick** is an enterprise B2B work management platform designed to help organizations of all sizes streamline their workflows, manage projects effectively, and improve team collaboration.
 
-## What is Flotik?
+## What is Flotick?
 
-Flotik provides a comprehensive suite of tools for modern businesses:
+Flotick provides a comprehensive suite of tools for modern businesses:
 
 ### Project Management
 Track projects from inception to completion with visual workflows, Gantt charts, and customizable dashboards.
@@ -268,21 +268,21 @@ Automate repetitive tasks and create efficient workflows that save time and redu
 ### Analytics & Reporting
 Gain insights into team performance, project progress, and resource allocation with powerful analytics.
 
-## Why Flotik Created Flotik Resume
+## Why Flotick Created Flotick Resume
 
-At Flotik, we believe in empowering professionals at every stage of their career journey. While our enterprise platform helps teams work better together, we recognized a need for high-quality career tools accessible to everyone.
+At Flotick, we believe in empowering professionals at every stage of their career journey. While our enterprise platform helps teams work better together, we recognized a need for high-quality career tools accessible to everyone.
 
-**Flotik Resume** was born from this vision—bringing enterprise-grade quality to resume building, completely free. By offering Flotik Resume without charge, we:
+**Flotick Resume** was born from this vision—bringing enterprise-grade quality to resume building, completely free. By offering Flotick Resume without charge, we:
 
 - Make professional resume tools accessible to everyone
 - Help job seekers compete for better opportunities
 - Demonstrate our commitment to professional development
-- Showcase the quality and innovation that defines Flotik
+- Showcase the quality and innovation that defines Flotick
 
-## The Flotik Difference
+## The Flotick Difference
 
 ### Enterprise-Grade Quality
-Every product Flotik creates meets enterprise standards for quality, security, and reliability.
+Every product Flotick creates meets enterprise standards for quality, security, and reliability.
 
 ### User-Centric Design
 We prioritize intuitive, beautiful interfaces that make complex tasks simple.
@@ -293,32 +293,32 @@ Data protection isn't optional—it's foundational to everything we build.
 ### Continuous Innovation
 Our AI-powered features represent our commitment to using cutting-edge technology for user benefit.
 
-## Connect with Flotik
+## Connect with Flotick
 
-- **Website:** [flotik.com](https://flotik.com)
-- **Flotik Resume:** [resume.flotik.com](https://resume.flotik.com)
-- **Twitter:** [@flotik](https://twitter.com/flotik)
-- **LinkedIn:** [Flotik](https://linkedin.com/company/flotik)
+- **Website:** [Flotick.com](https://Flotick.com)
+- **Flotick Resume:** [resume.Flotick.com](https://resume.Flotick.com)
+- **Twitter:** [@Flotick](https://twitter.com/Flotick)
+- **LinkedIn:** [Flotick](https://linkedin.com/company/Flotick)
 
 ## Join Our Mission
 
-Whether you're using Flotik's enterprise platform or building your resume with Flotik Resume, you're part of a community dedicated to professional excellence.
+Whether you're using Flotick's enterprise platform or building your resume with Flotick Resume, you're part of a community dedicated to professional excellence.
 
-Experience the Flotik difference today.
+Experience the Flotick difference today.
     `,
     date: "2024-01-11",
-    author: "Flotik Team",
+    author: "Flotick Team",
     readingTime: "5 min read",
-    tags: ["Flotik", "Enterprise", "Work Management"],
+    tags: ["Flotick", "Enterprise", "Work Management"],
   },
   {
     slug: "traditional-vs-ai-resume-builders",
     title: "Traditional vs AI-Powered Resume Builders: Complete Comparison",
-    description: "Compare traditional resume builders with AI-powered solutions like Flotik Resume. Learn which approach is best for your job search and why AI resume builders are the future.",
+    description: "Compare traditional resume builders with AI-powered solutions like Flotick Resume. Learn which approach is best for your job search and why AI resume builders are the future.",
     content: `
 # Traditional vs AI-Powered Resume Builders: Which Should You Choose?
 
-The resume building landscape has evolved significantly. Let's compare traditional resume builders with modern AI-powered solutions like **Flotik Resume** to help you make the best choice for your career.
+The resume building landscape has evolved significantly. Let's compare traditional resume builders with modern AI-powered solutions like **Flotick Resume** to help you make the best choice for your career.
 
 ## Traditional Resume Builders
 
@@ -342,10 +342,10 @@ Traditional resume builders provide:
 - Limited customization
 - Often require paid subscriptions for best features
 
-## AI-Powered Resume Builders (Flotik Resume)
+## AI-Powered Resume Builders (Flotick Resume)
 
 ### How They Work
-AI resume builders like Flotik Resume offer:
+AI resume builders like Flotick Resume offer:
 - Intelligent content generation
 - Real-time optimization suggestions
 - ATS analysis and scoring
@@ -358,7 +358,7 @@ AI resume builders like Flotik Resume offer:
 - Personalized suggestions
 - Continuous learning and improvement
 - Time-saving features
-- Many are free (like Flotik Resume)
+- Many are free (like Flotick Resume)
 
 ### Cons
 - Requires AI understanding
@@ -388,7 +388,7 @@ AI reduces resume creation time from hours to minutes without sacrificing qualit
 AI models improve over time, meaning the tool gets better the more you use it.
 
 ### 4. Accessible to Everyone
-Free AI tools like Flotik Resume give everyone access to professional-grade resume assistance.
+Free AI tools like Flotick Resume give everyone access to professional-grade resume assistance.
 
 ## Making the Right Choice
 
@@ -397,7 +397,7 @@ Choose a **traditional builder** if:
 - You prefer complete manual control
 - You don't need content assistance
 
-Choose an **AI-powered builder** like Flotik Resume if:
+Choose an **AI-powered builder** like Flotick Resume if:
 - You want help improving your content
 - You need to optimize for ATS systems
 - You want to save time
@@ -405,12 +405,12 @@ Choose an **AI-powered builder** like Flotik Resume if:
 
 ## Conclusion
 
-While traditional resume builders still have their place, AI-powered solutions offer significant advantages for today's job market. Flotik Resume combines the best of both worlds—professional templates with intelligent AI assistance—all for free.
+While traditional resume builders still have their place, AI-powered solutions offer significant advantages for today's job market. Flotick Resume combines the best of both worlds—professional templates with intelligent AI assistance—all for free.
 
-Try Flotik Resume at [resume.flotik.com](https://resume.flotik.com) and experience the AI difference.
+Try Flotick Resume at [resume.Flotick.com](https://resume.Flotick.com) and experience the AI difference.
     `,
     date: "2024-01-10",
-    author: "Flotik Team",
+    author: "Flotick Team",
     readingTime: "6 min read",
     tags: ["Resume Builders", "AI vs Traditional", "Comparison"],
   },

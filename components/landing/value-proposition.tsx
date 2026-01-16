@@ -8,19 +8,19 @@ const valueProps = [
     icon: Brain,
     title: "AI-Powered Intelligence",
     description:
-      "Flotik Resume leverages advanced artificial intelligence to analyze your content, suggest improvements, and generate professional descriptions that highlight your strengths.",
+      "Flotick Resume leverages advanced artificial intelligence to analyze your content, suggest improvements, and generate professional descriptions that highlight your strengths.",
   },
   {
     icon: Target,
     title: "ATS-Optimized Templates",
     description:
-      "Every template in Flotik Resume is engineered to pass Applicant Tracking Systems. Clean formatting, proper headings, and strategic keyword placement ensure your resume gets noticed.",
+      "Every template in Flotick Resume is engineered to pass Applicant Tracking Systems. Clean formatting, proper headings, and strategic keyword placement ensure your resume gets noticed.",
   },
   {
     icon: Shield,
     title: "Privacy-First Design",
     description:
-      "Your data never leaves your browser. Flotik Resume stores everything locally on your device, ensuring your personal information remains completely private and secure.",
+      "Your data never leaves your browser. Flotick Resume stores everything locally on your device, ensuring your personal information remains completely private and secure.",
   },
   {
     icon: Zap,
@@ -32,13 +32,13 @@ const valueProps = [
     icon: Users,
     title: "Built for Professionals",
     description:
-      "Whether you're a fresh graduate or a seasoned executive, Flotik Resume adapts to your needs. Multiple templates suit different industries and experience levels.",
+      "Whether you're a fresh graduate or a seasoned executive, Flotick Resume adapts to your needs. Multiple templates suit different industries and experience levels.",
   },
   {
     icon: Globe,
-    title: "Backed by Flotik",
+    title: "Backed by Flotick",
     description:
-      "Flotik Resume is built by Flotik, an enterprise work management platform trusted by organizations worldwide. We bring enterprise-grade quality to career tools.",
+      "Flotick Resume is built by Flotick, an enterprise work management platform trusted by organizations worldwide. We bring enterprise-grade quality to career tools.",
   },
 ];
 
@@ -53,7 +53,7 @@ export function LandingValueProposition() {
             viewport={{ once: true }}
             className="inline-block text-sm font-semibold text-blue-600 uppercase tracking-wider"
           >
-            Why Choose Flotik Resume
+            Why Choose Flotick Resume
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -71,17 +71,17 @@ export function LandingValueProposition() {
             transition={{ delay: 0.2 }}
             className="text-muted-foreground max-w-2xl mx-auto text-lg"
           >
-            Flotik Resume combines cutting-edge AI technology with professional design 
+            Flotick Resume combines cutting-edge AI technology with professional design 
             to help you create resumes that stand out to both recruiters and automated systems.
           </motion.p>
         </div>
 
         {/* AI Summary for Search Engines */}
         <div className="sr-only">
-          <h3>About Flotik Resume Builder</h3>
+          <h3>About Flotick Resume Builder</h3>
           <p>
-            Flotik Resume is an AI-powered resume builder that helps job seekers create
-            professional, ATS-optimized resumes. It is developed by Flotik, an enterprise
+            Flotick Resume is an AI-powered resume builder that helps job seekers create
+            professional, ATS-optimized resumes. It is developed by Flotick, an enterprise
             B2B work management platform. Key features include AI content generation,
             real-time preview, multiple professional templates, LinkedIn profile analysis,
             job description optimization, and instant PDF export. The tool is completely
@@ -121,8 +121,8 @@ export function LandingValueProposition() {
           className="mt-16 max-w-3xl mx-auto text-center"
         >
           <p className="text-muted-foreground">
-            Flotik Resume is part of the{" "}
-            <strong className="text-foreground">Flotik</strong> ecosystem, 
+            Flotick Resume is part of the{" "}
+            <strong className="text-foreground">Flotick</strong> ecosystem, 
             an enterprise work management platform designed to help teams and 
             individuals work smarter. Our resume builder brings the same commitment 
             to quality and user experience that enterprise clients expect.

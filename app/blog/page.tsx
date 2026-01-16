@@ -5,17 +5,17 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Calendar, Clock } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Blog - Resume Tips, AI Insights & Career Advice | Flotik Resume",
+  title: "Blog - Resume Tips, AI Insights & Career Advice | Flotick Resume",
   description:
-    "Explore the Flotik Resume blog for expert tips on resume building, AI-powered career tools, job search strategies, and professional development. Learn how to create ATS-optimized resumes.",
+    "Explore the Flotick Resume blog for expert tips on resume building, AI-powered career tools, job search strategies, and professional development. Learn how to create ATS-optimized resumes.",
   alternates: {
-    canonical: "https://resume.flotik.com/blog",
+    canonical: "https://resume.Flotick.com/blog",
   },
   openGraph: {
-    title: "Flotik Resume Blog - Resume Tips & AI Career Insights",
+    title: "Flotick Resume Blog - Resume Tips & AI Career Insights",
     description:
-      "Expert advice on resume building, AI career tools, and job search strategies from the Flotik team.",
-    url: "https://resume.flotik.com/blog",
+      "Expert advice on resume building, AI career tools, and job search strategies from the Flotick team.",
+    url: "https://resume.Flotick.com/blog",
     type: "website",
   },
 };
@@ -27,20 +27,20 @@ export default function BlogPage() {
   const blogSchema = {
     "@context": "https://schema.org",
     "@type": "Blog",
-    name: "Flotik Resume Blog",
+    name: "Flotick Resume Blog",
     description:
       "Expert tips on resume building, AI-powered career tools, and job search strategies.",
-    url: "https://resume.flotik.com/blog",
+    url: "https://resume.Flotick.com/blog",
     publisher: {
       "@type": "Organization",
-      name: "Flotik",
-      url: "https://flotik.com",
+      name: "Flotick",
+      url: "https://Flotick.com",
     },
     blogPost: posts.map((post) => ({
       "@type": "BlogPosting",
       headline: post.title,
       description: post.description,
-      url: `https://resume.flotik.com/blog/${post.slug}`,
+      url: `https://resume.Flotick.com/blog/${post.slug}`,
       datePublished: post.date,
       author: {
         "@type": "Person",
@@ -63,7 +63,7 @@ export default function BlogPage() {
             <div className="h-6 w-6 bg-blue-600 rounded-md flex items-center justify-center text-white text-xs">
               F
             </div>
-            Flotik Resume
+            Flotick Resume
           </Link>
           <Link href="/builder">
             <Button size="sm">Build Resume</Button>
@@ -75,7 +75,7 @@ export default function BlogPage() {
       <section className="py-16 bg-gradient-to-b from-blue-50 to-background">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
-            Flotik Resume <span className="text-blue-600">Blog</span>
+            Flotick Resume <span className="text-blue-600">Blog</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Expert insights on resume building, AI career tools, and job search
@@ -141,7 +141,7 @@ export default function BlogPage() {
             Ready to Build Your Resume?
           </h2>
           <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-            Put these tips into practice with Flotik Resume, our free AI-powered
+            Put these tips into practice with Flotick Resume, our free AI-powered
             resume builder.
           </p>
           <Link href="/builder">
@@ -156,14 +156,14 @@ export default function BlogPage() {
       <footer className="py-8 border-t border-border">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           <p>
-            © {new Date().getFullYear()} Flotik Resume. A product of{" "}
+            © {new Date().getFullYear()} Flotick Resume. A product of{" "}
             <a
-              href="https://flotik.com"
+              href="https://Flotick.com"
               className="font-semibold text-foreground hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Flotik
+              Flotick
             </a>
             .
           </p>

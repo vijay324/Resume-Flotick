@@ -2,16 +2,16 @@ import { MetadataRoute } from "next";
 
 // Blog posts for sitemap generation
 const blogPosts = [
-  "what-is-flotik-resume",
-  "how-flotik-uses-ai",
+  "what-is-Flotick-resume",
+  "how-Flotick-uses-ai",
   "best-resume-builder-enterprise",
   "optimize-resume-with-ai",
-  "about-flotik-enterprise",
+  "about-Flotick-enterprise",
   "traditional-vs-ai-resume-builders",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://resume.flotik.com";
+  const baseUrl = "https://resume.Flotick.com";
   const currentDate = new Date();
 
   // Static pages

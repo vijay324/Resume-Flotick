@@ -9,8 +9,8 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/_next/"],
       },
     ],
-    sitemap: "https://resume.flotik.com/sitemap.xml",
-    host: "https://resume.flotik.com",
+    sitemap: "https://resume.Flotick.com/sitemap.xml",
+    host: "https://resume.Flotick.com",
   };
 }
 

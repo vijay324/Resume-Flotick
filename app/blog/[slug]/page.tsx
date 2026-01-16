@@ -33,12 +33,12 @@ export async function generateMetadata({
     description: post.description,
     authors: [{ name: post.author }],
     alternates: {
-      canonical: `https://resume.flotik.com/blog/${post.slug}`,
+      canonical: `https://resume.Flotick.com/blog/${post.slug}`,
     },
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://resume.flotik.com/blog/${post.slug}`,
+      url: `https://resume.Flotick.com/blog/${post.slug}`,
       type: "article",
       publishedTime: post.date,
       authors: [post.author],
@@ -118,16 +118,16 @@ export default async function BlogPostPage({
     },
     publisher: {
       "@type": "Organization",
-      name: "Flotik",
-      url: "https://flotik.com",
+      name: "Flotick",
+      url: "https://Flotick.com",
       logo: {
         "@type": "ImageObject",
-        url: "https://flotik.com/logo.png",
+        url: "https://Flotick.com/logo.png",
       },
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://resume.flotik.com/blog/${post.slug}`,
+      "@id": `https://resume.Flotick.com/blog/${post.slug}`,
     },
     keywords: post.tags.join(", "),
   };
@@ -151,7 +151,7 @@ export default async function BlogPostPage({
             <div className="h-6 w-6 bg-blue-600 rounded-md flex items-center justify-center text-white text-xs">
               F
             </div>
-            Flotik Resume
+            Flotick Resume
           </Link>
           <Link href="/builder">
             <Button size="sm">Build Resume</Button>
@@ -219,7 +219,7 @@ export default async function BlogPostPage({
               Ready to Build Your Resume?
             </h3>
             <p className="text-muted-foreground mb-4">
-              Try Flotik Resume for free and create your professional resume in
+              Try Flotick Resume for free and create your professional resume in
               minutes.
             </p>
             <Link href="/builder">
@@ -258,14 +258,14 @@ export default async function BlogPostPage({
       <footer className="py-8 border-t border-border">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           <p>
-            © {new Date().getFullYear()} Flotik Resume. A product of{" "}
+            © {new Date().getFullYear()} Flotick Resume. A product of{" "}
             <a
-              href="https://flotik.com"
+              href="https://Flotick.com"
               className="font-semibold text-foreground hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Flotik
+              Flotick
             </a>
             .
           </p>

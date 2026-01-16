@@ -4,17 +4,17 @@ import { ArrowRight, Building2, Briefcase, Users, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export const metadata: Metadata = {
-  title: "About Flotik Resume - AI Resume Builder by Flotik",
+  title: "About Flotick Resume - AI Resume Builder by Flotick",
   description:
-    "Learn about Flotik Resume, the free AI-powered resume builder. Discover how Flotik, an enterprise B2B work management platform, is helping professionals build better resumes.",
+    "Learn about Flotick Resume, the free AI-powered resume builder. Discover how Flotick, an enterprise B2B work management platform, is helping professionals build better resumes.",
   alternates: {
-    canonical: "https://resume.flotik.com/about",
+    canonical: "https://resume.Flotick.com/about",
   },
   openGraph: {
-    title: "About Flotik Resume - AI Resume Builder by Flotik",
+    title: "About Flotick Resume - AI Resume Builder by Flotick",
     description:
-      "Flotik Resume is a free AI-powered resume builder developed by Flotik, an enterprise work management platform.",
-    url: "https://resume.flotik.com/about",
+      "Flotick Resume is a free AI-powered resume builder developed by Flotick, an enterprise work management platform.",
+    url: "https://resume.Flotick.com/about",
     type: "website",
   },
 };
@@ -24,14 +24,14 @@ export default function AboutPage() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    name: "Flotik",
-    url: "https://flotik.com",
-    logo: "https://flotik.com/logo.png",
+    name: "Flotick",
+    url: "https://Flotick.com",
+    logo: "https://Flotick.com/logo.png",
     description:
-      "Flotik is an enterprise B2B work management platform that helps teams collaborate, manage projects, and streamline workflows. Flotik Resume is our free AI-powered resume builder.",
+      "Flotick is an enterprise B2B work management platform that helps teams collaborate, manage projects, and streamline workflows. Flotick Resume is our free AI-powered resume builder.",
     sameAs: [
-      "https://twitter.com/flotik",
-      "https://linkedin.com/company/flotik",
+      "https://twitter.com/Flotick",
+      "https://linkedin.com/company/Flotick",
     ],
     foundingDate: "2024",
     knowsAbout: [
@@ -57,7 +57,7 @@ export default function AboutPage() {
             <div className="h-6 w-6 bg-blue-600 rounded-md flex items-center justify-center text-white text-xs">
               F
             </div>
-            Flotik Resume
+            Flotick Resume
           </Link>
           <Link href="/builder">
             <Button size="sm">Build Resume</Button>
@@ -69,25 +69,25 @@ export default function AboutPage() {
       <section className="py-20 bg-gradient-to-b from-blue-50 to-background">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">
-            About <span className="text-blue-600">Flotik Resume</span>
+            About <span className="text-blue-600">Flotick Resume</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            A free AI-powered resume builder from Flotik, designed to help
+            A free AI-powered resume builder from Flotick, designed to help
             professionals create job-winning resumes that pass ATS systems.
           </p>
         </div>
       </section>
 
-      {/* What is Flotik Resume */}
+      {/* What is Flotick Resume */}
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-4xl">
-          <h2 className="text-3xl font-bold mb-6">What is Flotik Resume?</h2>
+          <h2 className="text-3xl font-bold mb-6">What is Flotick Resume?</h2>
           <div className="prose prose-lg max-w-none text-muted-foreground">
             <p>
-              <strong className="text-foreground">Flotik Resume</strong> is a
+              <strong className="text-foreground">Flotick Resume</strong> is a
               free, AI-powered resume builder that helps job seekers create
               professional, ATS-optimized resumes in minutes. Unlike traditional
-              resume builders that simply provide templates, Flotik Resume uses
+              resume builders that simply provide templates, Flotick Resume uses
               advanced artificial intelligence to actively improve your resume
               content.
             </p>
@@ -99,7 +99,7 @@ export default function AboutPage() {
               no sign-up required.
             </p>
             <p>
-              Built with privacy in mind, Flotik Resume stores all your data
+              Built with privacy in mind, Flotick Resume stores all your data
               locally on your device. Your personal information never leaves
               your browser, ensuring complete privacy and security.
             </p>
@@ -107,29 +107,29 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* About Flotik */}
+      {/* About Flotick */}
       <section className="py-16 bg-secondary/30">
         <div className="container mx-auto px-4 max-w-4xl">
           <div className="flex items-center gap-3 mb-6">
             <Building2 className="h-8 w-8 text-blue-600" />
-            <h2 className="text-3xl font-bold">About Flotik</h2>
+            <h2 className="text-3xl font-bold">About Flotick</h2>
           </div>
           <div className="prose prose-lg max-w-none text-muted-foreground">
             <p>
-              <strong className="text-foreground">Flotik</strong> is an
+              <strong className="text-foreground">Flotick</strong> is an
               enterprise B2B work management platform designed to help
               organizations streamline their workflows, manage projects, and
               improve team collaboration.
             </p>
             <p>
-              Founded with the mission to make work more efficient, Flotik
+              Founded with the mission to make work more efficient, Flotick
               provides tools that help teams of all sizes accomplish more. From
               project tracking and task management to team communication and
-              workflow automation, Flotik offers a comprehensive suite of
+              workflow automation, Flotick offers a comprehensive suite of
               enterprise-grade solutions.
             </p>
             <p>
-              Flotik Resume is part of our commitment to helping professionals
+              Flotick Resume is part of our commitment to helping professionals
               succeed at every stage of their career. By offering free,
               high-quality career tools, we aim to democratize access to
               professional resources that were previously available only to
@@ -138,12 +138,12 @@ export default function AboutPage() {
           </div>
           <div className="mt-8">
             <a
-              href="https://flotik.com"
+              href="https://Flotick.com"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-blue-600 font-medium hover:underline"
             >
-              Learn more about Flotik <ArrowRight className="h-4 w-4" />
+              Learn more about Flotick <ArrowRight className="h-4 w-4" />
             </a>
           </div>
         </div>
@@ -153,7 +153,7 @@ export default function AboutPage() {
       <section className="py-16">
         <div className="container mx-auto px-4 max-w-4xl">
           <h2 className="text-3xl font-bold mb-8">
-            Why Choose Flotik Resume?
+            Why Choose Flotick Resume?
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             <div className="p-6 rounded-xl border border-border bg-card">
@@ -184,7 +184,7 @@ export default function AboutPage() {
               <Building2 className="h-8 w-8 text-blue-600 mb-4" />
               <h3 className="text-xl font-semibold mb-2">Enterprise Quality</h3>
               <p className="text-muted-foreground">
-                Built by Flotik with the same quality and attention to detail
+                Built by Flotick with the same quality and attention to detail
                 that enterprise clients expect.
               </p>
             </div>
@@ -199,7 +199,7 @@ export default function AboutPage() {
             Ready to Build Your Resume?
           </h2>
           <p className="text-blue-100 mb-8 max-w-xl mx-auto">
-            Join thousands of professionals who use Flotik Resume to create
+            Join thousands of professionals who use Flotick Resume to create
             job-winning resumes. It&apos;s free, fast, and powered by AI.
           </p>
           <Link href="/builder">
@@ -218,14 +218,14 @@ export default function AboutPage() {
       <footer className="py-8 border-t border-border">
         <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
           <p>
-            © {new Date().getFullYear()} Flotik Resume. A product of{" "}
+            © {new Date().getFullYear()} Flotick Resume. A product of{" "}
             <a
-              href="https://flotik.com"
+              href="https://Flotick.com"
               className="font-semibold text-foreground hover:underline"
               target="_blank"
               rel="noopener noreferrer"
             >
-              Flotik
+              Flotick
             </a>
             .
           </p>

@@ -10,13 +10,13 @@ export function LandingFooter() {
                <div className="h-6 w-6 bg-blue-600 rounded-md flex items-center justify-center text-white text-xs">
                  F
                </div>
-               Flotik Resume
+               Flotick Resume
             </div>
             <p className="text-sm text-muted-foreground text-balance">
-              Free AI-powered resume builder by <a href="https://flotik.com" className="font-semibold text-foreground hover:underline" target="_blank" rel="noopener noreferrer">Flotik</a>.
+              Free AI-powered resume builder by <a href="https://Flotick.com" className="font-semibold text-foreground hover:underline" target="_blank" rel="noopener noreferrer">Flotick</a>.
             </p>
             <p className="text-xs text-muted-foreground mt-2">
-              Flotik is an enterprise B2B work management platform helping teams collaborate and succeed.
+              Flotick is an enterprise B2B work management platform helping teams collaborate and succeed.
             </p>
           </div>
           
@@ -33,8 +33,8 @@ export function LandingFooter() {
             <h4 className="font-semibold mb-4">Resources</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li><Link href="/blog" className="hover:text-primary transition-colors">Blog</Link></li>
-              <li><Link href="/about" className="hover:text-primary transition-colors">About Flotik</Link></li>
-              <li><a href="https://flotik.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Flotik Platform</a></li>
+              <li><Link href="/about" className="hover:text-primary transition-colors">About Flotick</Link></li>
+              <li><a href="https://Flotick.com" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">Flotick Platform</a></li>
             </ul>
           </div>
           
@@ -50,7 +50,7 @@ export function LandingFooter() {
         
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-border">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Flotik Resume. A product of <a href="https://flotik.com" className="font-bold text-gray-900 hover:underline" target="_blank" rel="noopener noreferrer">Flotik</a>.
+            © {new Date().getFullYear()} Flotick Resume. A product of <a href="https://Flotick.com" className="font-bold text-gray-900 hover:underline" target="_blank" rel="noopener noreferrer">Flotick</a>.
           </p>
           <div className="flex gap-4 text-xs text-muted-foreground">
             <span>AI-Powered Resume Builder</span>

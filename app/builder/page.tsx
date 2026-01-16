@@ -4,14 +4,14 @@ import { TemplateProvider } from "@/context/template-context";
 
 export const metadata: Metadata = {
   title: "Build Your Resume - Free AI-Powered Resume Builder",
-  description: "Create your professional resume with Flotik Resume's AI-powered builder. Features intelligent content suggestions, ATS-optimized templates, real-time preview, and instant PDF export. 100% free, no sign-up required.",
+  description: "Create your professional resume with Flotick Resume's AI-powered builder. Features intelligent content suggestions, ATS-optimized templates, real-time preview, and instant PDF export. 100% free, no sign-up required.",
   alternates: {
-    canonical: "https://resume.flotik.com/builder",
+    canonical: "https://resume.Flotick.com/builder",
   },
   openGraph: {
-    title: "Build Your Resume - Flotik Resume AI Builder",
+    title: "Build Your Resume - Flotick Resume AI Builder",
     description: "Create professional, ATS-optimized resumes with AI-powered content suggestions. Free instant PDF export.",
-    url: "https://resume.flotik.com/builder",
+    url: "https://resume.Flotick.com/builder",
     type: "website",
   },
 };
@@ -21,10 +21,10 @@ export default function BuilderPage() {
   const builderSchema = {
     "@context": "https://schema.org",
     "@type": "WebApplication",
-    "name": "Flotik Resume Builder",
+    "name": "Flotick Resume Builder",
     "applicationCategory": "BusinessApplication",
     "operatingSystem": "Web Browser",
-    "url": "https://resume.flotik.com/builder",
+    "url": "https://resume.Flotick.com/builder",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -39,7 +39,7 @@ export default function BuilderPage() {
     ],
     "creator": {
       "@type": "Organization",
-      "name": "Flotik"
+      "name": "Flotick"
     }
   };
 

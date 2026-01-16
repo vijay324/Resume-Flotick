@@ -7,34 +7,34 @@ import { cn } from "@/lib/utils";
 
 const faqs = [
   {
-    question: "What is Flotik Resume?",
+    question: "What is Flotick Resume?",
     answer:
-      "Flotik Resume is a free AI-powered resume builder developed by Flotik. It helps job seekers create professional, ATS-optimized resumes in minutes using artificial intelligence to suggest content, improve wording, and ensure your resume passes automated screening systems.",
+      "Flotick Resume is a free AI-powered resume builder developed by Flotick. It helps job seekers create professional, ATS-optimized resumes in minutes using artificial intelligence to suggest content, improve wording, and ensure your resume passes automated screening systems.",
   },
   {
-    question: "Is Flotik Resume really free?",
+    question: "Is Flotick Resume really free?",
     answer:
-      "Yes, Flotik Resume is 100% free to use. There are no hidden fees, premium tiers, or subscription requirements. You can create unlimited resumes and download them as PDFs without any cost.",
+      "Yes, Flotick Resume is 100% free to use. There are no hidden fees, premium tiers, or subscription requirements. You can create unlimited resumes and download them as PDFs without any cost.",
   },
   {
-    question: "How does Flotik Resume use AI?",
+    question: "How does Flotick Resume use AI?",
     answer:
-      "Flotik Resume uses advanced AI to help you write compelling content for your resume. It can summarize your experience, rewrite bullet points for impact, analyze your LinkedIn profile for suggestions, and optimize your resume for specific job descriptions to improve ATS compatibility.",
+      "Flotick Resume uses advanced AI to help you write compelling content for your resume. It can summarize your experience, rewrite bullet points for impact, analyze your LinkedIn profile for suggestions, and optimize your resume for specific job descriptions to improve ATS compatibility.",
   },
   {
-    question: "What is Flotik?",
+    question: "What is Flotick?",
     answer:
-      "Flotik is an enterprise B2B work management platform that helps organizations streamline their workflows, manage projects, and improve team collaboration. Flotik Resume is one of the free tools offered by Flotik to help professionals advance their careers.",
+      "Flotick is an enterprise B2B work management platform that helps organizations streamline their workflows, manage projects, and improve team collaboration. Flotick Resume is one of the free tools offered by Flotick to help professionals advance their careers.",
   },
   {
-    question: "Are Flotik Resume templates ATS-friendly?",
+    question: "Are Flotick Resume templates ATS-friendly?",
     answer:
-      "Yes, all Flotik Resume templates are designed to be ATS-friendly. They use clean formatting, standard fonts, and proper heading structures that Applicant Tracking Systems can easily parse and read.",
+      "Yes, all Flotick Resume templates are designed to be ATS-friendly. They use clean formatting, standard fonts, and proper heading structures that Applicant Tracking Systems can easily parse and read.",
   },
   {
-    question: "Do I need to sign up to use Flotik Resume?",
+    question: "Do I need to sign up to use Flotick Resume?",
     answer:
-      "No, you don't need to create an account or sign up. Flotik Resume works directly in your browser, and your data is stored locally on your device for privacy. You can start building your resume immediately.",
+      "No, you don't need to create an account or sign up. Flotick Resume works directly in your browser, and your data is stored locally on your device for privacy. You can start building your resume immediately.",
   },
 ];
 
@@ -94,7 +94,7 @@ export function LandingFAQ() {
             Frequently Asked Questions
           </h2>
           <p className="text-muted-foreground text-lg">
-            Everything you need to know about Flotik Resume
+            Everything you need to know about Flotick Resume
           </p>
         </div>
 
