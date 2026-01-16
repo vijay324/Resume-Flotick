@@ -7,6 +7,7 @@ import type {
   JobDescriptionInput,
   OptimizedResumeResult,
   SectionOptimization,
+  ContentLength,
 } from "@/types/ai";
 import { createGeminiClient, type GeminiClient } from "./gemini-client";
 import {
@@ -53,9 +54,10 @@ export class AIService {
    */
   async rewriteContent(
     text: string,
-    tone: "professional" | "concise" | "detailed"
+    tone: string,
+    length: ContentLength = "medium"
   ): Promise<RewriteResponse> {
-    const prompt = buildContentRewritePrompt(text, tone);
+    const prompt = buildContentRewritePrompt(text, tone, length);
     const response = await this.client.generateContent(prompt);
 
     return {

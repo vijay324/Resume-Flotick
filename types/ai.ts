@@ -53,9 +53,12 @@ export interface SummarizeResponse {
   tokensUsed: number;
 }
 
+export type ContentLength = "short" | "medium" | "long";
+
 export interface RewriteRequest {
   text: string;
-  tone: "professional" | "concise" | "detailed";
+  tone: string; // "professional" | "confident" | "friendly" (flexible string now)
+  length?: ContentLength;
 }
 
 export interface RewriteResponse {
@@ -95,6 +98,7 @@ export interface JobDescriptionInput {
   description: string;
   requiredSkills: string[];
   responsibilities?: string;
+  length?: ContentLength;
 }
 
 /**

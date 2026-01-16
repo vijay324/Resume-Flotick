@@ -14,6 +14,7 @@ import { useReactToPrint } from "react-to-print";
 import Link from "next/link";
 import Image from "next/image";
 import { useResume } from "@/context/resume-context";
+import { MobileToolbar } from "@/components/resume-builder/mobile-toolbar";
 
 export function ResumeBuilder() {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -79,6 +80,14 @@ export function ResumeBuilder() {
           </div>
         </div>
 
+        {/* Mobile Toolbar */}
+        <MobileToolbar 
+          onDownload={reactToPrintFn}
+          onClear={() => setIsClearDialogOpen(true)}
+          zoom={zoom}
+          onZoomChange={setZoom}
+        />
+        
         {/* Floating Open Button when collapsed */}
         <div className={`absolute left-6 top-6 z-30 transition-all duration-500 ${!isSidebarOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'}`}>
           <button 
@@ -92,8 +101,8 @@ export function ResumeBuilder() {
 
         {/* Right Side - Preview */}
         <div className={`flex-1 bg-[#F8F9FA] h-full overflow-auto overflow-x-auto relative flex flex-col items-center p-8 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent`}>
-            {/* Template Selector & Download Button (Floating) */}
-            <div className={`fixed top-6 right-8 z-30 flex items-center gap-3 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
+            {/* Template Selector & Download Button (Floating) - Desktop Only */}
+            <div className={`hidden md:flex fixed top-6 right-8 z-30 items-center gap-3 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
                 {/* Clear Resume Button */}
                 <Button
                   variant="ghost"

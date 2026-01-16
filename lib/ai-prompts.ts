@@ -56,18 +56,32 @@ Be specific, constructive, and actionable in your feedback.`;
 
 export function buildContentRewritePrompt(
   text: string,
-  tone: "professional" | "concise" | "detailed"
+  tone: string,
+  length: "short" | "medium" | "long" = "medium"
 ): string {
-  const toneInstructions = {
+  const toneInstructions: Record<string, string> = {
     professional:
       "Rewrite this to sound more professional and polished while maintaining the same core information. Use action verbs and industry-standard terminology. Ensure the tone is confident but not arrogant.",
+    confident:
+      "Rewrite this to sound confident and authoritative. Highlight achievements and impact strongly.",
+    friendly:
+      "Rewrite this to be approachable and friendly while maintaining professionalism.",
+    // Legacy support
     concise:
-      "Rewrite this to be more concise and impactful. Remove redundancy and focus on the most important points. Aim to reduce length by 30-40% while preserving key information. Use clear, direct language.",
+      "Rewrite this to be concise and impactful. Remove redundancy and focus on the most important points.",
     detailed:
-      "Expand this text with more detail and context. Add specific examples, metrics, and elaboration while maintaining clarity and readability. Ensure the added details sound authentic.",
+      "Expand this text with more context. Add specific examples/elaboration while maintaining clarity.",
+  };
+  
+  const lengthInstructions = {
+    short: "Keep it short and concise (approx. 30-50 words or 1-2 sentences). Focus only on the most critical information.",
+    medium: "Keep it moderate in length (approx. 50-100 words or 3-4 sentences). Balance detail with readability.",
+    long: "Provide a detailed explanation (approx. 100+ words or 5+ sentences). Include comprehensive context and examples."
   };
 
-  return `${toneInstructions[tone]}
+  return `${toneInstructions[tone] || toneInstructions["professional"]}
+  
+LENGTH REQUIREMENT: ${lengthInstructions[length]}
 ${HUMANIZATION_DIRECTIVE}
 
 ORIGINAL TEXT:
@@ -197,8 +211,17 @@ export function buildJobDescriptionOptimizationPrompt(
   resumeData: import("@/types/resume").ResumeData,
   jobDescription: import("@/types/ai").JobDescriptionInput
 ): string {
+  const lengthInstruction = jobDescription.length 
+    ? `\nOPTIMIZATION LENGTH: Target a ${jobDescription.length} length for rewritten sections. ${
+        jobDescription.length === 'short' ? "Be very concise and to the point." : 
+        jobDescription.length === 'long' ? "Provide detailed, comprehensive descriptions." : 
+        "Balance detail with conciseness."
+      }`
+    : "";
+
   return `You are an expert resume optimizer, ATS specialist, and career coach. Your task is to optimize a resume for a specific job description.
 ${HUMANIZATION_DIRECTIVE}
+${lengthInstruction}
 
 CRITICAL RULES - YOU MUST FOLLOW THESE:
 1. NEVER fabricate, invent, or add experiences, skills, or achievements that don't exist in the original resume

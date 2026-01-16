@@ -10,6 +10,7 @@ import type {
   LinkedInAnalysis,
   JobDescriptionInput,
   OptimizedResumeResult,
+  ContentLength,
 } from "@/types/ai";
 import type { ResumeData } from "@/types/resume";
 
@@ -82,7 +83,8 @@ export function useRewrite() {
 
   const rewrite = async (
     text: string,
-    tone: "professional" | "concise" | "detailed"
+    tone: string,
+    length?: ContentLength
   ): Promise<RewriteResponse | null> => {
     if (!aiEnabled) {
       setError("AI features are not enabled. Please add your API key.");
@@ -101,7 +103,7 @@ export function useRewrite() {
       const response = await fetch("/api/ai/rewrite", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text, tone, deviceId, apiKey }),
+        body: JSON.stringify({ text, tone, length, deviceId, apiKey }),
       });
 
       const data = await response.json();

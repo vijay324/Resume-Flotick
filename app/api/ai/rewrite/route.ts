@@ -5,7 +5,8 @@ import { checkRateLimit } from "@/lib/server/rate-limiter";
 
 const RewriteSchema = z.object({
   text: z.string().min(1, "Text is required"),
-  tone: z.enum(["professional", "concise", "detailed"]),
+  tone: z.string().min(1, "Tone is required"),
+  length: z.enum(["short", "medium", "long"]).optional(),
   deviceId: z.string().min(5, "Device ID is required"),
   apiKey: z.string().min(10, "API key is required"),
 });
@@ -40,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     // Use AI service with provided API key
     const aiService = createAIService(apiKey);
-    const result = await aiService.rewriteContent(text, tone);
+    const result = await aiService.rewriteContent(text, tone, validation.data.length);
 
     return NextResponse.json({
       success: true,

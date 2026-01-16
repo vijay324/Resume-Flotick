@@ -10,8 +10,9 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { AlertCircle, Briefcase, Sparkles, X, Plus } from "lucide-react";
-import type { JobDescriptionInput, OptimizedResumeResult } from "@/types/ai";
+import type { JobDescriptionInput, OptimizedResumeResult, ContentLength } from "@/types/ai";
 import { OptimizationPreview } from "./optimization-preview";
+import { LengthSelector } from "./length-selector";
 
 export function JobOptimizerPanel() {
   const { resumeData } = useResume();
@@ -25,6 +26,7 @@ export function JobOptimizerPanel() {
   const [newSkill, setNewSkill] = useState("");
   const [requiredSkills, setRequiredSkills] = useState<string[]>([]);
   const [responsibilities, setResponsibilities] = useState("");
+  const [length, setLength] = useState<ContentLength>("medium");
 
   const handleAddSkill = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -46,7 +48,8 @@ export function JobOptimizerPanel() {
       company: company || undefined,
       description,
       requiredSkills,
-      responsibilities: responsibilities || undefined
+      responsibilities: responsibilities || undefined,
+      length
     };
 
     const optimizationResult = await optimizeForJob(resumeData, input);
@@ -126,6 +129,13 @@ export function JobOptimizerPanel() {
             onChange={(e) => setDescription(e.target.value)}
             className="min-h-[150px] bg-gray-50/50 focus:bg-white transition-colors leading-relaxed"
           />
+        </div>
+
+        <div className="space-y-2">
+          <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+             Output Length
+          </Label>
+          <LengthSelector value={length} onChange={setLength} className="w-full [&>button]:w-full bg-gray-50/50" />
         </div>
 
         <div className="space-y-2">
