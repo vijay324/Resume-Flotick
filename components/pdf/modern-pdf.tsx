@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
 
 // Icon Components for Header
 const Icon = ({ path }: { path: string }) => (
-  <Svg viewBox="0 0 24 24" style={{ width: 10, height: 10, marginRight: 4 }}>
+  <Svg viewBox="0 0 24 24" style={{ width: 12, height: 12, marginRight: 6 }}>
     <Path d={path} fill="none" stroke="#93c5fd" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
   </Svg>
 );
@@ -206,9 +206,9 @@ export const ModernPdf = ({ data }: Props) => {
 
              {experience.length > 0 && (
                <View style={styles.block}>
-                 <Text style={styles.sectionTitle}>Work Experience</Text>
-                 {experience.map(exp => (
-                   <View key={exp.id} style={{ marginBottom: 16 }}>
+                 {experience.map((exp, index) => (
+                   <View key={exp.id} wrap={false} style={{ marginBottom: 16 }}>
+                     {index === 0 && <Text style={styles.sectionTitle}>Work Experience</Text>}
                      <View style={styles.blockHeader}>
                         <Text style={styles.blockTitle}>{exp.position}</Text>
                         <Text style={styles.blockDate}>{exp.startDate} – {exp.endDate}</Text>
@@ -229,9 +229,9 @@ export const ModernPdf = ({ data }: Props) => {
 
              {projects.length > 0 && (
                <View style={styles.block}>
-                 <Text style={styles.sectionTitle}>Projects</Text>
-                 {projects.map(proj => (
-                   <View key={proj.id} style={{ marginBottom: 12 }}>
+                 {projects.map((proj, index) => (
+                   <View key={proj.id} wrap={false} style={{ marginBottom: 12 }}>
+                     {index === 0 && <Text style={styles.sectionTitle}>Projects</Text>}
                      <View style={{ flexDirection: 'row', alignItems: 'baseline', marginBottom: 2 }}>
                         <Text style={styles.blockTitle}>{proj.name}</Text>
                         {proj.link && <Link src={proj.link} style={{ marginLeft: 6, fontSize: 8, color: '#1e3a5f' }}>| {proj.link.replace(/^https?:\/\//, "")}</Link>}

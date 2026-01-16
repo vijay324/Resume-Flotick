@@ -295,9 +295,9 @@ export const ProfessionalPdf = ({ data }: Props) => {
           {/* Experience */}
           {experience.length > 0 && (
             <View style={{ marginBottom: 20 }}>
-              <Text style={styles.sectionTitleRight}>Experience</Text>
-              {experience.map((exp) => (
-                <View key={exp.id} style={styles.block}>
+              {experience.map((exp, index) => (
+                <View key={exp.id} wrap={false} style={styles.block}>
+                  {index === 0 && <Text style={styles.sectionTitleRight}>Experience</Text>}
                   <View style={styles.blockHeader}>
                     <Text style={styles.blockTitle}>{exp.position}</Text>
                     <Text style={styles.blockDate}>{exp.startDate} – {exp.endDate}</Text>
@@ -322,9 +322,9 @@ export const ProfessionalPdf = ({ data }: Props) => {
           {/* Projects */}
           {projects.length > 0 && (
             <View style={{ marginBottom: 20 }}>
-              <Text style={styles.sectionTitleRight}>Projects</Text>
-              {projects.map((proj) => (
-                <View key={proj.id} style={styles.block}>
+              {projects.map((proj, index) => (
+                <View key={proj.id} wrap={false} style={styles.block}>
+                   {index === 0 && <Text style={styles.sectionTitleRight}>Projects</Text>}
                    <View style={styles.blockHeader}>
                      <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
                         <Text style={styles.blockTitle}>{proj.name}</Text>
@@ -354,9 +354,9 @@ export const ProfessionalPdf = ({ data }: Props) => {
           {/* Education */}
           {education.length > 0 && (
             <View style={{ marginBottom: 20 }}>
-              <Text style={styles.sectionTitleRight}>Education</Text>
-              {education.map((edu) => (
-                <View key={edu.id} style={styles.block}>
+              {education.map((edu, index) => (
+                <View key={edu.id} wrap={false} style={styles.block}>
+                  {index === 0 && <Text style={styles.sectionTitleRight}>Education</Text>}
                   <View style={styles.blockHeader}>
                     <Text style={styles.blockTitle}>{edu.institution}</Text>
                     <Text style={styles.blockDate}>{edu.startDate} – {edu.endDate}</Text>

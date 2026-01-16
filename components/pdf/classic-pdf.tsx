@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
-import { Page, Text, View, Document, StyleSheet, Link } from '@react-pdf/renderer';
+import { Page, Text, View, Document, StyleSheet, Link, Svg, Path } from '@react-pdf/renderer';
 import type { ResumeData } from '@/types/resume';
 
 const styles = StyleSheet.create({
@@ -20,21 +20,21 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    marginBottom: 4,
+    marginBottom: 8, // Increased from 4 to 8 to prevent collision
   },
   jobTitle: {
     fontSize: 11,
     color: '#666',
     textTransform: 'uppercase',
     letterSpacing: 2,
-    marginBottom: 8,
+    marginBottom: 12, // Increased spacing below title
   },
   contactRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    gap: 8,
+    gap: 12, // Increased gap for icons
     fontSize: 9,
     color: '#666',
   },
@@ -46,9 +46,14 @@ const styles = StyleSheet.create({
     textDecoration: 'none',
     color: '#111',
   },
+  // Icon style
+  icon: {
+    width: 10,
+    height: 10,
+    marginRight: 4,
+  },
   separator: {
-    marginHorizontal: 4,
-    color: '#ccc',
+     display: 'none', // Hiding text separator in favor of icons/gap
   },
   section: {
     marginBottom: 16,
@@ -116,6 +121,20 @@ const styles = StyleSheet.create({
   },
 });
 
+// Icon Components
+const Icon = ({ path }: { path: string }) => (
+  <Svg viewBox="0 0 24 24" style={styles.icon}>
+    <Path d={path} fill="none" stroke="#666" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+  </Svg>
+);
+
+const PhoneIcon = () => <Icon path="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />;
+const MailIcon = () => <Icon path="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6" />;
+const MapPinIcon = () => <Icon path="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />;
+const LinkedinIcon = () => <Icon path="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 2a2 2 0 1 1-2 2 2 2 0 0 1 2-2z" />;
+const GithubIcon = () => <Icon path="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />;
+const GlobeIcon = () => <Icon path="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z M2 12h20 M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z" />;
+
 interface Props {
   data: ResumeData;
 }
@@ -131,31 +150,49 @@ export const ClassicPdf = ({ data }: Props) => {
           {personalInfo.jobTitle && <Text style={styles.jobTitle}>{personalInfo.jobTitle}</Text>}
           
           <View style={styles.contactRow}>
-            {personalInfo.phone && <Link src={`tel:${personalInfo.phone}`} style={styles.contactLink}>{personalInfo.phone}</Link>}
-            {personalInfo.phone && personalInfo.email && <Text style={styles.separator}>•</Text>}
-            {personalInfo.email && <Link src={`mailto:${personalInfo.email}`} style={styles.contactLink}>{personalInfo.email}</Link>}
+            {personalInfo.phone && (
+                <View style={styles.contactItem}>
+                    <PhoneIcon />
+                    <Link src={`tel:${personalInfo.phone}`} style={styles.contactLink}>{personalInfo.phone}</Link>
+                </View>
+            )}
+            {personalInfo.email && (
+                <View style={styles.contactItem}>
+                    <MailIcon />
+                    <Link src={`mailto:${personalInfo.email}`} style={styles.contactLink}>{personalInfo.email}</Link>
+                </View>
+            )}
             
-            {(personalInfo.phone || personalInfo.email) && personalInfo.location && <Text style={styles.separator}>•</Text>}
-            {personalInfo.location && <Text>{personalInfo.location}</Text>}
-          </View>
-          
-          <View style={[styles.contactRow, { marginTop: 4 }]}>
+            {personalInfo.location && (
+                <View style={styles.contactItem}>
+                    <MapPinIcon />
+                    <Text>{personalInfo.location}</Text>
+                </View>
+            )}
+
              {personalInfo.linkedin && (
-                <Link src={personalInfo.linkedin} style={styles.contactLink}>
-                   {personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}
-                </Link>
+                <View style={styles.contactItem}>
+                    <LinkedinIcon />
+                    <Link src={personalInfo.linkedin} style={styles.contactLink}>
+                       {personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}
+                    </Link>
+                </View>
              )}
-             {personalInfo.linkedin && personalInfo.github && <Text style={styles.separator}>•</Text>}
              {personalInfo.github && (
-                <Link src={personalInfo.github} style={styles.contactLink}>
-                   {personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}
-                </Link>
+                <View style={styles.contactItem}>
+                    <GithubIcon />
+                    <Link src={personalInfo.github} style={styles.contactLink}>
+                       {personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}
+                    </Link>
+                </View>
              )}
-             {(personalInfo.linkedin || personalInfo.github) && personalInfo.website && <Text style={styles.separator}>•</Text>}
              {personalInfo.website && (
-                <Link src={personalInfo.website} style={styles.contactLink}>
-                   {personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}
-                </Link>
+                <View style={styles.contactItem}>
+                    <GlobeIcon />
+                    <Link src={personalInfo.website} style={styles.contactLink}>
+                       {personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}
+                    </Link>
+                </View>
              )}
           </View>
         </View>
@@ -179,9 +216,9 @@ export const ClassicPdf = ({ data }: Props) => {
 
         {experience.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Work Experience</Text>
-            {experience.map((exp) => (
-              <View key={exp.id} style={styles.block}>
+            {experience.map((exp, index) => (
+              <View key={exp.id} wrap={false} style={styles.block}>
+                {index === 0 && <Text style={styles.sectionTitle}>Work Experience</Text>}
                 <View style={styles.blockHeader}>
                   <Text style={styles.blockTitle}>{exp.position}</Text>
                   <Text style={styles.blockDate}>{exp.startDate} – {exp.endDate}</Text>
@@ -205,9 +242,9 @@ export const ClassicPdf = ({ data }: Props) => {
 
         {projects.length > 0 && (
           <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Projects</Text>
-            {projects.map((proj) => (
-              <View key={proj.id} style={styles.block}>
+             {projects.map((proj, index) => (
+              <View key={proj.id} wrap={false} style={styles.block}>
+                 {index === 0 && <Text style={styles.sectionTitle}>Projects</Text>}
                 <View style={styles.blockHeader}>
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Text style={[styles.blockTitle, { fontSize: 11 }]}>{proj.name}</Text>
@@ -236,16 +273,18 @@ export const ClassicPdf = ({ data }: Props) => {
 
         {education.length > 0 && (
           <View style={styles.section}>
-              <Text style={styles.sectionTitle}>Education</Text>
-              {education.map((edu) => (
-                <View key={edu.id} style={[styles.blockHeader, { marginBottom: 6 }]}>
-                   <View>
-                      <Text style={{ fontWeight: 'bold' }}>{edu.institution}</Text>
-                      <Text>{edu.degree} in {edu.field}</Text>
-                   </View>
-                   <View style={{ alignItems: 'flex-end' }}>
-                      <Text style={styles.blockDate}>{edu.startDate} – {edu.endDate}</Text>
-                      {edu.score && <Text style={{ fontSize: 9, fontStyle: 'italic', color: '#666' }}>Score: {edu.score}</Text>}
+              {education.map((edu, index) => (
+                <View key={edu.id} wrap={false} style={[styles.block, { marginBottom: 6 }]}>
+                   {index === 0 && <Text style={styles.sectionTitle}>Education</Text>}
+                   <View style={styles.blockHeader}>
+                     <View>
+                        <Text style={{ fontWeight: 'bold' }}>{edu.institution}</Text>
+                        <Text>{edu.degree} in {edu.field}</Text>
+                     </View>
+                     <View style={{ alignItems: 'flex-end' }}>
+                        <Text style={styles.blockDate}>{edu.startDate} – {edu.endDate}</Text>
+                        {edu.score && <Text style={{ fontSize: 9, fontStyle: 'italic', color: '#666' }}>Score: {edu.score}</Text>}
+                     </View>
                    </View>
                 </View>
               ))}
