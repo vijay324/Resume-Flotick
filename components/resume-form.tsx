@@ -14,6 +14,7 @@ import { CertificationForm } from "./forms/certification-form";
 import { AwardForm } from "./forms/award-form";
 import { VolunteerForm } from "./forms/volunteer-form";
 import { ResumeAIPanel } from "./ai/resume-ai-panel";
+import { JobOptimizerPanel } from "./ai/job-optimizer-panel";
 import { LinkedInAnalyzer } from "./ai/linkedin-analyzer";
 import { ApiKeySettings } from "./ai/api-key-settings";
 
@@ -152,6 +153,8 @@ export function ResumeForm() {
                  
                  <ApiKeySettings />
                  
+                 <hr className="border-dashed border-gray-200" />
+                 <JobOptimizerPanel />
                  <hr className="border-dashed border-gray-200" />
                  <ResumeAIPanel />
                  <hr className="border-dashed border-gray-200" />

@@ -85,3 +85,42 @@ export interface AIUsageStats {
   remaining: number;
   resetAt: Date;
 }
+
+/**
+ * Job Description Input for resume optimization
+ */
+export interface JobDescriptionInput {
+  jobTitle: string;
+  company?: string;
+  description: string;
+  requiredSkills: string[];
+  responsibilities?: string;
+}
+
+/**
+ * Section-level optimization result
+ */
+export interface SectionOptimization {
+  section: string;
+  sectionLabel: string;
+  original: string;
+  optimized: string;
+  changes: string[];
+  applied: boolean;
+}
+
+/**
+ * Complete optimization result from AI
+ */
+export interface OptimizedResumeResult {
+  jobTitle: string;
+  company?: string;
+  matchScore: number;
+  sections: SectionOptimization[];
+  keywordsAdded: string[];
+  gapSuggestions: {
+    type: "skill" | "experience" | "certification";
+    suggestion: string;
+    importance: "high" | "medium" | "low";
+  }[];
+}

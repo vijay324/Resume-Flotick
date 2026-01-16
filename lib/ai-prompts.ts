@@ -165,3 +165,86 @@ REQUIREMENTS:
 
 BULLET POINTS:`;
 }
+
+/**
+ * Build a prompt for optimizing a resume for a specific job description
+ * Uses the DCI (Dynamic Contextual Intelligence) approach
+ */
+export function buildJobDescriptionOptimizationPrompt(
+  resumeData: import("@/types/resume").ResumeData,
+  jobDescription: import("@/types/ai").JobDescriptionInput
+): string {
+  return `You are an expert resume optimizer, ATS specialist, and career coach. Your task is to optimize a resume for a specific job description.
+
+CRITICAL RULES - YOU MUST FOLLOW THESE:
+1. NEVER fabricate, invent, or add experiences, skills, or achievements that don't exist in the original resume
+2. Only enhance, rephrase, and reorganize EXISTING content to better match the job
+3. Inject relevant keywords NATURALLY into existing content
+4. Improve ATS compatibility while maintaining readability
+5. Highlight transferable skills that ARE present in the resume
+6. Quantify achievements ONLY where numbers already exist in the original
+
+JOB DETAILS:
+Title: ${jobDescription.jobTitle}
+${jobDescription.company ? `Company: ${jobDescription.company}` : ""}
+
+Job Description:
+${jobDescription.description}
+
+Required Skills:
+${jobDescription.requiredSkills.join(", ")}
+
+${jobDescription.responsibilities ? `Key Responsibilities:\n${jobDescription.responsibilities}` : ""}
+
+CURRENT RESUME DATA:
+${JSON.stringify(resumeData, null, 2)}
+
+PROVIDE YOUR OPTIMIZATION IN THIS EXACT JSON FORMAT:
+{
+  "matchScore": <number 0-100 representing how well the optimized resume matches the job>,
+  "sections": [
+    {
+      "section": "summary",
+      "sectionLabel": "Professional Summary",
+      "original": "<exact original text>",
+      "optimized": "<optimized text with keywords naturally integrated>",
+      "changes": ["Added keyword X", "Emphasized skill Y", "Improved clarity"]
+    },
+    {
+      "section": "experience.0.description",
+      "sectionLabel": "Experience: <Company Name> - <Position>",
+      "original": "<exact original description>",
+      "optimized": "<optimized description>",
+      "changes": ["Aligned bullet points with job requirements", "Added relevant keywords"]
+    }
+  ],
+  "keywordsAdded": ["keyword1", "keyword2", "keyword3"],
+  "gapSuggestions": [
+    {
+      "type": "skill",
+      "suggestion": "<specific skill from job description not found in resume - recommend learning>",
+      "importance": "high"
+    },
+    {
+      "type": "experience",
+      "suggestion": "<type of experience that would strengthen candidacy>",
+      "importance": "medium"
+    }
+  ]
+}
+
+SECTIONS TO OPTIMIZE (in order of priority):
+1. personalInfo.summary - Rewrite the professional summary to align with the job
+2. experience[].description - Optimize each job description's bullet points
+3. skills - Note which skills to highlight (but don't add fake ones)
+4. projects[].description - Align project descriptions if relevant
+
+REMEMBER:
+- The "original" field must contain the EXACT original text
+- The "optimized" field contains your improved version
+- The "changes" array explains what you changed
+- Gap suggestions are for skills/experience the candidate DOESN'T have but should consider acquiring
+- Keep optimizations professional and ATS-friendly
+- Maintain factual accuracy at all times`;
+}
+

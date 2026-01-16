@@ -8,6 +8,8 @@ import type {
   RewriteResponse,
   ResumeAnalysis,
   LinkedInAnalysis,
+  JobDescriptionInput,
+  OptimizedResumeResult,
 } from "@/types/ai";
 import type { ResumeData } from "@/types/resume";
 
@@ -220,4 +222,55 @@ export function useLinkedInAnalysis() {
   };
 
   return { analyzeLinkedIn, isLoading, error };
+}
+
+/**
+ * Custom hook for job-specific resume optimization
+ */
+export function useJobOptimization() {
+  const { deviceId, aiEnabled } = useAI();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const optimizeForJob = async (
+    resumeData: ResumeData,
+    jobDescription: JobDescriptionInput
+  ): Promise<OptimizedResumeResult | null> => {
+    if (!aiEnabled) {
+      setError("AI features are not enabled. Please add your API key.");
+      return null;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const apiKey = await getApiKey();
+      if (!apiKey) {
+        throw new Error("No API key found. Please add your Gemini API key first.");
+      }
+
+      const response = await fetch("/api/ai/optimize-job", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ resumeData, jobDescription, deviceId, apiKey }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to optimize resume");
+      }
+
+      return data.data;
+    } catch (err) {
+      const errorMessage = (err as Error).message;
+      setError(errorMessage);
+      return null;
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { optimizeForJob, isLoading, error };
 }

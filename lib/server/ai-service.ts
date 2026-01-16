@@ -4,6 +4,9 @@ import type {
   LinkedInAnalysis,
   SummarizeResponse,
   RewriteResponse,
+  JobDescriptionInput,
+  OptimizedResumeResult,
+  SectionOptimization,
 } from "@/types/ai";
 import { createGeminiClient, type GeminiClient } from "./gemini-client";
 import {
@@ -13,6 +16,7 @@ import {
   buildLinkedInAnalysisPrompt,
   buildImproveSectionPrompt,
   buildGenerateFromJobTitlePrompt,
+  buildJobDescriptionOptimizationPrompt,
 } from "@/lib/ai-prompts";
 
 /**
@@ -122,6 +126,41 @@ export class AIService {
       improved: response.text.trim(),
       tokensUsed: response.tokensUsed || 0,
     };
+  }
+
+  /**
+   * Optimize resume for a specific job
+   */
+  async optimizeResumeForJob(
+    resumeData: ResumeData,
+    jobDescription: JobDescriptionInput
+  ): Promise<OptimizedResumeResult> {
+    const prompt = buildJobDescriptionOptimizationPrompt(
+      resumeData,
+      jobDescription
+    );
+    const response = await this.client.generateContent(prompt);
+
+    try {
+      const jsonMatch = response.text.match(/\{[\s\S]*\}/);
+      if (jsonMatch) {
+        const result = JSON.parse(jsonMatch[0]);
+        // Add metadata to result
+        return {
+          jobTitle: jobDescription.jobTitle,
+          company: jobDescription.company,
+          ...result,
+          sections: result.sections.map((s: SectionOptimization) => ({
+            ...s,
+            applied: false,
+          })),
+        };
+      }
+      throw new Error("Invalid response format");
+    } catch (error) {
+      console.error("Error parsing optimization response:", error);
+      throw error;
+    }
   }
 
   /**
