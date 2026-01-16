@@ -18,6 +18,7 @@ import {
   buildGenerateFromJobTitlePrompt,
   buildJobDescriptionOptimizationPrompt,
 } from "@/lib/ai-prompts";
+import { humanizeText } from "@/lib/text-humanizer";
 
 /**
  * Central AI service layer
@@ -42,7 +43,7 @@ export class AIService {
     const response = await this.client.generateContent(prompt);
 
     return {
-      summary: response.text.trim(),
+      summary: humanizeText(response.text.trim()),
       tokensUsed: response.tokensUsed || 0,
     };
   }
@@ -58,7 +59,7 @@ export class AIService {
     const response = await this.client.generateContent(prompt);
 
     return {
-      rewritten: response.text.trim(),
+      rewritten: humanizeText(response.text.trim()),
       tokensUsed: response.tokensUsed || 0,
     };
   }
@@ -123,7 +124,7 @@ export class AIService {
     const response = await this.client.generateContent(prompt);
 
     return {
-      improved: response.text.trim(),
+      improved: humanizeText(response.text.trim()),
       tokensUsed: response.tokensUsed || 0,
     };
   }
@@ -174,7 +175,7 @@ export class AIService {
     const response = await this.client.generateContent(prompt);
 
     return {
-      description: response.text.trim(),
+      description: humanizeText(response.text.trim()),
       tokensUsed: response.tokensUsed || 0,
     };
   }
