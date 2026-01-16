@@ -31,6 +31,12 @@
   --ring: #18181b;
   
   --radius: 0.75rem; /* Slightly more rounded for modern feel */
+
+  /* Redesign Backgrounds */
+  --mesh-1: #f8fafc;
+  --mesh-2: #f1f5f9;
+  --mesh-3: #eff6ff;
+  --mesh-4: #fafafa;
 }
 
 
@@ -85,6 +91,17 @@ body {
   backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
+
+.premium-glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03),
+    inset 0 0 20px 0 rgba(255, 255, 255, 0.2);
+}
+
 
 
 /* Smooth Scrolling */

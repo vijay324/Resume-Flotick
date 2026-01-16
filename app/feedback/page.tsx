@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
@@ -15,44 +15,59 @@ import {
   MessageSquare,
   Sparkles,
   ArrowRight,
-  ArrowLeft
+  ArrowLeft,
+  Heart,
+  Zap,
+  Layout,
+  Cpu,
+  Link as LinkIcon,
+  Crosshair,
+  User,
+  Mail,
+  Bug,
+  Lightbulb
 } from "lucide-react";
 
-// Rating options for feature feedback
+// Rating options for feature feedback with premium colors
 const RATING_OPTIONS = [
-  { value: "very-useful", label: "Very Useful", color: "bg-emerald-500", ring: "ring-emerald-500", text: "text-emerald-700", bg: "bg-emerald-50" },
-  { value: "useful", label: "Useful", color: "bg-blue-500", ring: "ring-blue-500", text: "text-blue-700", bg: "bg-blue-50" },
-  { value: "neutral", label: "Neutral", color: "bg-gray-500", ring: "ring-gray-500", text: "text-gray-700", bg: "bg-gray-50" },
-  { value: "not-useful", label: "Not Useful", color: "bg-red-500", ring: "ring-red-500", text: "text-red-700", bg: "bg-red-50" },
-  { value: "not-used", label: "Not Used", color: "bg-neutral-400", ring: "ring-neutral-400", text: "text-neutral-600", bg: "bg-neutral-100" },
+  { value: "very-useful", label: "Brilliant", icon: <Heart className="h-3 w-3" />, color: "bg-emerald-500", ring: "ring-emerald-500", text: "text-emerald-700", bg: "bg-emerald-50" },
+  { value: "useful", label: "Great", icon: <Zap className="h-3 w-3" />, color: "bg-blue-500", ring: "ring-blue-500", text: "text-blue-700", bg: "bg-blue-50" },
+  { value: "neutral", label: "Good", icon: <CheckCircle2 className="h-3 w-3" />, color: "bg-gray-500", ring: "ring-gray-500", text: "text-gray-700", bg: "bg-gray-50" },
+  { value: "not-useful", label: "Average", icon: <AlertCircle className="h-3 w-3" />, color: "bg-amber-500", ring: "ring-amber-500", text: "text-amber-700", bg: "bg-amber-50" },
+  { value: "not-used", label: "Poor", icon: <ArrowRight className="h-3 w-3" />, color: "bg-neutral-400", ring: "ring-neutral-400", text: "text-neutral-600", bg: "bg-neutral-100" },
 ] as const;
 
-// Features to collect feedback on
+// Features with enhanced icons and descriptions
 const FEATURES = [
   { 
     id: "resume-builder", 
-    name: "Resume Builder",
-    description: "Core editor logic"
+    name: "Resume Editor",
+    description: "The core crafting experience",
+    icon: <Layout className="h-5 w-5" />
   },
   { 
     id: "ai-optimization", 
-    name: "AI Optimization",
-    description: "Suggestions quality"
+    name: "AI Insights",
+    description: "Smart content suggestions",
+    icon: <Cpu className="h-5 w-5" />
   },
   { 
     id: "linkedin-analyzer", 
-    name: "LinkedIn Import",
-    description: "Profile analysis"
+    name: "LinkedIn Sync",
+    description: "Profile import & analysis",
+    icon: <LinkIcon className="h-5 w-5" />
   },
   { 
     id: "job-description", 
-    name: "Job Matching",
-    description: "DCI relevance"
+    name: "Job Matcher",
+    description: "Tailoring to job roles",
+    icon: <Crosshair className="h-5 w-5" />
   },
   { 
     id: "overall-ai", 
-    name: "AI Experience",
-    description: "Speed & accuracy"
+    name: "AI Engine",
+    description: "Processing speed & quality",
+    icon: <Sparkles className="h-5 w-5" />
   },
 ] as const;
 
@@ -90,13 +105,21 @@ const initialFormData: FeedbackFormData = {
 
 // Wizard Steps
 const STEPS = [
-  { id: "intro", title: "Welcome" },
-  { id: "overall", title: "Overall Experience" },
-  { id: "features", title: "Feature Ratings" },
-  { id: "details", title: "Additional Details" },
+  { id: "intro", title: "Identity", description: "Who are you?" },
+  { id: "overall", title: "Experience", description: "How's the vibe?" },
+  { id: "features", title: "Capabilities", description: "Deep dive" },
+  { id: "details", title: "Vision", description: "Future ideas" },
 ] as const;
 
-// --- COMPONENTS ---
+// --- PREMIUM UI COMPONENTS ---
+
+const BackgroundDecoration = () => (
+  <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-100/50 blur-[120px] animate-pulse" />
+    <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-100/50 blur-[120px] animate-pulse delay-700" />
+    <div className="absolute top-[20%] right-[10%] w-[20%] h-[20%] rounded-full bg-emerald-50/50 blur-[80px]" />
+  </div>
+);
 
 function StarRating({ 
   value, 
@@ -107,32 +130,52 @@ function StarRating({
 }) {
   const [hoverValue, setHoverValue] = useState(0);
 
+  const labels = ["Could be better", "It's okay", "Pretty good", "Excellent", "Mind-blowing"];
+
   return (
-    <div className="flex flex-col items-center gap-4 py-6">
-      <div className="flex items-center gap-3" onMouseLeave={() => setHoverValue(0)}>
+    <div className="flex flex-col items-center gap-6 py-10">
+      <div className="flex items-center gap-4" onMouseLeave={() => setHoverValue(0)}>
         {[1, 2, 3, 4, 5].map((star) => (
           <button
             key={star}
             type="button"
             onClick={() => onChange(star)}
             onMouseEnter={() => setHoverValue(star)}
-            className="group relative p-1 focus:outline-none transition-transform active:scale-95"
+            className="group relative focus:outline-none transition-all active:scale-90"
             aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
           >
-            <Star
-              className={`h-10 w-10 transition-all duration-200 ${
-                star <= (hoverValue || value)
-                  ? "fill-amber-400 text-amber-400 drop-shadow-sm scale-110"
-                  : "fill-transparent text-neutral-200 group-hover:text-neutral-300"
-              }`}
-              strokeWidth={1.5}
-            />
+            <motion.div
+              animate={{
+                scale: (hoverValue || value) >= star ? 1.2 : 1,
+                rotate: (hoverValue || value) >= star ? [0, 10, -10, 0] : 0,
+              }}
+              transition={{ duration: 0.2 }}
+            >
+              <Star
+                className={`h-12 w-12 transition-all duration-300 ${
+                  star <= (hoverValue || value)
+                    ? "fill-amber-400 text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]"
+                    : "fill-transparent text-neutral-200 group-hover:text-neutral-300"
+                }`}
+                strokeWidth={1.5}
+              />
+            </motion.div>
           </button>
         ))}
       </div>
-      <span className={`text-lg font-medium transition-opacity duration-300 ${value > 0 ? "opacity-100" : "opacity-0"} text-amber-600`}>
-        {value === 1 ? "Poor" : value === 2 ? "Fair" : value === 3 ? "Good" : value === 4 ? "Very Good" : "Excellent"}
-      </span>
+      <AnimatePresence mode="wait">
+        {value > 0 && (
+          <motion.p
+            key={value}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="text-lg font-semibold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent italic"
+          >
+            {labels[value - 1]}
+          </motion.p>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -145,22 +188,23 @@ function FeatureRatingOptions({
   onChange: (rating: RatingValue) => void;
 }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap gap-2 mt-4 sm:mt-0">
       {RATING_OPTIONS.map((option) => (
         <button
           key={option.value}
           type="button"
           onClick={() => onChange(option.value)}
           className={`
-            px-3 py-1.5 text-xs font-medium rounded-full border transition-all duration-200
-            hover:scale-105 active:scale-95
+            flex items-center gap-1.5 px-3 py-1.5 text-[11px] font-semibold rounded-full border transition-all duration-300
+            hover:shadow-sm active:scale-95
             ${
               value === option.value
-                ? `${option.bg} ${option.text} ${option.ring} border-transparent ring-1 ring-inset`
-                : "bg-white border-neutral-200 text-neutral-600 hover:border-neutral-300"
+                ? `${option.bg} ${option.text} ${option.ring} border-transparent ring-1 ring-inset shadow-inner`
+                : "bg-white/50 border-neutral-200 text-neutral-500 hover:border-neutral-300 hover:bg-white"
             }
           `}
         >
+          {option.icon}
           {option.label}
         </button>
       ))}
@@ -183,26 +227,34 @@ function FeatureFeedbackRow({
 
   return (
     <div className={`
-      group rounded-xl border border-transparent transition-all duration-200
-      hover:bg-neutral-50
-      ${isExpanded || feedback.comment ? "bg-neutral-50 border-neutral-200" : ""}
+      relative group rounded-2xl border transition-all duration-500 overflow-hidden
+      ${feedback.rating ? "border-black/5 bg-white/40" : "border-neutral-100 bg-transparent hover:bg-white/30 hover:border-neutral-200"}
+      ${isExpanded ? "ring-1 ring-black/5 shadow-sm" : ""}
     `}>
-      <div className="p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div className="min-w-[140px]">
-          <h4 className="font-medium text-sm text-neutral-900">
-            {feature.name}
-          </h4>
-          <p className="text-xs text-neutral-500">
-            {feature.description}
-          </p>
+      <div className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <div className={`
+            p-1 rounded-xl transition-colors duration-300
+            ${feedback.rating ? "bg-black text-white" : "bg-neutral-100 text-neutral-400 group-hover:bg-neutral-200 group-hover:text-neutral-600"}
+          `}>
+            {feature.icon}
+          </div>
+          <div>
+            <h4 className="font-semibold text-sm text-neutral-900 tracking-tight">
+              {feature.name}
+            </h4>
+            <p className="text-xs text-neutral-500 font-medium">
+              {feature.description}
+            </p>
+          </div>
         </div>
         
-        <div className="flex flex-wrap gap-2 items-center">
+        <div className="flex items-center gap-3">
           <FeatureRatingOptions 
             value={feedback.rating} 
             onChange={(rating) => {
               onRatingChange(rating);
-              if (rating && rating !== "not-used" && !isExpanded) setIsExpanded(true);
+              if (rating && !isExpanded) setIsExpanded(true);
             }} 
           />
           <Button
@@ -210,8 +262,8 @@ function FeatureFeedbackRow({
             variant="ghost"
             size="icon"
             className={`
-              h-8 w-8 rounded-full text-neutral-400 hover:text-neutral-600
-              ${isExpanded || feedback.comment ? "text-neutral-600 bg-black/5" : ""}
+              h-8 w-8 rounded-full transition-all duration-300
+              ${isExpanded || feedback.comment ? "text-black bg-black/5" : "text-neutral-300 hover:text-neutral-600 hover:bg-neutral-100"}
             `}
             onClick={() => setIsExpanded(!isExpanded)}
           >
@@ -226,16 +278,19 @@ function FeatureFeedbackRow({
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden px-3 pb-3 sm:px-4 sm:pb-4"
+            transition={{ duration: 0.3, ease: "circOut" }}
+            className="overflow-hidden"
           >
-            <Textarea
-              placeholder="Tell us more... (Optional)"
-              value={feedback.comment}
-              onChange={(e) => onCommentChange(e.target.value)}
-              rows={2}
-              className="resize-none text-sm bg-white border-neutral-200 focus:border-black focus-visible:ring-0 min-h-[60px] transition-colors"
-            />
+            <div className="px-5 pb-5">
+              <Textarea
+                placeholder="What details would make this perfect? (Optional)"
+                value={feedback.comment}
+                onChange={(e) => onCommentChange(e.target.value)}
+                autoFocus={isExpanded && !feedback.comment}
+                rows={2}
+                className="resize-none text-sm bg-white/60 border-neutral-200 focus:bg-white focus:border-black focus-visible:ring-0 min-h-[70px] transition-all rounded-xl placeholder:text-neutral-400"
+              />
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -270,6 +325,7 @@ export default function FeedbackPage() {
   const handleNext = () => {
     if (currentStep < STEPS.length - 1) {
       setCurrentStep(curr => curr + 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } else {
       handleSubmit();
     }
@@ -278,6 +334,7 @@ export default function FeedbackPage() {
   const handleBack = () => {
     if (currentStep > 0) {
       setCurrentStep(curr => curr - 1);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
   };
 
@@ -303,7 +360,6 @@ export default function FeedbackPage() {
 
       setStatus("success");
       setFormData(initialFormData);
-      setCurrentStep(0);
     } catch (error) {
       console.error("Error:", error);
       setStatus("error");
@@ -329,37 +385,43 @@ export default function FeedbackPage() {
     switch (currentStep) {
       case 0: // Intro & Bio
         return (
-          <div className="space-y-6">
-            <div className="text-center space-y-2 mb-8">
-               <h2 className="text-xl font-semibold text-neutral-900">Let&#39;s get to know you</h2>
-              <p className="text-sm text-neutral-500">This helps us follow up if needed (Optional)</p>
+          <div className="space-y-8 py-4">
+            <div className="text-center space-y-3 mb-4">
+               <h2 className="text-2xl font-bold text-neutral-900 tracking-tight">The Personal Touch</h2>
+              <p className="text-sm text-neutral-500 max-w-[280px] mx-auto font-medium">Your identity helps us refine our communication.</p>
             </div>
-            <div className="space-y-4 text-left">
-              <div className="space-y-2">
-                <Label htmlFor="name" className="flex justify-between items-center">
-                  <span>Name</span>
-                  <span className="text-[10px] text-neutral-400 font-medium uppercase tracking-wider">Required</span>
+            <div className="space-y-5 text-left max-w-sm mx-auto">
+              <div className="space-y-2 group">
+                <Label htmlFor="name" className="flex justify-between items-center px-1">
+                  <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em] text-neutral-400 group-focus-within:text-black transition-colors">
+                    <User className="h-3 w-3" />
+                    Full Name
+                  </span>
+                  <span className="text-[9px] text-neutral-300 font-bold uppercase tracking-widest">Required</span>
                 </Label>
                 <Input
                   id="name"
-                  placeholder="Your Name"
+                  placeholder="your name"
                   value={formData.name}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  className="bg-white border-neutral-200 focus:border-black focus-visible:ring-0 transition-colors"
+                  className="h-12 bg-white/60 border-neutral-200 focus:bg-white focus:border-black focus-visible:ring-0 transition-all rounded-xl placeholder:text-neutral-300 text-base"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="email" className="flex justify-between items-center">
-                  <span>Email</span>
-                  <span className="text-[10px] text-neutral-400 font-medium uppercase tracking-wider">Optional</span>
+              <div className="space-y-2 group">
+                <Label htmlFor="email" className="flex justify-between items-center px-1">
+                  <span className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em] text-neutral-400 group-focus-within:text-black transition-colors">
+                    <Mail className="h-3 w-3" />
+                    Email Address
+                  </span>
+                  <span className="text-[9px] text-neutral-300 font-bold uppercase tracking-widest">Optional</span>
                 </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder="hello@example.com"
                   value={formData.email}
                   onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                  className="bg-white border-neutral-200 focus:border-black focus-visible:ring-0 transition-colors"
+                  className="h-12 bg-white/60 border-neutral-200 focus:bg-white focus:border-black focus-visible:ring-0 transition-all rounded-xl placeholder:text-neutral-300 text-base"
                 />
               </div>
             </div>
@@ -368,10 +430,10 @@ export default function FeedbackPage() {
       
       case 1: // Overall Rating
         return (
-          <div className="space-y-6">
-            <div className="text-center space-y-2 mb-8">
-              <h2 className="text-xl font-semibold text-neutral-900">How was your experience?</h2>
-              <p className="text-sm text-neutral-500">Rate your overall satisfaction with the Resume Builder</p>
+          <div className="space-y-8 py-4">
+            <div className="text-center space-y-3">
+              <h2 className="text-2xl font-bold text-neutral-900 tracking-tight">Overall Vibe</h2>
+              <p className="text-sm text-neutral-500 max-w-[300px] mx-auto font-medium">How would you rate your journey with us so far?</p>
             </div>
             <StarRating 
               value={formData.overallRating} 
@@ -382,20 +444,26 @@ export default function FeedbackPage() {
 
       case 2: // Feature Ratings
         return (
-          <div className="space-y-6">
-            <div className="text-center space-y-2 mb-6">
-              <h2 className="text-xl font-semibold text-neutral-900">Feature Breakdown</h2>
-              <p className="text-sm text-neutral-500">Please rate all features to continue</p>
+          <div className="space-y-8 py-4">
+            <div className="text-center space-y-3">
+              <h2 className="text-2xl font-bold text-neutral-900 tracking-tight">Feature Deep-Dive</h2>
+              <p className="text-sm text-neutral-500 max-w-[320px] mx-auto font-medium">Which components served you best? Every rating counts.</p>
             </div>
-            <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
-              {FEATURES.map((feature) => (
-                <FeatureFeedbackRow
+            <div className="space-y-3 max-h-[450px] overflow-y-auto px-1 custom-scrollbar pb-4">
+              {FEATURES.map((feature, idx) => (
+                <motion.div
                   key={feature.id}
-                  feature={feature}
-                  feedback={formData.features[feature.id]}
-                  onRatingChange={(rating) => updateFeatureFeedback(feature.id, "rating", rating)}
-                  onCommentChange={(comment) => updateFeatureFeedback(feature.id, "comment", comment)}
-                />
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                >
+                  <FeatureFeedbackRow
+                    feature={feature}
+                    feedback={formData.features[feature.id]}
+                    onRatingChange={(rating) => updateFeatureFeedback(feature.id, "rating", rating)}
+                    onCommentChange={(comment) => updateFeatureFeedback(feature.id, "comment", comment)}
+                  />
+                </motion.div>
               ))}
             </div>
           </div>
@@ -403,34 +471,36 @@ export default function FeedbackPage() {
 
       case 3: // Text Feedback
         return (
-          <div className="space-y-6">
-            <div className="text-center space-y-2 mb-6">
-              <h2 className="text-xl font-semibold text-neutral-900">Final Thoughts</h2>
-              <p className="text-sm text-neutral-500">Any bugs or suggestions?</p>
+          <div className="space-y-8 py-4">
+            <div className="text-center space-y-3">
+              <h2 className="text-2xl font-bold text-neutral-900 tracking-tight">The Vision</h2>
+              <p className="text-sm text-neutral-500 max-w-[300px] mx-auto font-medium">Help us shape the roadmap of professional resumes.</p>
             </div>
-            <div className="space-y-4">
-              <div className="space-y-1.5">
-                <Label htmlFor="improvements" className="text-xs font-medium uppercase tracking-wider text-neutral-500 pl-1">
-                  Suggestion Box
+            <div className="space-y-6">
+              <div className="space-y-2 group">
+                <Label htmlFor="improvements" className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em] text-neutral-400 group-focus-within:text-green-600 transition-colors pl-1">
+                  <Lightbulb className="h-3.3 w-3.3" />
+                  What's Next?
                 </Label>
                 <Textarea
                   id="improvements"
-                  placeholder="What feature should we build next?"
+                  placeholder="I wish the builder could..."
                   value={formData.improvements}
                   onChange={(e) => setFormData(prev => ({ ...prev, improvements: e.target.value }))}
-                  className="min-h-[100px] resize-none bg-white border-neutral-200 focus:border-black focus-visible:ring-0 transition-colors"
+                  className="min-h-[120px] resize-none bg-white/60 border-neutral-200 focus:bg-white focus:border-green-600 focus-visible:ring-0 transition-all rounded-2xl p-4 text-base placeholder:text-neutral-300"
                 />
               </div>
-              <div className="space-y-1.5">
-                <Label htmlFor="issues" className="text-xs font-medium uppercase tracking-wider text-neutral-500 pl-1">
-                  Bug Report
+              <div className="space-y-2 group">
+                 <Label htmlFor="issues" className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.1em] text-neutral-400 group-focus-within:text-red-500 transition-colors pl-1">
+                  <Bug className="h-3.3 w-3.3" />
+                  Minor Hiccups
                 </Label>
                 <Textarea
                   id="issues"
-                  placeholder="Did you run into any hiccups?"
+                  placeholder="Did something feel off?"
                   value={formData.issues}
                   onChange={(e) => setFormData(prev => ({ ...prev, issues: e.target.value }))}
-                  className="min-h-[100px] resize-none bg-white border-neutral-200 focus:border-black focus-visible:ring-0 transition-colors"
+                  className="min-h-[120px] resize-none bg-white/60 border-neutral-200 focus:bg-white focus:border-red-400 focus-visible:ring-0 transition-all rounded-2xl p-4 text-base placeholder:text-neutral-300"
                 />
               </div>
             </div>
@@ -443,26 +513,36 @@ export default function FeedbackPage() {
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50 py-20 px-4 sm:px-6">
-      <div className="max-w-xl mx-auto space-y-8">
+    <div className="min-h-screen relative flex flex-col items-center justify-center py-20 px-4 sm:px-6">
+      <BackgroundDecoration />
+      
+      <div className="w-full max-w-2xl pt-16 relative">
         
-        {/* Header */}
-        <div className="text-center space-y-2">
-          <motion.div 
-            initial={{ scale: 0.9, opacity: 0 }}
+        {/* Header Branding */}
+        <div className="text-center mb-10">
+          {/* <motion.div 
+            initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center justify-center p-3 rounded-2xl bg-white shadow-sm border border-neutral-100 mb-2"
+            className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-black text-white shadow-xl shadow-black/10 mb-6"
           >
-            <Sparkles className="h-5 w-5 text-neutral-900" />
-          </motion.div>
+            <Sparkles className="h-7 w-7" />
+          </motion.div> */}
           <motion.h1 
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="text-4xl font-black tracking-tight text-neutral-900 sm:text-5xl"
+          >
+            We Value Your Voice.
+          </motion.h1>
+          <motion.p
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.1 }}
-            className="text-2xl font-semibold tracking-tight text-neutral-900"
+            transition={{ delay: 0.3 }}
+            className="mt-3 text-neutral-500 font-semibold tracking-wide uppercase text-[10px]"
           >
-            We value your voice
-          </motion.h1>
+            Your insights help us grow • It only takes a minute
+          </motion.p>
         </div>
 
         <AnimatePresence mode="wait">
@@ -471,106 +551,134 @@ export default function FeedbackPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8 text-center"
+              className="premium-glass rounded-[2rem] p-12 text-center relative overflow-hidden"
             >
-              <div className="flex justify-center mb-4">
-                <div className="h-12 w-12 rounded-full bg-emerald-50 flex items-center justify-center">
-                  <CheckCircle2 className="h-6 w-6 text-emerald-600" />
-                </div>
+              <div className="absolute top-0 left-0 w-full h-1.5 bg-emerald-500" />
+              <div className="flex justify-center mb-6">
+                <motion.div 
+                  initial={{ rotate: -15, scale: 0 }}
+                  animate={{ rotate: 0, scale: 1 }}
+                  transition={{ type: "spring", stiffness: 200, damping: 12 }}
+                  className="h-20 w-20 rounded-3xl bg-emerald-500 flex items-center justify-center shadow-[0_20px_40px_rgba(16,185,129,0.3)]"
+                >
+                  <CheckCircle2 className="h-10 w-10 text-white" />
+                </motion.div>
               </div>
-              <h3 className="text-lg font-medium text-neutral-900 mb-2">
-                Feedback Received
+              <h3 className="text-3xl font-black text-neutral-900 mb-3">
+                Mission Success!
               </h3>
-              <p className="text-sm text-neutral-500 mb-6">
-                Thank you for helping us grow. We read every update.
+              <p className="text-neutral-500 font-medium mb-10 max-w-[320px] mx-auto leading-relaxed">
+                Your insights are already fueling our next sprint. We appreciate your dedication.
               </p>
               <Button 
-                variant="outline" 
-                onClick={() => setStatus("idle")}
-                className="mx-auto"
+                onClick={() => {
+                  setStatus("idle");
+                  setCurrentStep(0);
+                }}
+                className="h-12 px-8 bg-black hover:bg-neutral-800 text-white rounded-xl font-bold shadow-lg shadow-black/10 transition-all hover:translate-y-[-2px] active:translate-y-0"
               >
-                Send another response
+                Send more insights
               </Button>
             </motion.div>
           ) : (
             <motion.div 
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white rounded-2xl shadow-sm border border-neutral-200 overflow-hidden"
+              className="premium-glass rounded-[2.5rem] relative overflow-hidden"
             >
-              {/* Progress Bar */}
-              <div className="h-1 bg-neutral-100 w-full">
-                <motion.div 
-                  className="h-full bg-neutral-900"
-                  initial={{ width: 0 }}
-                  animate={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
-                  transition={{ duration: 0.3 }}
-                />
+              {/* Progress Indicator */}
+              <div className="flex px-8 pt-8 gap-2">
+                {STEPS.map((step, idx) => (
+                  <div key={step.id} className="flex-1 h-1.5 relative rounded-full overflow-hidden bg-white/50">
+                    <motion.div 
+                      className="absolute inset-0 bg-black"
+                      initial={false}
+                      animate={{ 
+                        width: currentStep >= idx ? "100%" : "0%",
+                        opacity: currentStep === idx ? 1 : 0.4
+                      }}
+                      transition={{ duration: 0.4 }}
+                    />
+                  </div>
+                ))}
               </div>
 
-              <div className="p-6 sm:p-8">
+              <div className="p-8 sm:p-12">
                  <AnimatePresence mode="wait">
                   <motion.div
                     key={currentStep}
-                    initial={{ x: 20, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    exit={{ x: -20, opacity: 0 }}
-                    transition={{ duration: 0.2 }}
+                    initial={{ x: 20, opacity: 0, filter: "blur(8px)" }}
+                    animate={{ x: 0, opacity: 1, filter: "blur(0px)" }}
+                    exit={{ x: -20, opacity: 0, filter: "blur(8px)" }}
+                    transition={{ duration: 0.4, ease: "circOut" }}
                   >
+                    <div className="mb-2 text-[10px] font-black uppercase tracking-[0.2em] text-neutral-400">
+                      Phase 0{currentStep + 1}
+                    </div>
                     {renderStepContent()}
                   </motion.div>
                 </AnimatePresence>
 
-                {/* Navigation Buttons */}
-                <div className="flex items-center justify-between mt-8 pt-6 border-t border-neutral-100">
+                {/* Footer Navigation */}
+                <div className="flex items-center justify-between mt-12 pt-8 border-t border-black/5">
                   <Button
                     variant="ghost"
                     onClick={handleBack}
                     disabled={currentStep === 0 || status === "loading"}
-                    className={currentStep === 0 ? "invisible" : ""}
+                    className={`
+                      h-12 px-6 rounded-xl font-bold transition-all
+                      ${currentStep === 0 ? "invisible" : "text-neutral-400 hover:text-black hover:bg-black/5"}
+                    `}
                   >
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     Back
                   </Button>
                   
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-neutral-400 font-medium">
-                      Step {currentStep + 1} of {STEPS.length}
-                    </span>
+                  <div className="flex items-center gap-6">
+                    <div className="hidden sm:block text-right">
+                      <p className="text-[10px] font-black uppercase tracking-widest text-neutral-300">Target</p>
+                      <p className="text-xs font-bold text-neutral-900">{STEPS[currentStep].title}</p>
+                    </div>
                     <Button
                       onClick={handleNext}
                       disabled={!isStepValid() || status === "loading"}
-                      className="bg-neutral-900 hover:bg-neutral-800 text-white min-w-[100px]"
+                      className={`
+                        h-10 min-w-[140px] px-6 rounded-xl font-black text-white shadow-xl transition-all
+                        ${!isStepValid() || status === "loading" 
+                          ? "bg-neutral-200 cursor-not-allowed shadow-none" 
+                          : "bg-black hover:bg-neutral-800 shadow-black/10 hover:translate-y-[-2px] active:translate-y-0"}
+                      `}
                     >
                       {status === "loading" ? (
-                        <Loader2 className="h-4 w-4 animate-spin" />
+                        <span className="flex items-center gap-2">
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                          Submitting...
+                        </span>
                       ) : currentStep === STEPS.length - 1 ? (
-                        <>
-                          Submit
-                          <Send className="h-4 w-4 ml-2" />
-                        </>
+                        <span className="flex items-center gap-2">
+                          Transmit <Send className="h-4 w-4" />
+                        </span>
                       ) : (
-                        <>
-                          Next
-                          <ArrowRight className="h-4 w-4 ml-2" />
-                        </>
+                        <span className="flex items-center gap-2">
+                          Proceed <ArrowRight className="h-4 w-4" />
+                        </span>
                       )}
                     </Button>
                   </div>
                 </div>
               </div>
 
-              {/* Error State */}
+              {/* Enhanced Error Feedback */}
               <AnimatePresence>
                 {status === "error" && (
                   <motion.div 
                     initial={{ height: 0 }}
                     animate={{ height: "auto" }}
                     exit={{ height: 0 }}
-                    className="overflow-hidden bg-red-50 border-t border-red-100"
+                    className="overflow-hidden bg-red-500 text-white"
                   >
-                    <div className="flex items-center gap-2 text-sm text-red-600 p-3 justify-center">
-                      <AlertCircle className="h-4 w-4 shrink-0" />
+                    <div className="flex items-center gap-3 text-sm font-bold p-4 justify-center">
+                      <AlertCircle className="h-4 w-4" />
                       <p>{errorMessage}</p>
                     </div>
                   </motion.div>
@@ -579,6 +687,13 @@ export default function FeedbackPage() {
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Footer Meta */}
+        <div className="mt-12 text-center opacity-40 hover:opacity-100 transition-opacity duration-500 cursor-default">
+          <p className="text-[10px] font-black uppercase tracking-[0.3em] text-neutral-900">
+            Encrypted & Secure Submission • built by Flotick
+          </p>
+        </div>
       </div>
     </div>
   );

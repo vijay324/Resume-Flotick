@@ -68,20 +68,20 @@ function sanitizeInput(input: string): string {
 
 // Feature name mapping
 const FEATURE_NAMES: Record<string, string> = {
-  "resume-builder": "Resume Builder",
-  "ai-optimization": "AI Resume Optimization",
-  "linkedin-analyzer": "LinkedIn Profile Analyzer",
-  "job-description": "Job Description Optimization (DCI)",
-  "overall-ai": "Overall AI Experience",
+  "resume-builder": "Resume Editor",
+  "ai-optimization": "AI Insights",
+  "linkedin-analyzer": "LinkedIn Sync",
+  "job-description": "Job Matcher",
+  "overall-ai": "AI Engine",
 };
 
 // Rating label mapping
 const RATING_LABELS: Record<string, string> = {
-  "very-useful": "⭐ Very Useful",
-  "useful": "👍 Useful",
-  "neutral": "😐 Neutral",
-  "not-useful": "👎 Not Useful",
-  "not-used": "⚪ Not Used",
+  "very-useful": "Brilliant",
+  "useful": "Great",
+  "neutral": "Good",
+  "not-useful": "Average",
+  "not-used": "Poor",
 };
 
 // Generate star icons for rating
