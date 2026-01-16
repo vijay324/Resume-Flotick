@@ -13,7 +13,7 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://resume.Flotick.com"),
+  metadataBase: new URL("https://resume.flotick.org"),
   title: {
     default: "Flotick Resume - AI-Powered Resume Builder | Create Professional Resumes",
     template: "%s | Flotick Resume - AI Resume Builder",
@@ -46,7 +46,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://resume.Flotick.com",
+    url: "https://resume.flotick.org",
     title: "Flotick Resume - AI-Powered Resume Builder",
     description: "Build professional, ATS-optimized resumes with Flotick's AI-powered resume builder. Free templates, intelligent content suggestions, and instant PDF downloads.",
     siteName: "Flotick Resume",
@@ -83,7 +83,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: "https://resume.Flotick.com",
+    canonical: "https://resume.flotick.org",
   },
   other: {
     "google-site-verification": "", // Add verification code when available

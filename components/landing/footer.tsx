@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export function LandingFooter() {
@@ -7,8 +8,8 @@ export function LandingFooter() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-12">
           <div className="col-span-2 md:col-span-1 space-y-4">
             <div className="flex items-center gap-2 font-bold text-xl">
-               <div className="h-6 w-6 bg-blue-600 rounded-md flex items-center justify-center text-white text-xs">
-                 F
+               <div className="h-6 w-6  flex items-center justify-center text-white text-xs">
+                 <Image src="/logo-black.svg" alt="Flotick Logo" width={24} height={24} />
                </div>
                Flotick Resume
             </div>

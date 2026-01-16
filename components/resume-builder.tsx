@@ -52,7 +52,7 @@ export function ResumeBuilder() {
                 <Link href="/" className="p-2 -ml-2 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all">
                   <ChevronLeft className="h-5 w-5" />
                 </Link>
-                <div className="h-10 w-10 rounded-full bg-white border border-gray-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm">
+                <div className="h-10 w-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm">
                    <Image src="/logo-black.svg" alt="Logo" width={22} height={22} />
                 </div>
                 <div>

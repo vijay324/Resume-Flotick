@@ -11,7 +11,7 @@ const blogPosts = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = "https://resume.Flotick.com";
+  const baseUrl = "https://resume.flotick.org";
   const currentDate = new Date();
 
   // Static pages

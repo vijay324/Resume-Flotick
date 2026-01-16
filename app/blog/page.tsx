@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   description:
     "Explore the Flotick Resume blog for expert tips on resume building, AI-powered career tools, job search strategies, and professional development. Learn how to create ATS-optimized resumes.",
   alternates: {
-    canonical: "https://resume.Flotick.com/blog",
+    canonical: "https://resume.flotick.org/blog",
   },
   openGraph: {
     title: "Flotick Resume Blog - Resume Tips & AI Career Insights",
     description:
       "Expert advice on resume building, AI career tools, and job search strategies from the Flotick team.",
-    url: "https://resume.Flotick.com/blog",
+    url: "https://resume.flotick.org/blog",
     type: "website",
   },
 };
@@ -30,7 +30,7 @@ export default function BlogPage() {
     name: "Flotick Resume Blog",
     description:
       "Expert tips on resume building, AI-powered career tools, and job search strategies.",
-    url: "https://resume.Flotick.com/blog",
+    url: "https://resume.flotick.org/blog",
     publisher: {
       "@type": "Organization",
       name: "Flotick",
@@ -40,7 +40,7 @@ export default function BlogPage() {
       "@type": "BlogPosting",
       headline: post.title,
       description: post.description,
-      url: `https://resume.Flotick.com/blog/${post.slug}`,
+      url: `https://resume.flotick.org/blog/${post.slug}`,
       datePublished: post.date,
       author: {
         "@type": "Person",
@@ -56,23 +56,9 @@ export default function BlogPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(blogSchema) }}
       />
 
-      {/* Navigation */}
-      <nav className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-            <div className="h-6 w-6 bg-blue-600 rounded-md flex items-center justify-center text-white text-xs">
-              F
-            </div>
-            Flotick Resume
-          </Link>
-          <Link href="/builder">
-            <Button size="sm">Build Resume</Button>
-          </Link>
-        </div>
-      </nav>
 
       {/* Hero */}
-      <section className="py-16 bg-gradient-to-b from-blue-50 to-background">
+      <section className="pt-26 bg-gradient-to-b from-blue-50 to-background">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Flotick Resume <span className="text-blue-600">Blog</span>

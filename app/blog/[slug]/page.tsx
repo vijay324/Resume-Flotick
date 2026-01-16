@@ -33,12 +33,12 @@ export async function generateMetadata({
     description: post.description,
     authors: [{ name: post.author }],
     alternates: {
-      canonical: `https://resume.Flotick.com/blog/${post.slug}`,
+      canonical: `https://resume.flotick.org/blog/${post.slug}`,
     },
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://resume.Flotick.com/blog/${post.slug}`,
+      url: `https://resume.flotick.org/blog/${post.slug}`,
       type: "article",
       publishedTime: post.date,
       authors: [post.author],
@@ -127,7 +127,7 @@ export default async function BlogPostPage({
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": `https://resume.Flotick.com/blog/${post.slug}`,
+      "@id": `https://resume.flotick.org/blog/${post.slug}`,
     },
     keywords: post.tags.join(", "),
   };

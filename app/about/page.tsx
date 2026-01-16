@@ -8,13 +8,13 @@ export const metadata: Metadata = {
   description:
     "Learn about Flotick Resume, the free AI-powered resume builder. Discover how Flotick, an enterprise B2B work management platform, is helping professionals build better resumes.",
   alternates: {
-    canonical: "https://resume.Flotick.com/about",
+    canonical: "https://resume.flotick.org/about",
   },
   openGraph: {
     title: "About Flotick Resume - AI Resume Builder by Flotick",
     description:
       "Flotick Resume is a free AI-powered resume builder developed by Flotick, an enterprise work management platform.",
-    url: "https://resume.Flotick.com/about",
+    url: "https://resume.flotick.org/about",
     type: "website",
   },
 };
@@ -50,20 +50,7 @@ export default function AboutPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
 
-      {/* Navigation */}
-      <nav className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-            <div className="h-6 w-6 bg-blue-600 rounded-md flex items-center justify-center text-white text-xs">
-              F
-            </div>
-            Flotick Resume
-          </Link>
-          <Link href="/builder">
-            <Button size="sm">Build Resume</Button>
-          </Link>
-        </div>
-      </nav>
+    
 
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-blue-50 to-background">
@@ -214,23 +201,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="py-8 border-t border-border">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>
-            © {new Date().getFullYear()} Flotick Resume. A product of{" "}
-            <a
-              href="https://Flotick.com"
-              className="font-semibold text-foreground hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Flotick
-            </a>
-            .
-          </p>
-        </div>
-      </footer>
+    
     </main>
   );
 }

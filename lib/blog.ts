@@ -53,7 +53,7 @@ Unlike other resume builders that charge subscription fees or add watermarks to 
 
 ## Getting Started
 
-1. Visit [resume.Flotick.com](https://resume.Flotick.com)
+1. Visit [resume.flotick.org](https://resume.flotick.org)
 2. Click "Build My Resume"
 3. Fill in your information
 4. Use AI tools to enhance your content
@@ -61,7 +61,7 @@ Unlike other resume builders that charge subscription fees or add watermarks to 
 
 Start building your job-winning resume today with Flotick Resume.
     `,
-    date: "2024-01-15",
+    date: "2026-01-15",
     author: "Flotick Team",
     readingTime: "5 min read",
     tags: ["Flotick Resume", "AI Resume Builder", "Resume Tips"],
@@ -115,14 +115,14 @@ Flotick Resume's AI features are designed to enhance, not replace, your resume-b
 
 Try Flotick Resume today and experience the power of AI-assisted resume building.
     `,
-    date: "2024-01-14",
+    date: "2026-01-14",
     author: "Flotick Team",
     readingTime: "6 min read",
     tags: ["AI", "Flotick Resume", "Resume Optimization"],
   },
   {
     slug: "best-resume-builder-enterprise",
-    title: "Best Resume Builder for Enterprise & Professionals in 2024",
+    title: "Best Resume Builder for Enterprise & Professionals in 2026",
     description: "Discover why Flotick Resume is the best resume builder for enterprise professionals. Compare features, learn about ATS optimization, and see how enterprise-grade tools make a difference.",
     content: `
 # Best Resume Builder for Enterprise & Professionals
@@ -158,9 +158,9 @@ Flotick believes in democratizing access to professional tools. By offering Flot
 
 For enterprise professionals, Flotick Resume offers the perfect combination of sophisticated AI tools, professional templates, and enterprise-grade security—all at no cost.
 
-Start building your executive resume today at [resume.Flotick.com](https://resume.Flotick.com).
+Start building your executive resume today at [resume.flotick.org](https://resume.flotick.org).
     `,
-    date: "2024-01-13",
+    date: "2026-01-13",
     author: "Flotick Team",
     readingTime: "5 min read",
     tags: ["Enterprise", "Professional Resume", "Flotick Resume"],
@@ -236,9 +236,9 @@ Always review AI suggestions. Ensure:
 
 AI-powered resume optimization through Flotick Resume gives you a competitive edge without the cost of professional resume services. Start optimizing your resume today and increase your chances of landing interviews.
 
-Visit [resume.Flotick.com](https://resume.Flotick.com) to get started.
+Visit [resume.flotick.org](https://resume.flotick.org) to get started.
     `,
-    date: "2024-01-12",
+    date: "2026-01-12",
     author: "Flotick Team",
     readingTime: "7 min read",
     tags: ["Job Search", "AI Optimization", "Resume Tips"],
@@ -296,7 +296,7 @@ Our AI-powered features represent our commitment to using cutting-edge technolog
 ## Connect with Flotick
 
 - **Website:** [Flotick.com](https://Flotick.com)
-- **Flotick Resume:** [resume.Flotick.com](https://resume.Flotick.com)
+- **Flotick Resume:** [resume.flotick.org](https://resume.flotick.org)
 - **Twitter:** [@Flotick](https://twitter.com/Flotick)
 - **LinkedIn:** [Flotick](https://linkedin.com/company/Flotick)
 
@@ -306,7 +306,7 @@ Whether you're using Flotick's enterprise platform or building your resume with 
 
 Experience the Flotick difference today.
     `,
-    date: "2024-01-11",
+    date: "2026-01-11",
     author: "Flotick Team",
     readingTime: "5 min read",
     tags: ["Flotick", "Enterprise", "Work Management"],
@@ -407,9 +407,9 @@ Choose an **AI-powered builder** like Flotick Resume if:
 
 While traditional resume builders still have their place, AI-powered solutions offer significant advantages for today's job market. Flotick Resume combines the best of both worlds—professional templates with intelligent AI assistance—all for free.
 
-Try Flotick Resume at [resume.Flotick.com](https://resume.Flotick.com) and experience the AI difference.
+Try Flotick Resume at [resume.flotick.org](https://resume.flotick.org) and experience the AI difference.
     `,
-    date: "2024-01-10",
+    date: "2026-01-10",
     author: "Flotick Team",
     readingTime: "6 min read",
     tags: ["Resume Builders", "AI vs Traditional", "Comparison"],

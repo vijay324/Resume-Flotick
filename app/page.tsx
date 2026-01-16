@@ -10,12 +10,12 @@ export const metadata: Metadata = {
   title: "Flotick Resume - Free AI Resume Builder | Create Professional Resumes Online",
   description: "Flotick Resume is a free AI-powered resume builder that helps you create professional, ATS-optimized resumes in minutes. Features intelligent content suggestions, real-time preview, and instant PDF export. Built by Flotick, the enterprise work management platform.",
   alternates: {
-    canonical: "https://resume.Flotick.com",
+    canonical: "https://resume.flotick.org",
   },
   openGraph: {
     title: "Flotick Resume - Free AI-Powered Resume Builder",
     description: "Create professional, ATS-optimized resumes with Flotick Resume. Free AI-powered resume builder with instant PDF export.",
-    url: "https://resume.Flotick.com",
+    url: "https://resume.flotick.org",
     type: "website",
   },
 };
@@ -49,7 +49,7 @@ export default function LandingPage() {
     "applicationCategory": "BusinessApplication",
     "applicationSubCategory": "Resume Builder",
     "operatingSystem": "Web",
-    "url": "https://resume.Flotick.com",
+    "url": "https://resume.flotick.org",
     "offers": {
       "@type": "Offer",
       "price": "0",
@@ -79,7 +79,7 @@ export default function LandingPage() {
       "bestRating": "5",
       "worstRating": "1"
     },
-    "screenshot": "https://resume.Flotick.com/og-image.jpg"
+    "screenshot": "https://resume.flotick.org/og-image.jpg"
   };
 
   // Product schema for commercial positioning
