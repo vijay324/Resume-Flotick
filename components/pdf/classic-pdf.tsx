@@ -5,38 +5,46 @@ import type { ResumeData } from '@/types/resume';
 
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
+    padding: 30, // Tighter padding to match preview
     backgroundColor: '#ffffff',
     fontFamily: 'Times-Roman',
     fontSize: 10.5,
-    lineHeight: 1.4,
+    lineHeight: 1.4, // Tighter line height matching preview
   },
   header: {
-    marginBottom: 20,
+    marginBottom: 14, // Tightened header spacing
     textAlign: 'center',
     borderBottomWidth: 0,
   },
+  // Wrappers to ensure spacing is respected
+  nameWrapper: {
+    marginBottom: 4, // Reduced from 10 to match preview
+  },
+  jobTitleWrapper: {
+    marginBottom: 6, // Reduced from 14 to match preview
+  },
   name: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     textTransform: 'uppercase',
-    marginBottom: 8, // Increased from 4 to 8 to prevent collision
+    letterSpacing: 1,
+    lineHeight: 1.2, // Tighter line height for the name itself
   },
   jobTitle: {
     fontSize: 11,
     color: '#666',
     textTransform: 'uppercase',
-    letterSpacing: 2,
-    marginBottom: 12, // Increased spacing below title
+    letterSpacing: 3,
   },
   contactRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    gap: 12, // Increased gap for icons
+    gap: 10, // Reduced from 16 to tighten contact spacing
     fontSize: 9,
     color: '#666',
+    marginBottom: 4, // Reduced from 8
   },
   contactItem: {
     flexDirection: 'row',
@@ -48,15 +56,15 @@ const styles = StyleSheet.create({
   },
   // Icon style
   icon: {
-    width: 10,
-    height: 10,
-    marginRight: 4,
+    width: 9, // Reduced slightly to match text size better for vertical alignment
+    height: 9, 
+    marginRight: 6, // Increased spacing between icon and text
   },
   separator: {
      display: 'none', // Hiding text separator in favor of icons/gap
   },
   section: {
-    marginBottom: 16,
+    marginBottom: 16, // Reduced from 24 to tighten section spacing
   },
   sectionTitle: {
     fontSize: 11,
@@ -64,12 +72,12 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     borderBottomWidth: 1,
     borderBottomColor: '#000',
-    marginBottom: 8,
-    paddingBottom: 2,
+    marginBottom: 8, // Reduced from 12 for tighter spacing
+    paddingBottom: 1, // Reduced from 2
   },
   // Block styles
   block: {
-    marginBottom: 12,
+    marginBottom: 10, // Reduced from 16 for tighter block spacing
   },
   blockHeader: {
     flexDirection: 'row',
@@ -88,7 +96,7 @@ const styles = StyleSheet.create({
   blockSubtitleRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 4,
+    marginBottom: 2, // Reduced from 4 for tighter spacing
   },
   blockSubtitle: {
     fontSize: 10.5,
@@ -102,11 +110,11 @@ const styles = StyleSheet.create({
     color: '#666',
   },
   list: {
-    marginLeft: 10,
+    marginLeft: 8, // Reduced from 10 for tighter list indentation
   },
   listItem: {
     flexDirection: 'row',
-    marginBottom: 2,
+    marginBottom: 1, // Reduced from 2 for tighter list items
   },
   bullet: {
     width: 10,
@@ -146,8 +154,14 @@ export const ClassicPdf = ({ data }: Props) => {
     <Document>
       <Page size="A4" style={styles.page}>
         <View style={styles.header}>
-          <Text style={styles.name}>{personalInfo.fullName}</Text>
-          {personalInfo.jobTitle && <Text style={styles.jobTitle}>{personalInfo.jobTitle}</Text>}
+          <View style={styles.nameWrapper}>
+             <Text style={styles.name}>{personalInfo.fullName}</Text>
+          </View>
+          {personalInfo.jobTitle && (
+            <View style={styles.jobTitleWrapper}>
+               <Text style={styles.jobTitle}>{personalInfo.jobTitle}</Text>
+            </View>
+          )}
           
           <View style={styles.contactRow}>
             {personalInfo.phone && (
@@ -292,7 +306,7 @@ export const ClassicPdf = ({ data }: Props) => {
         )}
 
         {(certifications.length > 0 || languages.length > 0) && (
-           <View style={{ flexDirection: 'row', gap: 20 }}>
+           <View style={{ flexDirection: 'row', gap: 14 }}>
               {certifications.length > 0 && (
                  <View style={{ flex: 1 }}>
                     <Text style={styles.sectionTitle}>Certifications</Text>
