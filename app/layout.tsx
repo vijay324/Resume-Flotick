@@ -12,41 +12,63 @@ const dmSans = DM_Sans({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://resume.flotick.org"),
+  metadataBase: new URL("https://resume.flotik.com"),
   title: {
-    default: "Flotick Resume Builder - AI Powered Resume Creation",
-    template: "%s | Flotick Resume Builder",
+    default: "Flotik Resume - AI-Powered Resume Builder | Create Professional Resumes",
+    template: "%s | Flotik Resume - AI Resume Builder",
   },
-  description: "Create a professional, ATS-friendly resume in minutes with Flotick's AI-powered resume builder. Free templates, real-time preview, and instant downloads.",
-  keywords: ["resume builder", "ai resume builder", "free resume maker", "cv maker", "ats friendly resume", "flotick"],
-  authors: [{ name: "Flotick" }],
-  creator: "Flotick",
-  publisher: "Flotick",
+  description: "Create professional, ATS-optimized resumes with Flotik Resume, the AI-powered resume builder from Flotik. Build job-winning resumes in minutes with intelligent content suggestions, real-time preview, and instant PDF export. 100% free, no sign-up required.",
+  keywords: [
+    "Flotik Resume",
+    "Flotik resume builder", 
+    "AI resume builder",
+    "AI resume builder Flotik",
+    "resume builder",
+    "free resume maker",
+    "professional resume builder",
+    "ATS-friendly resume",
+    "ATS resume builder",
+    "CV maker",
+    "resume creator",
+    "job resume builder",
+    "Flotik",
+    "enterprise resume builder",
+    "AI CV builder",
+    "resume generator",
+    "online resume builder"
+  ],
+  authors: [{ name: "Flotik", url: "https://flotik.com" }],
+  creator: "Flotik",
+  publisher: "Flotik",
+  applicationName: "Flotik Resume",
+  category: "Business",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://resume.flotick.org",
-    title: "Flotick Resume Builder - Create Your Perfect Resume",
-    description: "Build your professional resume in minutes with our AI-powered builder. ATS-friendly templates and real-time preview.",
-    siteName: "Flotick Resume Builder",
+    url: "https://resume.flotik.com",
+    title: "Flotik Resume - AI-Powered Resume Builder",
+    description: "Build professional, ATS-optimized resumes with Flotik's AI-powered resume builder. Free templates, intelligent content suggestions, and instant PDF downloads.",
+    siteName: "Flotik Resume",
     images: [
       {
-        url: "/og-image.jpg", // I should ensure this exists or user knows to add it
+        url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Flotick Resume Builder Preview",
+        alt: "Flotik Resume - AI-Powered Resume Builder",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Flotick Resume Builder - AI Powered Resume Creation",
-    description: "Create a professional, ATS-friendly resume in minutes with Flotick's AI-powered resume builder.",
+    title: "Flotik Resume - AI-Powered Resume Builder",
+    description: "Create professional, ATS-optimized resumes with Flotik's AI-powered resume builder. Free, fast, and intelligent.",
     images: ["/og-image.jpg"],
-    creator: "@flotick",
+    creator: "@flotik",
+    site: "@flotik",
   },
   icons: {
     icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
   robots: {
     index: true,
@@ -58,6 +80,12 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  alternates: {
+    canonical: "https://resume.flotik.com",
+  },
+  other: {
+    "google-site-verification": "", // Add verification code when available
   },
 };
 

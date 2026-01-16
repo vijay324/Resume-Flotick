@@ -22,7 +22,7 @@ export function LandingHero() {
           className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-sm font-medium mb-4"
         >
           <Sparkles className="h-4 w-4" />
-          <span>Sponsored by The Flotick</span>
+          <span>Powered by <a href="https://flotik.com" className="font-semibold hover:underline" target="_blank" rel="noopener noreferrer">Flotik</a></span>
         </motion.div>
 
         <motion.h1

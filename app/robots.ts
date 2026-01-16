@@ -2,11 +2,15 @@ import { MetadataRoute } from "next";
 
 export default function robots(): MetadataRoute.Robots {
   return {
-    rules: {
-      userAgent: "*",
-      allow: "/",
-      disallow: "/api/",
-    },
-    sitemap: "https://resume.flotick.org/sitemap.xml",
+    rules: [
+      {
+        userAgent: "*",
+        allow: "/",
+        disallow: ["/api/", "/_next/"],
+      },
+    ],
+    sitemap: "https://resume.flotik.com/sitemap.xml",
+    host: "https://resume.flotik.com",
   };
 }
+
