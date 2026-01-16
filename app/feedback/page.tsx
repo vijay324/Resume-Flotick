@@ -3,6 +3,7 @@
 import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { motion, AnimatePresence } from "framer-motion";
 import { 
@@ -12,16 +13,18 @@ import {
   AlertCircle, 
   Star,
   MessageSquare,
-  Sparkles
+  Sparkles,
+  ArrowRight,
+  ArrowLeft
 } from "lucide-react";
 
-// Rating options for feature feedback with refined colors
+// Rating options for feature feedback
 const RATING_OPTIONS = [
-  { value: "very-useful", label: "Very Useful", color: "bg-emerald-500", ring: "ring-emerald-500", text: "text-emerald-700 dark:text-emerald-300", bg: "bg-emerald-50 dark:bg-emerald-900/20" },
-  { value: "useful", label: "Useful", color: "bg-blue-500", ring: "ring-blue-500", text: "text-blue-700 dark:text-blue-300", bg: "bg-blue-50 dark:bg-blue-900/20" },
-  { value: "neutral", label: "Neutral", color: "bg-gray-500", ring: "ring-gray-500", text: "text-gray-700 dark:text-gray-300", bg: "bg-gray-50 dark:bg-gray-900/20" },
-  { value: "not-useful", label: "Not Useful", color: "bg-red-500", ring: "ring-red-500", text: "text-red-700 dark:text-red-300", bg: "bg-red-50 dark:bg-red-900/20" },
-  { value: "not-used", label: "Not Used", color: "bg-neutral-400", ring: "ring-neutral-400", text: "text-neutral-600 dark:text-neutral-400", bg: "bg-neutral-100 dark:bg-neutral-800" },
+  { value: "very-useful", label: "Very Useful", color: "bg-emerald-500", ring: "ring-emerald-500", text: "text-emerald-700", bg: "bg-emerald-50" },
+  { value: "useful", label: "Useful", color: "bg-blue-500", ring: "ring-blue-500", text: "text-blue-700", bg: "bg-blue-50" },
+  { value: "neutral", label: "Neutral", color: "bg-gray-500", ring: "ring-gray-500", text: "text-gray-700", bg: "bg-gray-50" },
+  { value: "not-useful", label: "Not Useful", color: "bg-red-500", ring: "ring-red-500", text: "text-red-700", bg: "bg-red-50" },
+  { value: "not-used", label: "Not Used", color: "bg-neutral-400", ring: "ring-neutral-400", text: "text-neutral-600", bg: "bg-neutral-100" },
 ] as const;
 
 // Features to collect feedback on
@@ -62,6 +65,8 @@ interface FeatureFeedback {
 }
 
 interface FeedbackFormData {
+  name: string;
+  email: string;
   overallRating: number;
   features: Record<FeatureId, FeatureFeedback>;
   improvements: string;
@@ -69,6 +74,8 @@ interface FeedbackFormData {
 }
 
 const initialFormData: FeedbackFormData = {
+  name: "",
+  email: "",
   overallRating: 0,
   features: {
     "resume-builder": { rating: "", comment: "" },
@@ -81,7 +88,16 @@ const initialFormData: FeedbackFormData = {
   issues: "",
 };
 
-// Minimalist Star Rating Component
+// Wizard Steps
+const STEPS = [
+  { id: "intro", title: "Welcome" },
+  { id: "overall", title: "Overall Experience" },
+  { id: "features", title: "Feature Ratings" },
+  { id: "details", title: "Additional Details" },
+] as const;
+
+// --- COMPONENTS ---
+
 function StarRating({ 
   value, 
   onChange 
@@ -92,8 +108,8 @@ function StarRating({
   const [hoverValue, setHoverValue] = useState(0);
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="flex items-center gap-1.5" onMouseLeave={() => setHoverValue(0)}>
+    <div className="flex flex-col items-center gap-4 py-6">
+      <div className="flex items-center gap-3" onMouseLeave={() => setHoverValue(0)}>
         {[1, 2, 3, 4, 5].map((star) => (
           <button
             key={star}
@@ -104,24 +120,23 @@ function StarRating({
             aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
           >
             <Star
-              className={`h-8 w-8 transition-all duration-200 ${
+              className={`h-10 w-10 transition-all duration-200 ${
                 star <= (hoverValue || value)
                   ? "fill-amber-400 text-amber-400 drop-shadow-sm scale-110"
-                  : "fill-transparent text-neutral-200 dark:text-neutral-800 group-hover:text-neutral-300 dark:group-hover:text-neutral-700"
+                  : "fill-transparent text-neutral-200 group-hover:text-neutral-300"
               }`}
               strokeWidth={1.5}
             />
           </button>
         ))}
       </div>
-      <span className={`text-sm font-medium transition-opacity duration-300 ${value > 0 ? "opacity-100" : "opacity-0"} text-amber-600 dark:text-amber-500`}>
+      <span className={`text-lg font-medium transition-opacity duration-300 ${value > 0 ? "opacity-100" : "opacity-0"} text-amber-600`}>
         {value === 1 ? "Poor" : value === 2 ? "Fair" : value === 3 ? "Good" : value === 4 ? "Very Good" : "Excellent"}
       </span>
     </div>
   );
 }
 
-// Feature Rating Chip
 function FeatureRatingOptions({
   value,
   onChange,
@@ -142,7 +157,7 @@ function FeatureRatingOptions({
             ${
               value === option.value
                 ? `${option.bg} ${option.text} ${option.ring} border-transparent ring-1 ring-inset`
-                : "bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 text-neutral-600 dark:text-neutral-400 hover:border-neutral-300 dark:hover:border-neutral-700"
+                : "bg-white border-neutral-200 text-neutral-600 hover:border-neutral-300"
             }
           `}
         >
@@ -153,7 +168,6 @@ function FeatureRatingOptions({
   );
 }
 
-// Feature Row
 function FeatureFeedbackRow({
   feature,
   feedback,
@@ -170,15 +184,15 @@ function FeatureFeedbackRow({
   return (
     <div className={`
       group rounded-xl border border-transparent transition-all duration-200
-      hover:bg-neutral-50 dark:hover:bg-neutral-900/50
-      ${isExpanded || feedback.comment ? "bg-neutral-50 dark:bg-neutral-900/50 border-neutral-200 dark:border-neutral-800" : ""}
+      hover:bg-neutral-50
+      ${isExpanded || feedback.comment ? "bg-neutral-50 border-neutral-200" : ""}
     `}>
       <div className="p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div className="min-w-[140px]">
-          <h4 className="font-medium text-sm text-neutral-900 dark:text-neutral-100">
+          <h4 className="font-medium text-sm text-neutral-900">
             {feature.name}
           </h4>
-          <p className="text-xs text-neutral-500 dark:text-neutral-500">
+          <p className="text-xs text-neutral-500">
             {feature.description}
           </p>
         </div>
@@ -196,8 +210,8 @@ function FeatureFeedbackRow({
             variant="ghost"
             size="icon"
             className={`
-              h-8 w-8 rounded-full text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-300
-              ${isExpanded || feedback.comment ? "text-neutral-600 dark:text-neutral-300 bg-black/5 dark:bg-white/5" : ""}
+              h-8 w-8 rounded-full text-neutral-400 hover:text-neutral-600
+              ${isExpanded || feedback.comment ? "text-neutral-600 bg-black/5" : ""}
             `}
             onClick={() => setIsExpanded(!isExpanded)}
           >
@@ -220,7 +234,7 @@ function FeatureFeedbackRow({
               value={feedback.comment}
               onChange={(e) => onCommentChange(e.target.value)}
               rows={2}
-              className="resize-none text-sm bg-white dark:bg-black/20 border-neutral-200 dark:border-neutral-800 focus:border-neutral-300 dark:focus:border-neutral-700 min-h-[60px]"
+              className="resize-none text-sm bg-white border-neutral-200 focus:border-neutral-300 min-h-[60px]"
             />
           </motion.div>
         )}
@@ -229,12 +243,14 @@ function FeatureFeedbackRow({
   );
 }
 
+// --- MAIN PAGE ---
+
 export default function FeedbackPage() {
   const [formData, setFormData] = useState<FeedbackFormData>(initialFormData);
+  const [currentStep, setCurrentStep] = useState(0);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
+  
   const updateFeatureFeedback = useCallback(
     (featureId: FeatureId, field: keyof FeatureFeedback, value: string) => {
       setFormData((prev) => ({
@@ -251,17 +267,27 @@ export default function FeedbackPage() {
     []
   );
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (isSubmitting) return;
-    
+  const handleNext = () => {
+    if (currentStep < STEPS.length - 1) {
+      setCurrentStep(curr => curr + 1);
+    } else {
+      handleSubmit();
+    }
+  };
+
+  const handleBack = () => {
+    if (currentStep > 0) {
+      setCurrentStep(curr => curr - 1);
+    }
+  };
+
+  const handleSubmit = async () => {
     if (formData.overallRating === 0) {
-      setErrorMessage("Please verify your overall experience with a rating.");
+      setErrorMessage("Please provide an overall rating before submitting.");
       setStatus("error");
       return;
     }
 
-    setIsSubmitting(true);
     setStatus("loading");
     setErrorMessage("");
 
@@ -277,17 +303,133 @@ export default function FeedbackPage() {
 
       setStatus("success");
       setFormData(initialFormData);
+      setCurrentStep(0);
     } catch (error) {
       console.error("Error:", error);
       setStatus("error");
       setErrorMessage(error instanceof Error ? error.message : "Failed to send feedback");
-    } finally {
-      setIsSubmitting(false);
+    }
+  };
+
+  const isStepValid = () => {
+    if (currentStep === 1 && formData.overallRating === 0) return false;
+    return true;
+  };
+
+  // Render Step Content
+  const renderStepContent = () => {
+    switch (currentStep) {
+      case 0: // Intro & Bio
+        return (
+          <div className="space-y-6">
+            <div className="text-center space-y-2 mb-8">
+               <h2 className="text-xl font-semibold text-neutral-900">Let&#39;s get to know you</h2>
+              <p className="text-sm text-neutral-500">This helps us follow up if needed (Optional)</p>
+            </div>
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="name">Name</Label>
+                <Input
+                  id="name"
+                  placeholder="Your Name"
+                  value={formData.name}
+                  onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
+                  className="bg-white border-neutral-200"
+                />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="email">Email</Label>
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
+                  className="bg-white border-neutral-200"
+                />
+              </div>
+            </div>
+          </div>
+        );
+      
+      case 1: // Overall Rating
+        return (
+          <div className="space-y-6">
+            <div className="text-center space-y-2 mb-8">
+              <h2 className="text-xl font-semibold text-neutral-900">How was your experience?</h2>
+              <p className="text-sm text-neutral-500">Rate your overall satisfaction with the Resume Builder</p>
+            </div>
+            <StarRating 
+              value={formData.overallRating} 
+              onChange={(rating) => setFormData(prev => ({ ...prev, overallRating: rating }))}
+            />
+          </div>
+        );
+
+      case 2: // Feature Ratings
+        return (
+          <div className="space-y-6">
+            <div className="text-center space-y-2 mb-6">
+              <h2 className="text-xl font-semibold text-neutral-900">Feature Breakdown</h2>
+              <p className="text-sm text-neutral-500">Which tools worked well for you?</p>
+            </div>
+            <div className="space-y-2 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+              {FEATURES.map((feature) => (
+                <FeatureFeedbackRow
+                  key={feature.id}
+                  feature={feature}
+                  feedback={formData.features[feature.id]}
+                  onRatingChange={(rating) => updateFeatureFeedback(feature.id, "rating", rating)}
+                  onCommentChange={(comment) => updateFeatureFeedback(feature.id, "comment", comment)}
+                />
+              ))}
+            </div>
+          </div>
+        );
+
+      case 3: // Text Feedback
+        return (
+          <div className="space-y-6">
+            <div className="text-center space-y-2 mb-6">
+              <h2 className="text-xl font-semibold text-neutral-900">Final Thoughts</h2>
+              <p className="text-sm text-neutral-500">Any bugs or suggestions?</p>
+            </div>
+            <div className="space-y-4">
+              <div className="space-y-1.5">
+                <Label htmlFor="improvements" className="text-xs font-medium uppercase tracking-wider text-neutral-500 pl-1">
+                  Suggestion Box
+                </Label>
+                <Textarea
+                  id="improvements"
+                  placeholder="What feature should we build next?"
+                  value={formData.improvements}
+                  onChange={(e) => setFormData(prev => ({ ...prev, improvements: e.target.value }))}
+                  className="min-h-[100px] resize-none bg-white border-neutral-200 focus:border-neutral-300"
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label htmlFor="issues" className="text-xs font-medium uppercase tracking-wider text-neutral-500 pl-1">
+                  Bug Report
+                </Label>
+                <Textarea
+                  id="issues"
+                  placeholder="Did you run into any hiccups?"
+                  value={formData.issues}
+                  onChange={(e) => setFormData(prev => ({ ...prev, issues: e.target.value }))}
+                  className="min-h-[100px] resize-none bg-white border-neutral-200 focus:border-neutral-300"
+                />
+              </div>
+            </div>
+          </div>
+        );
+      
+      default:
+        return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-neutral-50/50 dark:bg-neutral-950/50 py-20 px-4 sm:px-6">
+    <div className="min-h-screen bg-neutral-50 py-20 px-4 sm:px-6">
       <div className="max-w-xl mx-auto space-y-8">
         
         {/* Header */}
@@ -295,26 +437,18 @@ export default function FeedbackPage() {
           <motion.div 
             initial={{ scale: 0.9, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="inline-flex items-center justify-center p-3 rounded-2xl bg-white dark:bg-neutral-900 shadow-sm border border-neutral-100 dark:border-neutral-800 mb-2"
+            className="inline-flex items-center justify-center p-3 rounded-2xl bg-white shadow-sm border border-neutral-100 mb-2"
           >
-            <Sparkles className="h-5 w-5 text-neutral-900 dark:text-neutral-100" />
+            <Sparkles className="h-5 w-5 text-neutral-900" />
           </motion.div>
           <motion.h1 
             initial={{ y: 10, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.1 }}
-            className="text-2xl font-semibold tracking-tight text-neutral-900 dark:text-white"
+            className="text-2xl font-semibold tracking-tight text-neutral-900"
           >
             We value your voice
           </motion.h1>
-          <motion.p 
-            initial={{ y: 10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="text-sm text-neutral-500 dark:text-neutral-400"
-          >
-            Help us craft the ultimate resume building experience.
-          </motion.p>
         </div>
 
         <AnimatePresence mode="wait">
@@ -323,17 +457,17 @@ export default function FeedbackPage() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm border border-neutral-200 dark:border-neutral-800 p-8 text-center"
+              className="bg-white rounded-2xl shadow-sm border border-neutral-200 p-8 text-center"
             >
               <div className="flex justify-center mb-4">
-                <div className="h-12 w-12 rounded-full bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center">
-                  <CheckCircle2 className="h-6 w-6 text-emerald-600 dark:text-emerald-400" />
+                <div className="h-12 w-12 rounded-full bg-emerald-50 flex items-center justify-center">
+                  <CheckCircle2 className="h-6 w-6 text-emerald-600" />
                 </div>
               </div>
-              <h3 className="text-lg font-medium text-neutral-900 dark:text-white mb-2">
+              <h3 className="text-lg font-medium text-neutral-900 mb-2">
                 Feedback Received
               </h3>
-              <p className="text-sm text-neutral-500 dark:text-neutral-400 mb-6">
+              <p className="text-sm text-neutral-500 mb-6">
                 Thank you for helping us grow. We read every update.
               </p>
               <Button 
@@ -345,78 +479,70 @@ export default function FeedbackPage() {
               </Button>
             </motion.div>
           ) : (
-            <motion.form 
+            <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ delay: 0.3 }}
-              onSubmit={handleSubmit} 
-              className="space-y-6"
+              className="bg-white rounded-2xl shadow-sm border border-neutral-200 overflow-hidden"
             >
-              {/* Overall Rating */}
-              <div className="bg-white dark:bg-neutral-900 rounded-2xl p-6 shadow-sm border border-neutral-200 dark:border-neutral-800 text-center space-y-4">
-                <Label className="text-sm font-medium text-neutral-900 dark:text-neutral-200">
-                  How was your experience?
-                </Label>
-                <StarRating 
-                  value={formData.overallRating} 
-                  onChange={(rating) => {
-                    setFormData(prev => ({ ...prev, overallRating: rating }));
-                    if (status === "error") setStatus("idle");
-                  }} 
+              {/* Progress Bar */}
+              <div className="h-1 bg-neutral-100 w-full">
+                <motion.div 
+                  className="h-full bg-neutral-900"
+                  initial={{ width: 0 }}
+                  animate={{ width: `${((currentStep + 1) / STEPS.length) * 100}%` }}
+                  transition={{ duration: 0.3 }}
                 />
               </div>
 
-              {/* Detailed Feedback */}
-              <div className="bg-white dark:bg-neutral-900 rounded-2xl p-6 shadow-sm border border-neutral-200 dark:border-neutral-800 space-y-6">
-                <div className="space-y-1">
-                  <Label className="text-sm font-medium text-neutral-900 dark:text-white">
-                    Feature breakdown
-                  </Label>
-                  <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                    Which tools worked well for you?
-                  </p>
-                </div>
+              <div className="p-6 sm:p-8">
+                 <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentStep}
+                    initial={{ x: 20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                    exit={{ x: -20, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    {renderStepContent()}
+                  </motion.div>
+                </AnimatePresence>
 
-                <div className="space-y-2">
-                  {FEATURES.map((feature) => (
-                    <FeatureFeedbackRow
-                      key={feature.id}
-                      feature={feature}
-                      feedback={formData.features[feature.id]}
-                      onRatingChange={(rating) => updateFeatureFeedback(feature.id, "rating", rating)}
-                      onCommentChange={(comment) => updateFeatureFeedback(feature.id, "comment", comment)}
-                    />
-                  ))}
-                </div>
-              </div>
-
-              {/* Text Areas */}
-              <div className="space-y-4">
-                <div className="space-y-1.5">
-                  <Label htmlFor="improvements" className="text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400 pl-1">
-                    Suggestion Box
-                  </Label>
-                  <Textarea
-                    id="improvements"
-                    placeholder="What feature should we build next?"
-                    value={formData.improvements}
-                    onChange={(e) => setFormData(prev => ({ ...prev, improvements: e.target.value }))}
-                    className="min-h-[100px] resize-none bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 focus:border-neutral-300 dark:focus:border-neutral-700"
-                  />
-                </div>
-                
-                <div className="space-y-1.5">
-                  <Label htmlFor="issues" className="text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400 pl-1">
-                    Bug Report
-                  </Label>
-                  <Textarea
-                    id="issues"
-                    placeholder="Did you run into any hiccups?"
-                    value={formData.issues}
-                    onChange={(e) => setFormData(prev => ({ ...prev, issues: e.target.value }))}
-                    className="min-h-[100px] resize-none bg-white dark:bg-neutral-900 border-neutral-200 dark:border-neutral-800 focus:border-neutral-300 dark:focus:border-neutral-700"
-                  />
+                {/* Navigation Buttons */}
+                <div className="flex items-center justify-between mt-8 pt-6 border-t border-neutral-100">
+                  <Button
+                    variant="ghost"
+                    onClick={handleBack}
+                    disabled={currentStep === 0 || status === "loading"}
+                    className={currentStep === 0 ? "invisible" : ""}
+                  >
+                    <ArrowLeft className="h-4 w-4 mr-2" />
+                    Back
+                  </Button>
+                  
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs text-neutral-400 font-medium">
+                      Step {currentStep + 1} of {STEPS.length}
+                    </span>
+                    <Button
+                      onClick={handleNext}
+                      disabled={!isStepValid() || status === "loading"}
+                      className="bg-neutral-900 hover:bg-neutral-800 text-white min-w-[100px]"
+                    >
+                      {status === "loading" ? (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                      ) : currentStep === STEPS.length - 1 ? (
+                        <>
+                          Submit
+                          <Send className="h-4 w-4 ml-2" />
+                        </>
+                      ) : (
+                        <>
+                          Next
+                          <ArrowRight className="h-4 w-4 ml-2" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
                 </div>
               </div>
 
@@ -424,33 +550,19 @@ export default function FeedbackPage() {
               <AnimatePresence>
                 {status === "error" && (
                   <motion.div 
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    className="overflow-hidden"
+                    initial={{ height: 0 }}
+                    animate={{ height: "auto" }}
+                    exit={{ height: 0 }}
+                    className="overflow-hidden bg-red-50 border-t border-red-100"
                   >
-                    <div className="flex items-center gap-2 text-sm text-red-600 dark:text-red-400 bg-red-50 dark:bg-red-900/10 p-3 rounded-lg border border-red-100 dark:border-red-900/20">
+                    <div className="flex items-center gap-2 text-sm text-red-600 p-3 justify-center">
                       <AlertCircle className="h-4 w-4 shrink-0" />
                       <p>{errorMessage}</p>
                     </div>
                   </motion.div>
                 )}
               </AnimatePresence>
-
-              {/* Submit */}
-              <Button
-                type="submit"
-                disabled={status === "loading" || isSubmitting}
-                className="w-full h-12 text-sm font-medium transition-all shadow-sm hover:shadow-md bg-neutral-900 dark:bg-white text-white dark:text-neutral-900 hover:bg-neutral-800 dark:hover:bg-neutral-100"
-              >
-                {status === "loading" ? (
-                  <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                ) : (
-                  <Send className="h-4 w-4 mr-2" />
-                )}
-                <span>Send Feedback</span>
-              </Button>
-            </motion.form>
+            </motion.div>
           )}
         </AnimatePresence>
       </div>

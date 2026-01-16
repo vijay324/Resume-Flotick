@@ -9,12 +9,14 @@ const RATE_LIMIT_MAX_REQUESTS = 5; // 5 submissions per hour per IP
 
 // Feature feedback schema
 const featureFeedbackSchema = z.object({
-  rating: z.enum(["very-useful", "useful", "neutral", "not-useful", ""]),
+  rating: z.enum(["very-useful", "useful", "neutral", "not-useful", "not-used", ""]),
   comment: z.string().max(2000).optional(),
 });
 
 // Main feedback schema
 const feedbackSchema = z.object({
+  name: z.string().optional(),
+  email: z.string().email().optional().or(z.literal("")),
   overallRating: z.number().min(1).max(5),
   features: z.object({
     "resume-builder": featureFeedbackSchema,
@@ -105,13 +107,14 @@ export async function POST(request: Request) {
     const result = feedbackSchema.safeParse(body);
 
     if (!result.success) {
+      console.error("Validation error:", result.error.flatten());
       return NextResponse.json(
         { message: "Invalid feedback data", errors: result.error.flatten() },
         { status: 400 }
       );
     }
 
-    const { overallRating, features, improvements, issues } = result.data;
+    const { name, email, overallRating, features, improvements, issues } = result.data;
 
     // Check email configuration
     const emailUser = process.env.GMAIL_USER;
@@ -143,26 +146,13 @@ export async function POST(request: Request) {
       timeStyle: "long",
     });
 
-    // Build feature feedback HTML
-    let featureFeedbackHTML = "";
+    // Build feature feedback text for plain text version
     let featureFeedbackText = "";
-
     for (const [featureId, feedback] of Object.entries(features)) {
-      const featureName = FEATURE_NAMES[featureId] || featureId;
-      const ratingLabel = feedback.rating ? RATING_LABELS[feedback.rating] : "Not rated";
-      const comment = feedback.comment ? sanitizeInput(feedback.comment) : "No comment";
-
-      featureFeedbackHTML += `
-        <tr style="border-bottom: 1px solid #eee;">
-          <td style="padding: 12px; font-weight: 600; vertical-align: top; width: 200px;">${featureName}</td>
-          <td style="padding: 12px; vertical-align: top;">
-            <div style="margin-bottom: 4px;"><strong>Rating:</strong> ${ratingLabel}</div>
-            <div style="color: #666;"><strong>Comment:</strong> ${comment}</div>
-          </td>
-        </tr>
-      `;
-
-      featureFeedbackText += `\n${featureName}\n  Rating: ${ratingLabel}\n  Comment: ${comment}\n`;
+        const featureName = FEATURE_NAMES[featureId] || featureId;
+        const ratingLabel = feedback.rating ? RATING_LABELS[feedback.rating] : "Not rated";
+        const comment = feedback.comment ? sanitizeInput(feedback.comment) : "No comment";
+        featureFeedbackText += `\n${featureName}\n  Rating: ${ratingLabel}\n  Comment: ${comment}\n`;
     }
 
     // Build email content
@@ -173,6 +163,19 @@ export async function POST(request: Request) {
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>New Feedback</title>
+        <!-- Force Light Mode -->
+        <meta name="color-scheme" content="light">
+        <meta name="supported-color-schemes" content="light">
+        <style>
+          /* Force light mode styles */
+          :root {
+            color-scheme: light;
+          }
+          body {
+            background-color: #f5f5f5 !important;
+            color: #171717 !important;
+          }
+        </style>
       </head>
       <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; color: #171717; margin: 0; padding: 0; background-color: #f5f5f5;">
         
@@ -186,6 +189,17 @@ export async function POST(request: Request) {
           
           <div style="padding: 32px;">
             
+            <!-- User Info (if provided) -->
+            ${(name || email) ? `
+              <div style="margin-bottom: 24px; padding-bottom: 24px; border-bottom: 1px solid #f5f5f5;">
+                <p style="margin: 0 0 12px 0; font-size: 13px; font-weight: 600; color: #404040;">User Details</p>
+                <div style="font-size: 14px; color: #171717;">
+                  ${name ? `<strong>${sanitizeInput(name)}</strong>` : "Anonymous User"}
+                  ${email ? `<br><span style="color: #525252;">${sanitizeInput(email)}</span>` : ""}
+                </div>
+              </div>
+            ` : ""}
+
             <!-- Key Metrics -->
             <div style="display: flex; gap: 24px; margin-bottom: 32px;">
               <div style="flex: 1;">
@@ -258,9 +272,9 @@ NEW FEEDBACK RECEIVED - ${companyName}
 ================================================
 
 📅 Submitted: ${formattedDate}
-🕐 ISO: ${timestamp}
+1: ISO: ${timestamp}
 🌐 IP: ${clientIP}
-
+${(name || email) ? `\nUSER DETAILS\n------------\nName: ${name || "N/A"}\nEmail: ${email || "N/A"}\n` : ""}
 ⭐ OVERALL RATING
 -----------------
 ${getStarRating(overallRating)} (${overallRating}/5)
