@@ -17,7 +17,7 @@ export function LandingFooter() {
               Free AI-powered resume builder by <a href="https://Flotick.com" className="font-semibold text-foreground hover:underline" target="_blank" rel="noopener noreferrer">Flotick</a>.
             </p>
             <p className="text-xs text-muted-foreground mt-2">
-              Flotick is an enterprise B2B work management platform helping teams collaborate and succeed.
+              Flotick is an enterprise work management platform helping teams collaborate and succeed.
             </p>
           </div>
           
@@ -42,7 +42,7 @@ export function LandingFooter() {
           <div>
             <h4 className="font-semibold mb-4">Legal</h4>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li><Link href="/privacy" className="hover:text-primary transition-colors">Privacy</Link></li>
+              <li><Link href="/legal" className="hover:text-primary transition-colors">Privacy</Link></li>
               <li><Link href="/terms" className="hover:text-primary transition-colors">Terms</Link></li>
               <li><Link href="/contact" className="hover:text-primary transition-colors">Contact</Link></li>
             </ul>

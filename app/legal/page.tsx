@@ -51,7 +51,7 @@ export default function LegalPage() {
         <section className="mb-8">
           <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">6. Contact Us</h2>
           <p className="text-neutral-600 dark:text-neutral-400">
-            If you have any questions about this Privacy Policy, please contact us at <a href="mailto:flotcik.support@gmail.com" className="text-blue-600 hover:underline">flotcik.support@gmail.com</a>.
+            If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@flotick.com" className="text-blue-600 hover:underline">support@flotick.com</a>
           </p>
         </section>
       </div>

@@ -144,23 +144,10 @@ export default async function BlogPostPage({
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleSchema) }}
       />
 
-      {/* Navigation */}
-      <nav className="border-b border-border bg-background/80 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center gap-2 font-bold text-lg">
-            <div className="h-6 w-6 bg-blue-600 rounded-md flex items-center justify-center text-white text-xs">
-              F
-            </div>
-            Flotick Resume
-          </Link>
-          <Link href="/builder">
-            <Button size="sm">Build Resume</Button>
-          </Link>
-        </div>
-      </nav>
+     
 
       {/* Article */}
-      <article className="py-12">
+      <article className="pt-26 pb-14">
         <div className="container mx-auto px-4 max-w-3xl">
           {/* Back link */}
           <Link
@@ -253,24 +240,6 @@ export default async function BlogPostPage({
           )}
         </div>
       </article>
-
-      {/* Footer */}
-      <footer className="py-8 border-t border-border">
-        <div className="container mx-auto px-4 text-center text-sm text-muted-foreground">
-          <p>
-            © {new Date().getFullYear()} Flotick Resume. A product of{" "}
-            <a
-              href="https://Flotick.com"
-              className="font-semibold text-foreground hover:underline"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Flotick
-            </a>
-            .
-          </p>
-        </div>
-      </footer>
     </main>
   );
 }

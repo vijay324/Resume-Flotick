@@ -176,7 +176,7 @@ export default function LandingPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <LandingHero />
-      <LandingSocialProof />
+      {/* <LandingSocialProof /> */}
       <LandingFeatures />
       <LandingValueProposition />
       <LandingFAQ />

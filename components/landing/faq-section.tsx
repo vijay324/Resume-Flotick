@@ -98,7 +98,7 @@ export function LandingFAQ() {
           </p>
         </div>
 
-        <div className="divide-y divide-border rounded-xl border border-border bg-card p-2">
+        <div className="divide-y divide-border">
           {faqs.map((faq, index) => (
             <FAQItem
               key={faq.question}
