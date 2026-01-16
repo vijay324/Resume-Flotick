@@ -10,20 +10,21 @@ import { UndoRedoControls } from "@/components/ui/undo-redo-controls";
 import { ZoomControls } from "@/components/ui/zoom-controls";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Download, PanelLeftClose, PanelLeft, ChevronLeft, Trash2 } from "lucide-react";
-import { useReactToPrint } from "react-to-print";
 import Link from "next/link";
 import Image from "next/image";
 import { useResume } from "@/context/resume-context";
+import { useTemplate } from "@/context/template-context";
 import { MobileToolbar } from "@/components/resume-builder/mobile-toolbar";
+import { PdfDownloadButton } from "@/components/pdf-download-button";
 
 export function ResumeBuilder() {
   const contentRef = useRef<HTMLDivElement>(null);
-  const reactToPrintFn = useReactToPrint({ contentRef });
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [zoom, setZoom] = useState(0.9); // Default scale
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
-  const { clearAllData } = useResume();
+  const { resumeData, clearAllData } = useResume();
+  const { templateType } = useTemplate();
 
   const handleClearResume = async () => {
     setIsClearing(true);
@@ -82,7 +83,8 @@ export function ResumeBuilder() {
 
         {/* Mobile Toolbar */}
         <MobileToolbar 
-          onDownload={reactToPrintFn}
+          resumeData={resumeData}
+          templateType={templateType}
           onClear={() => setIsClearDialogOpen(true)}
           zoom={zoom}
           onZoomChange={setZoom}
@@ -116,14 +118,7 @@ export function ResumeBuilder() {
                 </Button>
                 <ZoomControls zoom={zoom} onZoomChange={setZoom} />
                 <TemplateSelector />
-                <Button 
-                  size="sm" 
-                  className="h-9 gap-2 shadow-lg hover:shadow-xl bg-gray-900 hover:bg-black text-white rounded-full px-5 transition-all hover:-translate-y-0.5"
-                  onClick={() => reactToPrintFn()}
-                >
-                   <Download className="h-3.5 w-3.5" /> 
-                   <span className="font-medium">Download PDF</span>
-                </Button>
+                <PdfDownloadButton resumeData={resumeData} templateType={templateType} />
             </div>
 
             {/* Background Pattern */}

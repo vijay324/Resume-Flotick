@@ -35,14 +35,14 @@ export function ClassicTemplate({ resumeData }: TemplateProps) {
              {personalInfo.phone && (
                <div className="flex items-center gap-1">
                  <Phone className="h-3 w-3 text-gray-500" />
-                 <span className="text-gray-900 font-medium">{personalInfo.phone}</span>
+                 <a href={`tel:${personalInfo.phone}`} className="text-gray-900 font-medium hover:text-blue-600 transition-colors">{personalInfo.phone}</a>
                </div>
              )}
              {personalInfo.phone && personalInfo.email && <Separator />}
              {personalInfo.email && (
                <div className="flex items-center gap-1">
                  <Mail className="h-3 w-3 text-gray-500" />
-                 <span className="text-gray-900 font-medium">{personalInfo.email}</span>
+                 <a href={`mailto:${personalInfo.email}`} className="text-gray-900 font-medium hover:text-blue-600 transition-colors">{personalInfo.email}</a>
                </div>
              )}
              {(personalInfo.email || personalInfo.phone) && personalInfo.location && <Separator />}
@@ -60,21 +60,21 @@ export function ClassicTemplate({ resumeData }: TemplateProps) {
                {personalInfo.linkedin && (
                  <div className="flex items-center gap-1">
                    <Linkedin className="h-3 w-3 text-gray-500" />
-                   <span className="text-gray-900 underline decoration-gray-300 underline-offset-2">{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                   <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="text-gray-900 underline decoration-gray-300 underline-offset-2 hover:text-blue-600 transition-colors">{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</a>
                  </div>
                )}
                {personalInfo.linkedin && personalInfo.github && <Separator />}
                {personalInfo.github && (
                  <div className="flex items-center gap-1">
                    <Github className="h-3 w-3 text-gray-500" />
-                   <span className="text-gray-900 underline decoration-gray-300 underline-offset-2">{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                   <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="text-gray-900 underline decoration-gray-300 underline-offset-2 hover:text-blue-600 transition-colors">{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</a>
                  </div>
                )}
                {(personalInfo.linkedin || personalInfo.github) && personalInfo.website && <Separator />}
                {personalInfo.website && (
                  <div className="flex items-center gap-1">
                    <Globe className="h-3 w-3 text-gray-500" />
-                   <span className="text-gray-900 underline decoration-gray-300 underline-offset-2">{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                   <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="text-gray-900 underline decoration-gray-300 underline-offset-2 hover:text-blue-600 transition-colors">{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</a>
                  </div>
                )}
             </div>

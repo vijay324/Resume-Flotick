@@ -6,18 +6,23 @@ import { Sheet, Menu, X, Download, Trash2, ZoomIn, ZoomOut } from "lucide-react"
 import { TemplateSelector } from "@/components/template-selector";
 import { ZoomControls } from "@/components/ui/zoom-controls";
 
+import { PdfDownloadButton } from "@/components/pdf-download-button";
+import type { ResumeData, TemplateType } from "@/types/resume";
+
 interface MobileToolbarProps {
-  onDownload: () => void;
   onClear: () => void;
   zoom: number;
   onZoomChange: (zoom: number) => void;
+  resumeData: ResumeData;
+  templateType: TemplateType;
 }
 
 export function MobileToolbar({
-  onDownload,
   onClear,
   zoom,
   onZoomChange,
+  resumeData,
+  templateType,
 }: MobileToolbarProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -58,16 +63,9 @@ export function MobileToolbar({
             {/* Actions */}
             <div className="space-y-6">
               {/* Main CTA */}
-              <Button 
-                onClick={() => {
-                  onDownload();
-                  setIsOpen(false);
-                }}
-                className="w-full gap-2 bg-gray-900 text-white hover:bg-black shadow-lg"
-              >
-                <Download className="h-4 w-4" />
-                Download PDF
-              </Button>
+              <div onClick={() => setIsOpen(false)}>
+                <PdfDownloadButton resumeData={resumeData} templateType={templateType} />
+              </div>
 
               <div className="space-y-3">
                 <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">

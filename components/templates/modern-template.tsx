@@ -32,13 +32,13 @@ export function ModernTemplate({ resumeData }: TemplateProps) {
             {personalInfo.phone && (
               <div className="flex items-center gap-1.5">
                 <Phone className="h-3.5 w-3.5 text-blue-300" />
-                <span>{personalInfo.phone}</span>
+                <a href={`tel:${personalInfo.phone}`} className="hover:text-white transition-colors">{personalInfo.phone}</a>
               </div>
             )}
             {personalInfo.email && (
               <div className="flex items-center gap-1.5">
                 <Mail className="h-3.5 w-3.5 text-blue-300" />
-                <span>{personalInfo.email}</span>
+                <a href={`mailto:${personalInfo.email}`} className="hover:text-white transition-colors">{personalInfo.email}</a>
               </div>
             )}
             {personalInfo.location && (
@@ -50,19 +50,19 @@ export function ModernTemplate({ resumeData }: TemplateProps) {
             {personalInfo.linkedin && (
               <div className="flex items-center gap-1.5">
                 <Linkedin className="h-3.5 w-3.5 text-blue-300" />
-                <span>{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</a>
               </div>
             )}
             {personalInfo.github && (
               <div className="flex items-center gap-1.5">
                 <Github className="h-3.5 w-3.5 text-blue-300" />
-                <span>{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</a>
               </div>
             )}
             {personalInfo.website && (
               <div className="flex items-center gap-1.5">
                 <Globe className="h-3.5 w-3.5 text-blue-300" />
-                <span>{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</a>
               </div>
             )}
           </div>

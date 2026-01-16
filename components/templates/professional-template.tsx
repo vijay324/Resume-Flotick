@@ -51,13 +51,13 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
                 {personalInfo.phone && (
                   <div className="flex items-center gap-2">
                     <Phone className="h-3 w-3 text-gray-400 shrink-0" />
-                    <span className="break-words">{personalInfo.phone}</span>
+                    <a href={`tel:${personalInfo.phone}`} className="break-words hover:text-white transition-colors">{personalInfo.phone}</a>
                   </div>
                 )}
                 {personalInfo.email && (
                   <div className="flex items-center gap-2">
                     <Mail className="h-3 w-3 text-gray-400 shrink-0" />
-                    <span className="break-words">{personalInfo.email}</span>
+                    <a href={`mailto:${personalInfo.email}`} className="break-words hover:text-white transition-colors">{personalInfo.email}</a>
                   </div>
                 )}
                 {personalInfo.location && (
@@ -69,19 +69,19 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
                 {personalInfo.linkedin && (
                   <div className="flex items-center gap-2">
                     <Linkedin className="h-3 w-3 text-gray-400 shrink-0" />
-                    <span className="break-words">{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                    <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="break-words hover:text-white transition-colors">{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</a>
                   </div>
                 )}
                 {personalInfo.github && (
                   <div className="flex items-center gap-2">
                     <Github className="h-3 w-3 text-gray-400 shrink-0" />
-                    <span className="break-words">{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                    <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="break-words hover:text-white transition-colors">{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</a>
                   </div>
                 )}
                 {personalInfo.website && (
                   <div className="flex items-center gap-2">
                     <Globe className="h-3 w-3 text-gray-400 shrink-0" />
-                    <span className="break-words">{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</span>
+                    <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="break-words hover:text-white transition-colors">{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</a>
                   </div>
                 )}
               </div>
