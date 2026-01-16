@@ -156,8 +156,8 @@ export function sanitizeRichText(input: string): string {
     .replace(/on\w+\s*=\s*[^\s>]*/gi, "");
 
   // Remove javascript: and data: URLs
-  sanitized = sanitized.replace(/href\s*=\s*["']?javascript:[^"'>]*/gi, "");
-  sanitized = sanitized.replace(/src\s*=\s*["']?data:[^"'>]*/gi, "");
+  sanitized = sanitized.replace(/href\s*=\s*(["'])?javascript:.*?\1/gi, "");
+  sanitized = sanitized.replace(/src\s*=\s*(["'])?data:.*?\1/gi, "");
 
   return sanitized;
 }

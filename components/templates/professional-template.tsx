@@ -18,12 +18,22 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
     >
       <div 
         className="resume-page bg-white shadow-none text-[10pt] leading-[1.4] text-[#1a1a1a]"
-        style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }} 
+        style={{ 
+          fontFamily: "Georgia, 'Times New Roman', Times, serif",
+          background: "linear-gradient(to right, #2c3e50 30%, white 30%)",
+          WebkitPrintColorAdjust: "exact",
+          paddingTop: "24px",
+          paddingBottom: "24px",
+          boxDecorationBreak: "clone",
+          WebkitBoxDecorationBreak: "clone"
+        }} 
       >
         {/* Two Column Layout */}
         <div className="flex min-h-[297mm]">
           {/* Left Sidebar - 30% */}
-          <div className="w-[30%] bg-[#2c3e50] text-white p-6">
+          <div 
+            className="w-[30%] text-white px-5"
+          >
             {/* Name & Title */}
             <div className="mb-6 pb-4 border-b border-white/20 break-inside-avoid">
               <h1 className="text-[18pt] font-bold leading-tight mb-1">{personalInfo.fullName}</h1>
@@ -125,7 +135,9 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
           </div>
 
           {/* Right Content - 70% */}
-          <div className="w-[70%] p-8">
+          <div 
+            className="w-[70%] px-6"
+          >
             {/* Summary */}
             {personalInfo.summary && (
               <div className="mb-5 break-inside-avoid">
@@ -139,7 +151,7 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
               <div className="mb-5">
                 <h2 className="text-[11pt] font-bold uppercase border-b-2 border-[#2c3e50] mb-3 pb-1 tracking-wider text-[#2c3e50]">Experience</h2>
                 {experience.map((exp: ExperienceItem) => (
-                  <div key={exp.id} className="mb-4 break-inside-avoid">
+                  <div key={exp.id} className="mb-5 break-inside-avoid">
                     <div className="flex justify-between items-baseline">
                       <h3 className="font-bold text-[11pt] text-gray-900">{exp.position}</h3>
                       <span className="text-[9pt] text-gray-600 font-medium whitespace-nowrap">
@@ -169,7 +181,7 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
               <div className="mb-5">
                 <h2 className="text-[11pt] font-bold uppercase border-b-2 border-[#2c3e50] mb-3 pb-1 tracking-wider text-[#2c3e50]">Projects</h2>
                 {projects.map((proj: ProjectItem) => (
-                  <div key={proj.id} className="mb-3 break-inside-avoid">
+                  <div key={proj.id} className="mb-4 break-inside-avoid">
                     <div className="flex items-baseline gap-2 mb-0.5">
                       <h3 className="font-bold text-[10pt] text-gray-900">{proj.name}</h3>
                       {proj.link && (
