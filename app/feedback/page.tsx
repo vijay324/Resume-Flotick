@@ -130,50 +130,90 @@ function StarRating({
 }) {
   const [hoverValue, setHoverValue] = useState(0);
 
-  const labels = ["Could be better", "It's okay", "Pretty good", "Excellent", "Mind-blowing"];
+  const labels = [
+    "Needs improvement", // 0.5
+    "Could be better",    // 1
+    "Below average",    // 1.5
+    "It's okay",         // 2
+    "Fair enough",       // 2.5
+    "Pretty good",       // 3
+    "Impressive",        // 3.5
+    "Excellent",         // 4
+    "Outstanding",       // 4.5
+    "Mind-blowing"       // 5
+  ];
+
+  const currentVal = hoverValue || value;
 
   return (
     <div className="flex flex-col items-center gap-6 py-10">
-      <div className="flex items-center gap-4" onMouseLeave={() => setHoverValue(0)}>
+      <div className="flex items-center gap-2" onMouseLeave={() => setHoverValue(0)}>
         {[1, 2, 3, 4, 5].map((star) => (
-          <button
+          <div
             key={star}
-            type="button"
-            onClick={() => onChange(star)}
-            onMouseEnter={() => setHoverValue(star)}
-            className="group relative focus:outline-none transition-all active:scale-90"
-            aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
+            className="group relative h-14 w-14 transition-all"
           >
+            {/* Left half hitbox */}
+            <div 
+              className="absolute left-0 top-0 w-1/2 h-full z-20 cursor-pointer" 
+              onMouseEnter={() => setHoverValue(star - 0.5)}
+              onClick={() => onChange(star - 0.5)}
+            />
+            {/* Right half hitbox */}
+            <div 
+              className="absolute right-0 top-0 w-1/2 h-full z-20 cursor-pointer" 
+              onMouseEnter={() => setHoverValue(star)}
+              onClick={() => onChange(star)}
+            />
+
             <motion.div
+              className="pointer-events-none"
               animate={{
-                scale: (hoverValue || value) >= star ? 1.2 : 1,
-                rotate: (hoverValue || value) >= star ? [0, 10, -10, 0] : 0,
+                scale: currentVal >= star - 0.5 ? 1.15 : 1,
+                rotate: currentVal >= star - 0.5 ? [0, 5, -5, 0] : 0,
               }}
               transition={{ duration: 0.2 }}
             >
-              <Star
-                className={`h-12 w-12 transition-all duration-300 ${
-                  star <= (hoverValue || value)
-                    ? "fill-amber-400 text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.5)]"
-                    : "fill-transparent text-neutral-200 group-hover:text-neutral-300"
-                }`}
-                strokeWidth={1.5}
-              />
+              <div className="relative">
+                {/* Background Star */}
+                <Star
+                  className="h-14 w-14 text-neutral-200 fill-transparent transition-colors duration-300 group-hover:text-neutral-300"
+                  strokeWidth={1.5}
+                />
+                
+                {/* Foreground Filled Star */}
+                <div 
+                  className="absolute top-0 left-0 h-full overflow-hidden transition-all duration-300 ease-out"
+                  style={{ 
+                    width: currentVal >= star ? '100%' : currentVal >= star - 0.5 ? '50%' : '0%' 
+                  }}
+                >
+                  <Star
+                    className="h-14 w-14 fill-amber-400 text-amber-400 drop-shadow-[0_0_15px_rgba(251,191,36,0.3)]"
+                    strokeWidth={1.5}
+                  />
+                </div>
+              </div>
             </motion.div>
-          </button>
+          </div>
         ))}
       </div>
       <AnimatePresence mode="wait">
         {value > 0 && (
-          <motion.p
+          <motion.div
             key={value}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="text-lg font-semibold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent italic"
+            className="flex flex-col items-center gap-1"
           >
-            {labels[value - 1]}
-          </motion.p>
+            <span className="text-2xl font-black text-neutral-900 leading-none">
+              {value.toFixed(1)}
+            </span>
+            <p className="text-sm font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent uppercase tracking-wider">
+              {labels[Math.round(value * 2) - 1]}
+            </p>
+          </motion.div>
         )}
       </AnimatePresence>
     </div>

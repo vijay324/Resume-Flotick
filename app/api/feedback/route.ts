@@ -17,7 +17,7 @@ const featureFeedbackSchema = z.object({
 const feedbackSchema = z.object({
   name: z.string().min(1, "Name is required"),
   email: z.string().email().optional().or(z.literal("")),
-  overallRating: z.number().min(1).max(5),
+  overallRating: z.number().min(0.5).max(5),
   features: z.object({
     "resume-builder": featureFeedbackSchema,
     "ai-optimization": featureFeedbackSchema,
@@ -86,7 +86,9 @@ const RATING_LABELS: Record<string, string> = {
 
 // Generate star icons for rating
 function getStarRating(rating: number): string {
-  return "★".repeat(rating) + "☆".repeat(5 - rating);
+  const full = Math.floor(rating);
+  const half = rating % 1 !== 0;
+  return "★".repeat(full) + (half ? "½" : "") + "☆".repeat(Math.max(0, 5 - full - (half ? 1 : 0)));
 }
 
 export async function POST(request: Request) {
@@ -212,8 +214,8 @@ export async function POST(request: Request) {
               <div style="flex: 1;">
                 <p style="margin: 0; font-size: 13px; color: #737373;">Overall Rating</p>
                 <div style="margin-top: 4px; display: flex; align-items: baseline; gap: 8px;">
-                  <span style="font-size: 20px; font-weight: 600; color: #171717;">${overallRating}.0</span>
-                  <span style="color: #f59e0b; font-size: 18px;">${"★".repeat(overallRating)}${"☆".repeat(5 - overallRating)}</span>
+                  <span style="font-size: 20px; font-weight: 600; color: #171717;">${overallRating.toFixed(1)}</span>
+                  <span style="color: #f59e0b; font-size: 18px;">${getStarRating(overallRating)}</span>
                 </div>
               </div>
               <div style="flex: 1.5;">
