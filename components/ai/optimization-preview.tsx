@@ -26,22 +26,42 @@ export function OptimizationPreview({ result, onBack }: OptimizationPreviewProps
   const { resumeData, setResumeData } = useResume();
   const [syncedSections, setSyncedSections] = useState<Set<string>>(new Set());
 
+  // Helper to strip markdown formatting (bold/italic) from text
+  const stripMarkdown = (text: string): string => {
+    return text
+      .replace(/\*\*([^*]+)\*\*/g, '$1')  // Remove **bold**
+      .replace(/\*([^*]+)\*/g, '$1')       // Remove *italic*
+      .replace(/__([^_]+)__/g, '$1')       // Remove __bold__
+      .replace(/_([^_]+)_/g, '$1');        // Remove _italic_
+  };
+
   // Helper to parse complex nested keys like "experience.0.description"
   const applyChange = (sectionKey: string, newValue: string) => {
-    // For simple keys (e.g. personalInfo.summary)
-    if (sectionKey === "personalInfo.summary") {
+    // Strip markdown formatting from the value before applying
+    const cleanValue = stripMarkdown(newValue);
+    // Handle "summary" key (maps to personalInfo.summary)
+    if (sectionKey === "summary" || sectionKey === "personalInfo.summary") {
        setResumeData(prev => ({
          ...prev,
          personalInfo: {
            ...prev.personalInfo,
-           summary: newValue
+           summary: cleanValue
          }
        }));
        setSyncedSections(prev => new Set(prev).add(sectionKey));
        return;
     }
 
-    // For array items like experience.0.description
+    // Handle skills section - the AI might return a comma-separated list of skills
+    if (sectionKey === "skills") {
+      // For skills, we update the skill names based on the optimized content
+      // The AI typically returns suggestions, we'll keep skills as-is for manual editing
+      setSyncedSections(prev => new Set(prev).add(sectionKey));
+      console.info("Skills optimization noted. Please review and update skills manually if needed.");
+      return;
+    }
+
+    // For array items like experience.0.description or projects.0.description
     const parts = sectionKey.split(".");
     if (parts.length === 3) {
        const [section, indexStr, field] = parts;
@@ -52,7 +72,28 @@ export function OptimizationPreview({ result, onBack }: OptimizationPreviewProps
            // @ts-ignore - Dynamic access is safe here given the structure check
            const list = [...prev[section]];
            if (list[index]) {
-             list[index] = { ...list[index], [field]: newValue };
+             list[index] = { ...list[index], [field]: cleanValue };
+             return { ...prev, [section]: list };
+           }
+           return prev;
+         });
+         setSyncedSections(prev => new Set(prev).add(sectionKey));
+         return;
+       }
+    }
+
+    // Handle direct section fields like "experience.0" (full item replacement not supported)
+    if (parts.length === 2) {
+       const [section, indexStr] = parts;
+       const index = parseInt(indexStr);
+       
+       if ((section === "experience" || section === "projects" || section === "education") && !isNaN(index)) {
+         // For now, assume it's the description field if not specified
+         setResumeData(prev => {
+           // @ts-ignore - Dynamic access is safe here given the structure check
+           const list = [...prev[section]];
+           if (list[index]) {
+             list[index] = { ...list[index], description: cleanValue };
              return { ...prev, [section]: list };
            }
            return prev;
