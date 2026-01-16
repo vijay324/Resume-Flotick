@@ -168,66 +168,86 @@ export async function POST(request: Request) {
     // Build email content
     const emailHTML = `
       <!DOCTYPE html>
-      <html>
+      <html lang="en">
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>New Feedback</title>
       </head>
-      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 700px; margin: 0 auto; padding: 20px;">
+      <body style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; color: #171717; margin: 0; padding: 0; background-color: #f5f5f5;">
         
-        <div style="background: linear-gradient(135deg, #3b82f6, #8b5cf6); color: white; padding: 24px; border-radius: 12px 12px 0 0;">
-          <h1 style="margin: 0; font-size: 24px;">📬 New Feedback Received</h1>
-          <p style="margin: 8px 0 0 0; opacity: 0.9; font-size: 14px;">${companyName} Builder</p>
-        </div>
-        
-        <div style="background: #f8fafc; padding: 20px; border-radius: 0 0 12px 12px; border: 1px solid #e2e8f0;">
+        <div style="max-width: 600px; margin: 40px auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.1);">
           
-          <!-- Timestamp -->
-          <div style="background: white; padding: 16px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #e2e8f0;">
-            <p style="margin: 0; color: #666; font-size: 14px;">
-              <strong>📅 Submitted:</strong> ${formattedDate}<br>
-              <strong>🕐 ISO:</strong> ${timestamp}<br>
-              <strong>🌐 IP:</strong> ${clientIP}
-            </p>
+          <!-- Minimal Header -->
+          <div style="padding: 32px 32px 24px 32px; border-bottom: 1px solid #f0f0f0;">
+            <p style="margin: 0; font-size: 12px; color: #737373; text-transform: uppercase; letter-spacing: 0.5px; font-weight: 600;">New Feedback Received</p>
+            <h1 style="margin: 8px 0 0 0; font-size: 24px; font-weight: 600; color: #171717;">${companyName}</h1>
           </div>
           
-          <!-- Overall Rating -->
-          <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #e2e8f0;">
-            <h2 style="margin: 0 0 12px 0; font-size: 18px; color: #1e293b;">⭐ Overall Rating</h2>
-            <div style="font-size: 24px; color: #f59e0b;">${getStarRating(overallRating)}</div>
-            <p style="margin: 8px 0 0 0; color: #64748b;">${overallRating} out of 5 stars</p>
-          </div>
-          
-          <!-- Feature Feedback -->
-          <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #e2e8f0;">
-            <h2 style="margin: 0 0 16px 0; font-size: 18px; color: #1e293b;">📊 Feature-wise Feedback</h2>
-            <table style="width: 100%; border-collapse: collapse;">
-              ${featureFeedbackHTML}
-            </table>
-          </div>
-          
-          <!-- Additional Feedback -->
-          <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 16px; border: 1px solid #e2e8f0;">
-            <h2 style="margin: 0 0 16px 0; font-size: 18px; color: #1e293b;">💬 Additional Feedback</h2>
+          <div style="padding: 32px;">
             
-            <div style="margin-bottom: 16px;">
-              <h3 style="margin: 0 0 8px 0; font-size: 14px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">What can we improve?</h3>
-              <p style="margin: 0; padding: 12px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #3b82f6;">
-                ${improvements ? sanitizeInput(improvements) : "<em style='color: #94a3b8;'>No response provided</em>"}
-              </p>
+            <!-- Key Metrics -->
+            <div style="display: flex; gap: 24px; margin-bottom: 32px;">
+              <div style="flex: 1;">
+                <p style="margin: 0; font-size: 13px; color: #737373;">Overall Rating</p>
+                <div style="margin-top: 4px; display: flex; align-items: baseline; gap: 8px;">
+                  <span style="font-size: 20px; font-weight: 600; color: #171717;">${overallRating}.0</span>
+                  <span style="color: #f59e0b; font-size: 18px;">${"★".repeat(overallRating)}${"☆".repeat(5 - overallRating)}</span>
+                </div>
+              </div>
+              <div style="flex: 1;">
+                <p style="margin: 0; font-size: 13px; color: #737373;">Submitted</p>
+                <p style="margin: 4px 0 0 0; font-size: 14px; font-weight: 500; color: #171717;">${new Date().toLocaleDateString("en-US", { month: 'short', day: 'numeric', year: 'numeric' })}</p>
+              </div>
             </div>
-            
+
+            <!-- Suggestion / Bug Report -->
+            ${improvements ? `
+            <div style="margin-bottom: 24px;">
+              <p style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600; color: #404040;">💡 Suggestion</p>
+              <div style="background-color: #f9fafb; padding: 16px; border-radius: 6px; font-size: 14px; color: #404040;">
+                ${sanitizeInput(improvements || "")}
+              </div>
+            </div>` : ""}
+
+            ${issues ? `
+            <div style="margin-bottom: 24px;">
+              <p style="margin: 0 0 8px 0; font-size: 13px; font-weight: 600; color: #dc2626;">🐛 Bug Report</p>
+              <div style="background-color: #fef2f2; padding: 16px; border-radius: 6px; font-size: 14px; color: #991b1b;">
+                ${sanitizeInput(issues || "")}
+              </div>
+            </div>` : ""}
+
+            <!-- Feature Breakdown Table -->
             <div>
-              <h3 style="margin: 0 0 8px 0; font-size: 14px; color: #64748b; text-transform: uppercase; letter-spacing: 0.5px;">Issues or Suggestions</h3>
-              <p style="margin: 0; padding: 12px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #8b5cf6;">
-                ${issues ? sanitizeInput(issues) : "<em style='color: #94a3b8;'>No response provided</em>"}
+              <p style="margin: 0 0 12px 0; font-size: 13px; font-weight: 600; color: #404040;">Feature Ratings</p>
+              <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                ${Object.entries(features).map(([key, f]) => {
+                  const label = RATING_LABELS[f.rating] || "—";
+                  const name = FEATURE_NAMES[key] || key;
+                  const hasComment = f.comment && f.comment.trim().length > 0;
+                  
+                  return `
+                    <tr style="border-bottom: 1px solid #f5f5f5;">
+                      <td style="padding: 12px 0; color: #404040; width: 40%; vertical-align: top;">${name}</td>
+                      <td style="padding: 12px 0; text-align: right; vertical-align: top;">
+                        <span style="display: inline-block; padding: 2px 8px; border-radius: 99px; background-color: #f3f4f6; color: #4b5563; font-size: 12px; font-weight: 500;">${label}</span>
+                        ${hasComment ? `<div style="margin-top: 8px; text-align: left; font-size: 13px; color: #525252; background: #fafafa; padding: 8px; border-radius: 4px;">"${sanitizeInput(f.comment || "")}"</div>` : ""}
+                      </td>
+                    </tr>
+                  `;
+                }).join("")}
+              </table>
+            </div>
+
+            <!-- Footer -->
+            <div style="margin-top: 32px; border-top: 1px solid #f0f0f0; padding-top: 24px;">
+              <p style="margin: 0; font-size: 11px; color: #a3a3a3; text-align: center;">
+                Sent via ${companyName} Feedback API • IP: ${clientIP}
               </p>
             </div>
+            
           </div>
-          
-          <p style="text-align: center; color: #94a3b8; font-size: 12px; margin: 16px 0 0 0;">
-            This feedback was submitted via the ${companyName} feedback form.
-          </p>
         </div>
       </body>
       </html>
