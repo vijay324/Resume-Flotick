@@ -24,6 +24,7 @@ export function LandingNavbar() {
     { name: "Features", href: "/#features" },
     { name: "Blogs", href: "/blog" },
     { name: "About", href: "/about" },
+    { name: "Feedback", href: "/feedback" },
   ];
 
   return (
