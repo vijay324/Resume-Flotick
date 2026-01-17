@@ -26,37 +26,49 @@ function isMobileDevice(): boolean {
 }
 
 /**
+ * Detects if the user is on iOS (iPhone, iPad, iPod)
+ */
+function isIOSDevice(): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  const userAgent = window.navigator.userAgent.toLowerCase();
+  return /iphone|ipad|ipod/.test(userAgent);
+}
+
+/**
  * Downloads PDF with mobile-compatible fallback
  */
 async function downloadPdfBlob(blob: Blob, filename: string) {
   const url = URL.createObjectURL(blob);
-  const isMobile = isMobileDevice();
+  const isIOS = isIOSDevice();
 
   try {
-    if (isMobile) {
-      // Mobile strategy: Open in new tab and let browser handle download
-      // This works better on iOS Safari and Android Chrome
-      const newWindow = window.open(url, '_blank');
+    // Strategy 1: Try anchor element download (works on desktop and most Android browsers)
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = filename;
+    link.style.display = 'none';
+    
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    // For iOS Safari, the download attribute is ignored, so we need to open in new tab
+    // This allows the user to use the native iOS share/download functionality
+    if (isIOS) {
+      // Small delay to allow anchor click to potentially work first
+      setTimeout(() => {
+        const newWindow = window.open(url, '_blank');
+        if (!newWindow) {
+          // Fallback if popup was blocked
+          window.location.href = url;
+        }
+      }, 100);
       
-      if (!newWindow) {
-        // Fallback if popup was blocked
-        window.location.href = url;
-      }
-      
-      // Cleanup after a delay to ensure download starts
+      // Cleanup after longer delay for iOS
       setTimeout(() => URL.revokeObjectURL(url), 10000);
     } else {
-      // Desktop strategy: Traditional download via anchor element
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = filename;
-      link.style.display = 'none';
-      
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      
-      // Cleanup blob URL after download
+      // Cleanup blob URL after download for non-iOS devices
       setTimeout(() => URL.revokeObjectURL(url), 100);
     }
   } catch (error) {
