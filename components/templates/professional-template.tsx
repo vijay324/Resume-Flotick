@@ -2,6 +2,7 @@
 
 import React from "react";
 import type { ResumeData, ExperienceItem, EducationItem, SkillItem, ProjectItem, LanguageItem, CertificationItem, AwardItem, VolunteerItem } from "@/types/resume";
+import { Phone, Mail, MapPin, Linkedin, Github, Globe } from "lucide-react";
 
 interface TemplateProps {
   resumeData: ResumeData;
@@ -39,7 +40,8 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
           {/* Contact Row */}
           <div className="flex flex-wrap justify-center gap-x-3 text-[9pt]">
             {personalInfo.phone && (
-              <div className="flex items-center">
+              <div className="flex items-center gap-1">
+                <Phone className="h-3 w-3" />
                 <a href={`tel:${personalInfo.phone}`} className="hover:underline">{personalInfo.phone}</a>
               </div>
             )}
@@ -47,7 +49,8 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
             {personalInfo.email && (
               <>
                 {personalInfo.phone && <span>|</span>}
-                <div className="flex items-center">
+                <div className="flex items-center gap-1">
+                  <Mail className="h-3 w-3" />
                   <a href={`mailto:${personalInfo.email}`} className="hover:underline">{personalInfo.email}</a>
                 </div>
               </>
@@ -56,14 +59,18 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
             {personalInfo.location && (
               <>
                 {(personalInfo.phone || personalInfo.email) && <span>|</span>}
-                <div>{personalInfo.location}</div>
+                <div className="flex items-center gap-1">
+                  <MapPin className="h-3 w-3" />
+                  <span>{personalInfo.location}</span>
+                </div>
               </>
             )}
 
             {personalInfo.linkedin && (
               <>
                 <span>|</span>
-                <div className="flex items-center">
+                <div className="flex items-center gap-1">
+                  <Linkedin className="h-3 w-3" />
                   <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="hover:underline">
                     linkedin.com/in/{personalInfo.linkedin.split('linkedin.com/in/')[1] || 'profile'}
                   </a>
@@ -74,8 +81,9 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
             {personalInfo.github && (
               <>
                 <span>|</span>
-                <div className="flex items-center">
-                   <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="hover:underline">
+                <div className="flex items-center gap-1">
+                  <Github className="h-3 w-3" />
+                  <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="hover:underline">
                     github.com/{personalInfo.github.split('github.com/')[1] || 'profile'}
                   </a>
                 </div>
@@ -85,7 +93,8 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
             {personalInfo.website && (
               <>
                 <span>|</span>
-                <div className="flex items-center">
+                <div className="flex items-center gap-1">
+                  <Globe className="h-3 w-3" />
                   <a href={personalInfo.website} target="_blank" rel="noopener noreferrer" className="hover:underline">
                     {personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}
                   </a>
