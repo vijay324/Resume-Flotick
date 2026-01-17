@@ -3,144 +3,331 @@ import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Link, Svg, Path } from '@react-pdf/renderer';
 import type { ResumeData } from '@/types/resume';
 
+/**
+ * Classic PDF Template
+ * 
+ * Section-specific styles for granular control over each section's spacing.
+ * Uses Times-Roman font family for classic, professional appearance.
+ */
+
 const styles = StyleSheet.create({
+  // ===== PAGE =====
   page: {
-    padding: 30, // Tighter padding to match preview
+    paddingTop: 30,
+    paddingBottom: 30,
+    paddingHorizontal: 30,
     backgroundColor: '#ffffff',
-    fontFamily: 'Times-Roman', // Matches preview's Georgia/Times New Roman serif
+    fontFamily: 'Times-Roman',
     fontSize: 10.5,
-    lineHeight: 1.45, // Matching preview's leading-[1.45]
+    lineHeight: 1.45,
+    color: '#111',
   },
-  header: {
-    marginBottom: 14, // Tightened header spacing
+
+  // ===== HEADER SECTION =====
+  headerSection: {
     textAlign: 'center',
-    borderBottomWidth: 0,
+    marginBottom: 14,
+    paddingBottom: 0,
   },
-  // Wrappers to ensure spacing is respected
-  nameWrapper: {
-    marginBottom: 4, // Reduced from 10 to match preview
-  },
-  jobTitleWrapper: {
-    marginBottom: 6, // Reduced from 14 to match preview
-  },
-  name: {
-    fontSize: 28, // Matching preview's text-[28pt]
-    fontFamily: 'Times-Bold', // Bold serif font to match preview
+  headerName: {
+    fontSize: 28,
+    fontFamily: 'Times-Bold',
     textTransform: 'uppercase',
     letterSpacing: 1,
-    lineHeight: 1.2, // Tighter line height for the name
+    lineHeight: 1.2,
+    marginBottom: 4,
   },
-  jobTitle: {
+  headerJobTitle: {
     fontSize: 11,
     color: '#666',
     textTransform: 'uppercase',
     letterSpacing: 3,
+    marginBottom: 6,
   },
-  contactRow: {
+  headerContactRow: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flexWrap: 'wrap',
-    gap: 10, // Reduced from 16 to tighten contact spacing
+    gap: 10,
     fontSize: 9,
     color: '#666',
-    marginBottom: 4, // Reduced from 8
+    marginBottom: 4,
   },
-  contactItem: {
+  headerContactItem: {
     flexDirection: 'row',
     alignItems: 'center',
   },
-  contactLink: {
+  headerContactLink: {
     textDecoration: 'none',
     color: '#111',
   },
-  // Icon style
-  icon: {
-    width: 9, // Reduced slightly to match text size better for vertical alignment
-    height: 9, 
-    marginRight: 6, // Increased spacing between icon and text
+  headerIcon: {
+    width: 10,
+    height: 10,
+    marginRight: 5,
   },
-  separator: {
-     display: 'none', // Hiding text separator in favor of icons/gap
+
+  // ===== SUMMARY SECTION =====
+  summarySection: {
+    marginTop: 6,
+    marginBottom: 16,
   },
-  section: {
-    marginBottom: 16, // Reduced from 24 to tighten section spacing
-  },
-  sectionTitle: {
+  summaryTitle: {
     fontSize: 11,
-    fontFamily: 'Times-Bold', // Bold serif to match preview
+    fontFamily: 'Times-Bold',
     textTransform: 'uppercase',
     borderBottomWidth: 1,
     borderBottomColor: '#000',
-    marginBottom: 8, // Reduced from 12 for tighter spacing
-    paddingBottom: 1, // Reduced from 2
+    marginBottom: 8,
+    paddingBottom: 1,
   },
-  // Block styles
-  block: {
-    marginBottom: 10, // Reduced from 16 for tighter block spacing
+  summaryText: {
+    textAlign: 'justify',
+    color: '#111',
+    lineHeight: 1.45,
   },
-  blockHeader: {
+
+  // ===== SKILLS SECTION =====
+  skillsSection: {
+    marginTop: 6,
+    marginBottom: 16,
+  },
+  skillsTitle: {
+    fontSize: 11,
+    fontFamily: 'Times-Bold',
+    textTransform: 'uppercase',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    marginBottom: 8,
+    paddingBottom: 1,
+  },
+  skillsRow: {
+    textAlign: 'justify',
+  },
+  skillsLabel: {
+    fontFamily: 'Times-Bold',
+  },
+
+  // ===== EXPERIENCE SECTION =====
+  experienceSection: {
+    marginTop: 6,
+    marginBottom: 16,
+  },
+  experienceTitle: {
+    fontSize: 11,
+    fontFamily: 'Times-Bold',
+    textTransform: 'uppercase',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    marginBottom: 8,
+    paddingBottom: 1,
+  },
+  experienceBlock: {
+    marginBottom: 10,
+  },
+  experienceHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
     marginBottom: 2,
   },
-  blockTitle: {
+  experiencePosition: {
     fontSize: 12,
-    fontFamily: 'Times-Bold', // Bold serif to match preview
+    fontFamily: 'Times-Bold',
   },
-  blockDate: {
+  experienceDate: {
     fontSize: 10,
     color: '#4b5563',
   },
-  blockSubtitleRow: {
+  experienceSubRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginBottom: 2, // Reduced from 4 for tighter spacing
+    marginBottom: 2,
   },
-  blockSubtitle: {
+  experienceCompany: {
     fontSize: 10.5,
-    fontFamily: 'Times-BoldItalic', // Bold italic serif to match preview
+    fontFamily: 'Times-BoldItalic',
     color: '#333',
   },
-  blockLocation: {
+  experienceLocation: {
     fontSize: 10,
-    fontFamily: 'Times-Italic', // Italic serif to match preview
+    fontFamily: 'Times-Italic',
     color: '#666',
   },
-  list: {
-    marginLeft: 8, // Reduced from 10 for tighter list indentation
+  experienceBulletList: {
+    marginLeft: 8,
   },
-  listItem: {
+  experienceBulletItem: {
     flexDirection: 'row',
-    marginBottom: 1, // Reduced from 2 for tighter list items
+    marginBottom: 1,
   },
-  bullet: {
+  experienceBullet: {
     width: 10,
     fontSize: 10,
   },
-  listContent: {
+  experienceBulletContent: {
     flex: 1,
     textAlign: 'justify',
   },
-  skillsText: {
+
+  // ===== PROJECTS SECTION =====
+  projectsSection: {
+    marginTop: 6,
+    marginBottom: 16,
+  },
+  projectsTitle: {
+    fontSize: 11,
+    fontFamily: 'Times-Bold',
+    textTransform: 'uppercase',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    marginBottom: 8,
+    paddingBottom: 1,
+  },
+  projectBlock: {
+    marginBottom: 10,
+  },
+  projectHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 0,
+  },
+  projectName: {
+    fontSize: 11,
+    fontFamily: 'Times-Bold',
+  },
+  projectLink: {
+    marginLeft: 6,
+    fontSize: 9,
+    color: '#666',
+    textDecoration: 'underline',
+  },
+  projectTech: {
+    fontSize: 9.5,
+    fontFamily: 'Times-Italic',
+    marginBottom: 2,
+  },
+  projectBulletList: {
+    marginLeft: 8,
+  },
+  projectBulletItem: {
+    flexDirection: 'row',
+    marginBottom: 1,
+  },
+  projectBullet: {
+    width: 10,
+    fontSize: 10,
+  },
+  projectBulletContent: {
+    flex: 1,
     textAlign: 'justify',
+  },
+
+  // ===== EDUCATION SECTION =====
+  educationSection: {
+    marginTop: 6,
+    marginBottom: 16,
+  },
+  educationTitle: {
+    fontSize: 11,
+    fontFamily: 'Times-Bold',
+    textTransform: 'uppercase',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    marginBottom: 8,
+    paddingBottom: 1,
+  },
+  educationBlock: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 6,
+  },
+  educationInstitution: {
+    fontFamily: 'Times-Bold',
+  },
+  educationDegree: {
+    fontSize: 10.5,
+  },
+  educationDate: {
+    fontSize: 10,
+    color: '#4b5563',
+  },
+  educationScore: {
+    fontSize: 9,
+    fontFamily: 'Times-Italic',
+    color: '#666',
+  },
+
+  // ===== CERTIFICATIONS SECTION =====
+  certificationsSection: {
+    flex: 1,
+  },
+  certificationsTitle: {
+    fontSize: 11,
+    fontFamily: 'Times-Bold',
+    textTransform: 'uppercase',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    marginBottom: 8,
+    paddingBottom: 1,
+  },
+  certificationBlock: {
+    marginBottom: 4,
+  },
+  certificationName: {
+    fontFamily: 'Times-Bold',
+  },
+  certificationIssuer: {
+    fontFamily: 'Times-Roman',
+    color: '#666',
+  },
+  certificationDate: {
+    fontSize: 9,
+    color: '#666',
+  },
+
+  // ===== LANGUAGES SECTION =====
+  languagesSection: {
+    flex: 1,
+  },
+  languagesTitle: {
+    fontSize: 11,
+    fontFamily: 'Times-Bold',
+    textTransform: 'uppercase',
+    borderBottomWidth: 1,
+    borderBottomColor: '#000',
+    marginBottom: 8,
+    paddingBottom: 1,
+  },
+  languagesRow: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  languagesText: {
+    fontSize: 10.5,
+  },
+
+  // ===== FOOTER ROW (Certifications + Languages) =====
+  footerRow: {
+    flexDirection: 'row',
+    gap: 14,
   },
 });
 
-// Icon Components
-const Icon = ({ path }: { path: string }) => (
-  <Svg viewBox="0 0 24 24" style={styles.icon}>
-    <Path d={path} fill="none" stroke="#666" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+// Icon Components - Using SVG paths from public folder icons
+const Icon = ({ d }: { d: string }) => (
+  <Svg viewBox="0 0 24 24" style={styles.headerIcon}>
+    <Path d={d} fill="#666" />
   </Svg>
 );
 
-const PhoneIcon = () => <Icon path="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />;
-const MailIcon = () => <Icon path="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6" />;
-const MapPinIcon = () => <Icon path="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z M12 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />;
-const LinkedinIcon = () => <Icon path="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z M2 9h4v12H2z M4 2a2 2 0 1 1-2 2 2 2 0 0 1 2-2z" />;
-const GithubIcon = () => <Icon path="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />;
-const GlobeIcon = () => <Icon path="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z M2 12h20 M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z" />;
+const PhoneIcon = () => <Icon d="M9.36556 10.6821C10.302 12.3288 11.6712 13.698 13.3179 14.6344L14.2024 13.3961C14.4965 12.9845 15.0516 12.8573 15.4956 13.0998C16.9024 13.8683 18.4571 14.3353 20.0789 14.4637C20.599 14.5049 21 14.9389 21 15.4606V19.9234C21 20.4361 20.6122 20.8657 20.1022 20.9181C19.5723 20.9726 19.0377 21 18.5 21C9.93959 21 3 14.0604 3 5.5C3 4.96227 3.02742 4.42771 3.08189 3.89776C3.1343 3.38775 3.56394 3 4.07665 3H8.53942C9.0611 3 9.49513 3.40104 9.5363 3.92109C9.66467 5.54288 10.1317 7.09764 10.9002 8.50444C11.1427 8.9484 11.0155 9.50354 10.6039 9.79757L9.36556 10.6821ZM6.84425 10.0252L8.7442 8.66809C8.20547 7.50514 7.83628 6.27183 7.64727 5H5.00907C5.00303 5.16632 5 5.333 5 5.5C5 12.9558 11.0442 19 18.5 19C18.667 19 18.8337 18.997 19 18.9909V16.3527C17.7282 16.1637 16.4949 15.7945 15.3319 15.2558L13.9748 17.1558C13.4258 16.9425 12.8956 16.6915 12.3874 16.4061L12.3293 16.373C10.3697 15.2587 8.74134 13.6303 7.627 11.6707L7.59394 11.6126C7.30849 11.1044 7.05754 10.5742 6.84425 10.0252Z" />;
+const MailIcon = () => <Icon d="M3 3H21C21.5523 3 22 3.44772 22 4V20C22 20.5523 21.5523 21 21 21H3C2.44772 21 2 20.5523 2 20V4C2 3.44772 2.44772 3 3 3ZM20 7.23792L12.0718 14.338L4 7.21594V19H20V7.23792ZM4.51146 5L12.0619 11.662L19.501 5H4.51146Z" />;
+const MapPinIcon = () => <Icon d="M12 20.8995L16.9497 15.9497C19.6834 13.2161 19.6834 8.78392 16.9497 6.05025C14.2161 3.31658 9.78392 3.31658 7.05025 6.05025C4.31658 8.78392 4.31658 13.2161 7.05025 15.9497L12 20.8995ZM12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364L12 23.7279ZM12 13C13.1046 13 14 12.1046 14 11C14 9.89543 13.1046 9 12 9C10.8954 9 10 9.89543 10 11C10 12.1046 10.8954 13 12 13ZM12 15C9.79086 15 8 13.2091 8 11C8 8.79086 9.79086 7 12 7C14.2091 7 16 8.79086 16 11C16 13.2091 14.2091 15 12 15Z" />;
+const LinkedinIcon = () => <Icon d="M4.00098 3H20.001C20.5533 3 21.001 3.44772 21.001 4V20C21.001 20.5523 20.5533 21 20.001 21H4.00098C3.44869 21 3.00098 20.5523 3.00098 20V4C3.00098 3.44772 3.44869 3 4.00098 3ZM5.00098 5V19H19.001V5H5.00098ZM7.50098 9C6.67255 9 6.00098 8.32843 6.00098 7.5C6.00098 6.67157 6.67255 6 7.50098 6C8.3294 6 9.00098 6.67157 9.00098 7.5C9.00098 8.32843 8.3294 9 7.50098 9ZM6.50098 10H8.50098V17.5H6.50098V10ZM12.001 10.4295C12.5854 9.86534 13.2665 9.5 14.001 9.5C16.072 9.5 17.501 11.1789 17.501 13.25V17.5H15.501V13.25C15.501 12.2835 14.7175 11.5 13.751 11.5C12.7845 11.5 12.001 12.2835 12.001 13.25V17.5H10.001V10H12.001V10.4295Z" />;
+const GithubIcon = () => <Icon d="M5.88401 18.6533C5.58404 18.4526 5.32587 18.1975 5.0239 17.8369C4.91473 17.7065 4.47283 17.1524 4.55811 17.2583C4.09533 16.6833 3.80296 16.417 3.50156 16.3089C2.9817 16.1225 2.7114 15.5499 2.89784 15.0301C3.08428 14.5102 3.65685 14.2399 4.17672 14.4263C4.92936 14.6963 5.43847 15.1611 6.12425 16.0143C6.03025 15.8974 6.46364 16.441 6.55731 16.5529C6.74784 16.7804 6.88732 16.9182 6.99629 16.9911C7.20118 17.1283 7.58451 17.1874 8.14709 17.1311C8.17065 16.7489 8.24136 16.3783 8.34919 16.0358C5.38097 15.3104 3.70116 13.3952 3.70116 9.63971C3.70116 8.40085 4.0704 7.28393 4.75917 6.3478C4.5415 5.45392 4.57433 4.37284 5.06092 3.15636C5.1725 2.87739 5.40361 2.66338 5.69031 2.57352C5.77242 2.54973 5.81791 2.53915 5.89878 2.52673C6.70167 2.40343 7.83573 2.69705 9.31449 3.62336C10.181 3.41879 11.0885 3.315 12.0012 3.315C12.9129 3.315 13.8196 3.4186 14.6854 3.62277C16.1619 2.69 17.2986 2.39649 18.1072 2.52651C18.1919 2.54013 18.2645 2.55783 18.3249 2.57766C18.6059 2.66991 18.8316 2.88179 18.9414 3.15636C19.4279 4.37256 19.4608 5.45344 19.2433 6.3472C19.9342 7.28337 20.3012 8.39208 20.3012 9.63971C20.3012 13.3968 18.627 15.3048 15.6588 16.032C15.7837 16.447 15.8496 16.9105 15.8496 17.4121C15.8496 18.0765 15.8471 18.711 15.8424 19.4225C15.8412 19.6127 15.8397 19.8159 15.8375 20.1281C16.2129 20.2109 16.5229 20.5077 16.6031 20.9089C16.7114 21.4504 16.3602 21.9773 15.8186 22.0856C14.6794 22.3134 13.8353 21.5538 13.8353 20.5611C13.8353 20.4708 13.836 20.3417 13.8375 20.1145C13.8398 19.8015 13.8412 19.599 13.8425 19.4094C13.8471 18.7019 13.8496 18.0716 13.8496 17.4121C13.8496 16.7148 13.6664 16.2602 13.4237 16.051C12.7627 15.4812 13.0977 14.3973 13.965 14.2999C16.9314 13.9666 18.3012 12.8177 18.3012 9.63971C18.3012 8.68508 17.9893 7.89571 17.3881 7.23559C17.1301 6.95233 17.0567 6.54659 17.199 6.19087C17.3647 5.77663 17.4354 5.23384 17.2941 4.57702L17.2847 4.57968C16.7928 4.71886 16.1744 5.0198 15.4261 5.5285C15.182 5.69438 14.8772 5.74401 14.5932 5.66413C13.7729 5.43343 12.8913 5.315 12.0012 5.315C11.111 5.315 10.2294 5.43343 9.40916 5.66413C9.12662 5.74359 8.82344 5.69492 8.57997 5.53101C7.8274 5.02439 7.2056 4.72379 6.71079 4.58376C6.56735 5.23696 6.63814 5.77782 6.80336 6.19087C6.94565 6.54659 6.87219 6.95233 6.61423 7.23559C6.01715 7.8912 5.70116 8.69376 5.70116 9.63971C5.70116 12.8116 7.07225 13.9683 10.023 14.2999C10.8883 14.3971 11.2246 15.4769 10.5675 16.0482C10.3751 16.2156 10.1384 16.7802 10.1384 17.4121V20.5611C10.1384 21.5474 9.30356 22.2869 8.17878 22.09C7.63476 21.9948 7.27093 21.4766 7.36613 20.9326C7.43827 20.5204 7.75331 20.2116 8.13841 20.1276V19.1381C7.22829 19.1994 6.47656 19.0498 5.88401 18.6533Z" />;
+const GlobeIcon = () => <Icon d="M12 22C6.47715 22 2 17.5228 2 12C2 6.47715 6.47715 2 12 2C17.5228 2 22 6.47715 22 12C22 17.5228 17.5228 22 12 22ZM9.71002 19.6674C8.74743 17.6259 8.15732 15.3742 8.02731 13H4.06189C4.458 16.1765 6.71639 18.7747 9.71002 19.6674ZM10.0307 13C10.1811 15.4388 10.8778 17.7297 12 19.752C13.1222 17.7297 13.8189 15.4388 13.9693 13H10.0307ZM19.9381 13H15.9727C15.8427 15.3742 15.2526 17.6259 14.29 19.6674C17.2836 18.7747 19.542 16.1765 19.9381 13ZM4.06189 11H8.02731C8.15732 8.62577 8.74743 6.37407 9.71002 4.33256C6.71639 5.22533 4.458 7.8235 4.06189 11ZM10.0307 11H13.9693C13.8189 8.56122 13.1222 6.27025 12 4.24799C10.8778 6.27025 10.1811 8.56122 10.0307 11ZM14.29 4.33256C15.2526 6.37407 15.8427 8.62577 15.9727 11H19.9381C19.542 7.8235 17.2836 5.22533 14.29 4.33256Z" />;
 
 interface Props {
   data: ResumeData;
@@ -156,104 +343,102 @@ const normalizeUrl = (url: string): string => {
 };
 
 export const ClassicPdf = ({ data }: Props) => {
-  const { personalInfo, experience, education, skills, projects, languages, certifications, awards, volunteer } = data;
+  const { personalInfo, experience, education, skills, projects, languages, certifications } = data;
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        <View style={styles.header}>
-          <View style={styles.nameWrapper}>
-             <Text style={styles.name}>{personalInfo.fullName}</Text>
-          </View>
+        {/* ===== HEADER ===== */}
+        <View style={styles.headerSection}>
+          <Text style={styles.headerName}>{personalInfo.fullName}</Text>
           {personalInfo.jobTitle && (
-            <View style={styles.jobTitleWrapper}>
-               <Text style={styles.jobTitle}>{personalInfo.jobTitle}</Text>
-            </View>
+            <Text style={styles.headerJobTitle}>{personalInfo.jobTitle}</Text>
           )}
           
-          <View style={styles.contactRow}>
+          <View style={styles.headerContactRow}>
             {personalInfo.phone && (
-                <View style={styles.contactItem}>
-                    <PhoneIcon />
-                    <Link src={`tel:${personalInfo.phone}`} style={styles.contactLink}>{personalInfo.phone}</Link>
-                </View>
+              <View style={styles.headerContactItem}>
+                <PhoneIcon />
+                <Link src={`tel:${personalInfo.phone}`} style={styles.headerContactLink}>{personalInfo.phone}</Link>
+              </View>
             )}
             {personalInfo.email && (
-                <View style={styles.contactItem}>
-                    <MailIcon />
-                    <Link src={`mailto:${personalInfo.email}`} style={styles.contactLink}>{personalInfo.email}</Link>
-                </View>
+              <View style={styles.headerContactItem}>
+                <MailIcon />
+                <Link src={`mailto:${personalInfo.email}`} style={styles.headerContactLink}>{personalInfo.email}</Link>
+              </View>
             )}
-            
             {personalInfo.location && (
-                <View style={styles.contactItem}>
-                    <MapPinIcon />
-                    <Text>{personalInfo.location}</Text>
-                </View>
+              <View style={styles.headerContactItem}>
+                <MapPinIcon />
+                <Text>{personalInfo.location}</Text>
+              </View>
             )}
-
-             {personalInfo.linkedin && (
-                <View style={styles.contactItem}>
-                    <LinkedinIcon />
-                    <Link src={normalizeUrl(personalInfo.linkedin)} style={styles.contactLink}>
-                       {personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}
-                    </Link>
-                </View>
-             )}
-             {personalInfo.github && (
-                <View style={styles.contactItem}>
-                    <GithubIcon />
-                    <Link src={normalizeUrl(personalInfo.github)} style={styles.contactLink}>
-                       {personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}
-                    </Link>
-                </View>
-             )}
-             {personalInfo.website && (
-                <View style={styles.contactItem}>
-                    <GlobeIcon />
-                    <Link src={normalizeUrl(personalInfo.website)} style={styles.contactLink}>
-                       {personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}
-                    </Link>
-                </View>
-             )}
+            {personalInfo.linkedin && (
+              <View style={styles.headerContactItem}>
+                <LinkedinIcon />
+                <Link src={normalizeUrl(personalInfo.linkedin)} style={styles.headerContactLink}>
+                  {personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}
+                </Link>
+              </View>
+            )}
+            {personalInfo.github && (
+              <View style={styles.headerContactItem}>
+                <GithubIcon />
+                <Link src={normalizeUrl(personalInfo.github)} style={styles.headerContactLink}>
+                  {personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}
+                </Link>
+              </View>
+            )}
+            {personalInfo.website && (
+              <View style={styles.headerContactItem}>
+                <GlobeIcon />
+                <Link src={normalizeUrl(personalInfo.website)} style={styles.headerContactLink}>
+                  {personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}
+                </Link>
+              </View>
+            )}
           </View>
         </View>
 
+        {/* ===== PROFESSIONAL SUMMARY ===== */}
         {personalInfo.summary && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Professional Summary</Text>
-            <Text style={{ textAlign: 'justify' }}>{personalInfo.summary}</Text>
+          <View style={styles.summarySection}>
+            <Text style={styles.summaryTitle}>Professional Summary</Text>
+            <Text style={styles.summaryText}>{personalInfo.summary}</Text>
           </View>
         )}
 
+        {/* ===== SKILLS ===== */}
         {skills.length > 0 && (
-          <View style={styles.section}>
-            <Text style={styles.sectionTitle}>Skills</Text>
-            <Text style={styles.skillsText}>
-              <Text style={{ fontFamily: 'Times-Bold' }}>Technical Proficiency: </Text>
+          <View style={styles.skillsSection}>
+            <Text style={styles.skillsTitle}>Skills</Text>
+            <Text style={styles.skillsRow}>
+              <Text style={styles.skillsLabel}>Technical Proficiency: </Text>
               {skills.map(s => s.name).join(" • ")}
             </Text>
           </View>
         )}
 
+        {/* ===== WORK EXPERIENCE ===== */}
         {experience.length > 0 && (
-          <View style={styles.section}>
+          <View style={styles.experienceSection}>
             {experience.map((exp, index) => (
-              <View key={exp.id} wrap={false} style={styles.block}>
-                {index === 0 && <Text style={styles.sectionTitle}>Work Experience</Text>}
-                <View style={styles.blockHeader}>
-                  <Text style={styles.blockTitle}>{exp.position}</Text>
-                  <Text style={styles.blockDate}>{exp.startDate} – {exp.endDate}</Text>
+              <View key={exp.id} wrap={false} style={styles.experienceBlock}>
+                {index === 0 && <Text style={styles.experienceTitle}>Work Experience</Text>}
+                <View style={styles.experienceHeader}>
+                  <Text style={styles.experiencePosition}>{exp.position}</Text>
+                  <Text style={styles.experienceDate}>{exp.startDate} – {exp.endDate}</Text>
                 </View>
-                <View style={styles.blockSubtitleRow}>
-                  <Text style={styles.blockSubtitle}>{exp.company}</Text>
-                  {exp.location && <Text style={styles.blockLocation}>{exp.location}</Text>}
+                <View style={styles.experienceSubRow}>
+                  <Text style={styles.experienceCompany}>{exp.company}</Text>
+                  {exp.location && <Text style={styles.experienceLocation}>{exp.location}</Text>}
                 </View>
-                <View style={styles.list}>
+                <View style={styles.experienceBulletList}>
                   {exp.description.split('\n').map((line, i) => line.trim() && (
-                    <View key={i} style={styles.listItem}>
-                      <Text style={styles.bullet}>•</Text>
-                      <Text style={styles.listContent}>{line.trim()}</Text>
+                    <View key={i} style={styles.experienceBulletItem}>
+                      <Text style={styles.experienceBullet}>•</Text>
+                      <Text style={styles.experienceBulletContent}>{line.trim()}</Text>
                     </View>
                   ))}
                 </View>
@@ -262,29 +447,28 @@ export const ClassicPdf = ({ data }: Props) => {
           </View>
         )}
 
+        {/* ===== PROJECTS ===== */}
         {projects.length > 0 && (
-          <View style={styles.section}>
-             {projects.map((proj, index) => (
-              <View key={proj.id} wrap={false} style={styles.block}>
-                 {index === 0 && <Text style={styles.sectionTitle}>Projects</Text>}
-                <View style={styles.blockHeader}>
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Text style={[styles.blockTitle, { fontSize: 11 }]}>{proj.name}</Text>
-                    {proj.link && (
-                      <Link src={normalizeUrl(proj.link)} style={{ marginLeft: 6, fontSize: 9, color: '#666', textDecoration: 'underline' }}>
-                        | {proj.link.replace(/^https?:\/\//, "")}
-                      </Link>
-                    )}
-                  </View>
+          <View style={styles.projectsSection}>
+            {projects.map((proj, index) => (
+              <View key={proj.id} wrap={false} style={styles.projectBlock}>
+                {index === 0 && <Text style={styles.projectsTitle}>Projects</Text>}
+                <View style={styles.projectHeader}>
+                  <Text style={styles.projectName}>{proj.name}</Text>
+                  {proj.link && (
+                    <Link src={normalizeUrl(proj.link)} style={styles.projectLink}>
+                      | {proj.link.replace(/^https?:\/\//, "")}
+                    </Link>
+                  )}
                 </View>
-                <Text style={{ fontSize: 9.5, fontFamily: 'Times-Italic', marginBottom: 2 }}>
+                <Text style={styles.projectTech}>
                   Technologies: {proj.technologies.join(", ")}
                 </Text>
-                <View style={styles.list}>
+                <View style={styles.projectBulletList}>
                   {proj.description.split('\n').map((line, i) => line.trim() && (
-                    <View key={i} style={styles.listItem}>
-                      <Text style={styles.bullet}>•</Text>
-                      <Text style={styles.listContent}>{line.trim()}</Text>
+                    <View key={i} style={styles.projectBulletItem}>
+                      <Text style={styles.projectBullet}>•</Text>
+                      <Text style={styles.projectBulletContent}>{line.trim()}</Text>
                     </View>
                   ))}
                 </View>
@@ -293,52 +477,55 @@ export const ClassicPdf = ({ data }: Props) => {
           </View>
         )}
 
+        {/* ===== EDUCATION ===== */}
         {education.length > 0 && (
-          <View style={styles.section}>
-              {education.map((edu, index) => (
-                <View key={edu.id} wrap={false} style={[styles.block, { marginBottom: 6 }]}>
-                   {index === 0 && <Text style={styles.sectionTitle}>Education</Text>}
-                   <View style={styles.blockHeader}>
-                     <View>
-                        <Text style={{ fontFamily: 'Times-Bold' }}>{edu.institution}</Text>
-                        <Text>{edu.degree} in {edu.field}</Text>
-                     </View>
-                     <View style={{ alignItems: 'flex-end' }}>
-                        <Text style={styles.blockDate}>{edu.startDate} – {edu.endDate}</Text>
-                        {edu.score && <Text style={{ fontSize: 9, fontFamily: 'Times-Italic', color: '#666' }}>Score: {edu.score}</Text>}
-                     </View>
-                   </View>
+          <View style={styles.educationSection}>
+            {education.map((edu, index) => (
+              <View key={edu.id} wrap={false} style={styles.educationBlock}>
+                {index === 0 && <Text style={styles.educationTitle}>Education</Text>}
+                <View>
+                  <Text style={styles.educationInstitution}>{edu.institution}</Text>
+                  <Text style={styles.educationDegree}>{edu.degree} in {edu.field}</Text>
                 </View>
-              ))}
+                <View style={{ alignItems: 'flex-end' }}>
+                  <Text style={styles.educationDate}>{edu.startDate} – {edu.endDate}</Text>
+                  {edu.score && <Text style={styles.educationScore}>Score: {edu.score}</Text>}
+                </View>
+              </View>
+            ))}
           </View>
         )}
 
+        {/* ===== CERTIFICATIONS & LANGUAGES ===== */}
         {(certifications.length > 0 || languages.length > 0) && (
-           <View style={{ flexDirection: 'row', gap: 14 }}>
-              {certifications.length > 0 && (
-                 <View style={{ flex: 1 }}>
-                    <Text style={styles.sectionTitle}>Certifications</Text>
-                    {certifications.map((cert) => (
-                       <View key={cert.id} style={{ marginBottom: 4 }}>
-                          <Text style={{ fontFamily: 'Times-Bold' }}>{cert.name} <Text style={{ fontFamily: 'Times-Roman', color: '#666' }}>— {cert.issuer}</Text></Text>
-                          <Text style={{ fontSize: 9, color: '#666' }}>{cert.date}</Text>
-                       </View>
+          <View style={styles.footerRow}>
+            {certifications.length > 0 && (
+              <View style={styles.certificationsSection}>
+                <Text style={styles.certificationsTitle}>Certifications</Text>
+                {certifications.map((cert) => (
+                  <View key={cert.id} style={styles.certificationBlock}>
+                    <Text>
+                      <Text style={styles.certificationName}>{cert.name}</Text>
+                      <Text style={styles.certificationIssuer}> — {cert.issuer}</Text>
+                    </Text>
+                    <Text style={styles.certificationDate}>{cert.date}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+            {languages.length > 0 && (
+              <View style={styles.languagesSection}>
+                <Text style={styles.languagesTitle}>Languages</Text>
+                <View style={styles.languagesRow}>
+                  <Text style={styles.languagesText}>
+                    {languages.map((lang, i) => (
+                      <Text key={lang.id}>{lang.name} ({lang.proficiency}){i < languages.length - 1 ? ' • ' : ''}</Text>
                     ))}
-                 </View>
-              )}
-              {languages.length > 0 && (
-                 <View style={{ flex: 1 }}>
-                    <Text style={styles.sectionTitle}>Languages</Text>
-                     <View style={{ flexDirection: 'row', flexWrap: 'wrap' }}>
-                        <Text>
-                           {languages.map((lang, i) => (
-                              <Text key={lang.id}>{lang.name} ({lang.proficiency}){i < languages.length - 1 ? ' • ' : ''}</Text>
-                           ))}
-                        </Text>
-                     </View>
-                 </View>
-              )}
-           </View>
+                  </Text>
+                </View>
+              </View>
+            )}
+          </View>
         )}
       </Page>
     </Document>

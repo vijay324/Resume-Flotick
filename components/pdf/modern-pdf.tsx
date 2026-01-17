@@ -3,16 +3,28 @@ import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Link, Svg, Path } from '@react-pdf/renderer';
 import type { ResumeData } from '@/types/resume';
 
+/**
+ * Modern PDF Template
+ * 
+ * Section-specific styles for granular control over each section's spacing.
+ * Uses Helvetica font family for clean, modern appearance.
+ */
+
 const styles = StyleSheet.create({
+  // ===== PAGE =====
   page: {
     backgroundColor: '#ffffff',
     fontFamily: 'Helvetica',
     fontSize: 10,
     lineHeight: 1.4,
   },
-  header: {
+
+  // ===== HEADER SECTION =====
+  headerSection: {
     backgroundColor: '#1e3a5f',
-    padding: 24,
+    paddingTop: 24,
+    paddingBottom: 24,
+    paddingHorizontal: 24,
     color: '#ffffff',
   },
   headerName: {
@@ -20,47 +32,65 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 4,
   },
-  headerTitle: {
+  headerJobTitle: {
     fontSize: 12,
-    color: '#bfdbfe', // blue-200
+    color: '#bfdbfe',
     textTransform: 'uppercase',
     letterSpacing: 1.5,
     marginBottom: 8,
   },
-  contactRow: {
+  headerContactRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 16,
     marginTop: 8,
   },
-  contactItem: {
+  headerContactItem: {
     flexDirection: 'row',
     alignItems: 'center',
     fontSize: 9,
-    color: '#e5e7eb', // gray-200
+    color: '#e5e7eb',
   },
-  link: {
+  headerContactIcon: {
+    width: 12,
+    height: 12,
+    marginRight: 6,
+  },
+  headerLink: {
     color: '#e5e7eb',
     textDecoration: 'none',
   },
-  // Body Layout
+
+  // ===== BODY LAYOUT =====
   body: {
     flexDirection: 'row',
     flex: 1,
   },
+
+  // ===== LEFT COLUMN =====
   leftColumn: {
     width: '65%',
-    padding: 24,
+    paddingTop: 24,
+    paddingBottom: 24,
+    paddingLeft: 24,
     paddingRight: 16,
   },
+
+  // ===== RIGHT COLUMN =====
   rightColumn: {
     width: '35%',
-    backgroundColor: '#f9fafb', // gray-50
-    padding: 24,
+    backgroundColor: '#f9fafb',
+    paddingTop: 24,
+    paddingBottom: 24,
     paddingLeft: 16,
+    paddingRight: 24,
   },
-  // Typography
-  sectionTitle: {
+
+  // ===== ABOUT SECTION (Left) =====
+  aboutSection: {
+    marginBottom: 16,
+  },
+  aboutTitle: {
     fontSize: 11,
     fontWeight: 'bold',
     textTransform: 'uppercase',
@@ -72,67 +102,152 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
   },
-  block: {
+  aboutText: {
+    textAlign: 'justify',
+    lineHeight: 1.5,
+    color: '#374151',
+  },
+
+  // ===== EXPERIENCE SECTION (Left) =====
+  experienceSection: {
     marginBottom: 16,
   },
-  blockHeader: {
+  experienceTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    color: '#1e3a5f',
+    marginBottom: 12,
+    paddingBottom: 4,
+    borderBottomWidth: 2,
+    borderBottomColor: '#1e3a5f',
+  },
+  experienceBlock: {
+    marginBottom: 16,
+  },
+  experienceHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
     marginBottom: 2,
   },
-  blockTitle: {
+  experiencePosition: {
     fontSize: 11,
     fontWeight: 'bold',
     color: '#111827',
   },
-  blockDate: {
+  experienceDate: {
     fontSize: 9,
     color: '#6b7280',
     backgroundColor: '#f3f4f6',
     padding: '2 6',
     borderRadius: 4,
   },
-  blockSubtitle: {
+  experienceCompany: {
     fontSize: 10,
-    fontWeight: 'bold', // React-pdf doesn't support semi-bold well with std fonts, but bold works
+    fontWeight: 'bold',
     color: '#1e3a5f',
     marginBottom: 2,
   },
-  list: {
+  experienceBulletList: {
     marginTop: 4,
   },
-  listItem: {
+  experienceBulletItem: {
     flexDirection: 'row',
     marginBottom: 2,
   },
-  bullet: {
+  experienceBullet: {
     width: 10,
     fontSize: 10,
     color: '#9ca3af',
   },
-  listContent: {
+  experienceBulletContent: {
     flex: 1,
     fontSize: 10,
     color: '#374151',
   },
-  // Right Column Items
-  sidebarSection: {
+
+  // ===== PROJECTS SECTION (Left) =====
+  projectsSection: {
+    marginBottom: 16,
+  },
+  projectsTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    color: '#1e3a5f',
+    marginBottom: 12,
+    paddingBottom: 4,
+    borderBottomWidth: 2,
+    borderBottomColor: '#1e3a5f',
+  },
+  projectBlock: {
+    marginBottom: 12,
+  },
+  projectHeader: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    marginBottom: 2,
+  },
+  projectName: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#111827',
+  },
+  projectLink: {
+    marginLeft: 6,
+    fontSize: 8,
+    color: '#1e3a5f',
+    textDecoration: 'none',
+  },
+  projectTechRow: {
+    flexDirection: 'row',
+    gap: 4,
+    flexWrap: 'wrap',
+    marginBottom: 4,
+  },
+  projectTechTag: {
+    fontSize: 8,
+    backgroundColor: '#f3f4f6',
+    padding: '1 4',
+    borderRadius: 2,
+    color: '#4b5563',
+  },
+  projectBulletList: {
+    marginTop: 4,
+  },
+  projectBulletItem: {
+    flexDirection: 'row',
+    marginBottom: 2,
+  },
+  projectBullet: {
+    width: 10,
+    fontSize: 10,
+    color: '#9ca3af',
+  },
+  projectBulletContent: {
+    flex: 1,
+    fontSize: 10,
+    color: '#374151',
+  },
+
+  // ===== SKILLS SECTION (Right) =====
+  skillsSection: {
     marginBottom: 24,
   },
-  sidebarTitle: {
+  skillsTitle: {
     fontSize: 10,
     fontWeight: 'bold',
     textTransform: 'uppercase',
     color: '#1e3a5f',
     marginBottom: 8,
   },
-  tagContainer: {
+  skillsTagContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 6,
   },
-  tag: {
+  skillTag: {
     backgroundColor: '#ffffff',
     borderWidth: 1,
     borderColor: '#e5e7eb',
@@ -141,11 +256,91 @@ const styles = StyleSheet.create({
     fontSize: 9,
     color: '#374151',
   },
+
+  // ===== EDUCATION SECTION (Right) =====
+  educationSection: {
+    marginBottom: 24,
+  },
+  educationTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    color: '#1e3a5f',
+    marginBottom: 8,
+  },
+  educationBlock: {
+    marginBottom: 8,
+  },
+  educationInstitution: {
+    fontWeight: 'bold',
+    fontSize: 10,
+  },
+  educationDegree: {
+    fontSize: 9,
+    color: '#374151',
+  },
+  educationDate: {
+    fontSize: 8,
+    color: '#6b7280',
+    marginTop: 1,
+  },
+  educationScore: {
+    fontSize: 8,
+    color: '#1e3a5f',
+    fontWeight: 'bold',
+  },
+
+  // ===== LANGUAGES SECTION (Right) =====
+  languagesSection: {
+    marginBottom: 24,
+  },
+  languagesTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    color: '#1e3a5f',
+    marginBottom: 8,
+  },
+  languageRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 2,
+  },
+  languageName: {
+    fontSize: 9,
+  },
+  languageProficiency: {
+    fontSize: 9,
+    color: '#6b7280',
+  },
+
+  // ===== CERTIFICATIONS SECTION (Right) =====
+  certificationsSection: {
+    marginBottom: 24,
+  },
+  certificationsTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    color: '#1e3a5f',
+    marginBottom: 8,
+  },
+  certBlock: {
+    marginBottom: 6,
+  },
+  certName: {
+    fontWeight: 'bold',
+    fontSize: 9,
+  },
+  certIssuer: {
+    fontSize: 8,
+    color: '#6b7280',
+  },
 });
 
 // Icon Components for Header
 const Icon = ({ path }: { path: string }) => (
-  <Svg viewBox="0 0 24 24" style={{ width: 12, height: 12, marginRight: 6 }}>
+  <Svg viewBox="0 0 24 24" style={styles.headerContactIcon}>
     <Path d={path} fill="none" stroke="#93c5fd" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
   </Svg>
 );
@@ -162,149 +357,174 @@ interface Props {
 }
 
 export const ModernPdf = ({ data }: Props) => {
-  const { personalInfo, experience, education, skills, projects, languages, certifications, awards, volunteer } = data;
+  const { personalInfo, experience, education, skills, projects, languages, certifications } = data;
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Header */}
-        <View style={styles.header}>
-           <Text style={styles.headerName}>{personalInfo.fullName}</Text>
-           {personalInfo.jobTitle && <Text style={styles.headerTitle}>{personalInfo.jobTitle}</Text>}
-           
-           <View style={styles.contactRow}>
-              {personalInfo.phone && (
-                <View style={styles.contactItem}><PhoneIcon /><Link src={`tel:${personalInfo.phone}`} style={styles.link}>{personalInfo.phone}</Link></View>
-              )}
-              {personalInfo.email && (
-                <View style={styles.contactItem}><MailIcon /><Link src={`mailto:${personalInfo.email}`} style={styles.link}>{personalInfo.email}</Link></View>
-              )}
-              {personalInfo.location && (
-                <View style={styles.contactItem}><MapPinIcon /><Text>{personalInfo.location}</Text></View>
-              )}
-              {personalInfo.linkedin && (
-                <View style={styles.contactItem}><LinkedinIcon /><Link src={personalInfo.linkedin} style={styles.link}>{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</Link></View>
-              )}
-              {personalInfo.github && (
-                <View style={styles.contactItem}><GithubIcon /><Link src={personalInfo.github} style={styles.link}>{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</Link></View>
-              )}
-              {personalInfo.website && (
-                <View style={styles.contactItem}><GlobeIcon /><Link src={personalInfo.website} style={styles.link}>{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</Link></View>
-              )}
-           </View>
+        {/* ===== HEADER ===== */}
+        <View style={styles.headerSection}>
+          <Text style={styles.headerName}>{personalInfo.fullName}</Text>
+          {personalInfo.jobTitle && <Text style={styles.headerJobTitle}>{personalInfo.jobTitle}</Text>}
+          
+          <View style={styles.headerContactRow}>
+            {personalInfo.phone && (
+              <View style={styles.headerContactItem}>
+                <PhoneIcon />
+                <Link src={`tel:${personalInfo.phone}`} style={styles.headerLink}>{personalInfo.phone}</Link>
+              </View>
+            )}
+            {personalInfo.email && (
+              <View style={styles.headerContactItem}>
+                <MailIcon />
+                <Link src={`mailto:${personalInfo.email}`} style={styles.headerLink}>{personalInfo.email}</Link>
+              </View>
+            )}
+            {personalInfo.location && (
+              <View style={styles.headerContactItem}>
+                <MapPinIcon />
+                <Text>{personalInfo.location}</Text>
+              </View>
+            )}
+            {personalInfo.linkedin && (
+              <View style={styles.headerContactItem}>
+                <LinkedinIcon />
+                <Link src={personalInfo.linkedin} style={styles.headerLink}>{personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}</Link>
+              </View>
+            )}
+            {personalInfo.github && (
+              <View style={styles.headerContactItem}>
+                <GithubIcon />
+                <Link src={personalInfo.github} style={styles.headerLink}>{personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}</Link>
+              </View>
+            )}
+            {personalInfo.website && (
+              <View style={styles.headerContactItem}>
+                <GlobeIcon />
+                <Link src={personalInfo.website} style={styles.headerLink}>{personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}</Link>
+              </View>
+            )}
+          </View>
         </View>
 
         <View style={styles.body}>
-          {/* Left Main Column */}
+          {/* ===== LEFT MAIN COLUMN ===== */}
           <View style={styles.leftColumn}>
-             {personalInfo.summary && (
-               <View style={styles.block}>
-                 <Text style={styles.sectionTitle}>About Me</Text>
-                 <Text style={{ textAlign: 'justify', lineHeight: 1.5, color: '#374151' }}>{personalInfo.summary}</Text>
-               </View>
-             )}
+            {/* About */}
+            {personalInfo.summary && (
+              <View style={styles.aboutSection}>
+                <Text style={styles.aboutTitle}>About Me</Text>
+                <Text style={styles.aboutText}>{personalInfo.summary}</Text>
+              </View>
+            )}
 
-             {experience.length > 0 && (
-               <View style={styles.block}>
-                 {experience.map((exp, index) => (
-                   <View key={exp.id} wrap={false} style={{ marginBottom: 16 }}>
-                     {index === 0 && <Text style={styles.sectionTitle}>Work Experience</Text>}
-                     <View style={styles.blockHeader}>
-                        <Text style={styles.blockTitle}>{exp.position}</Text>
-                        <Text style={styles.blockDate}>{exp.startDate} – {exp.endDate}</Text>
-                     </View>
-                     <Text style={styles.blockSubtitle}>{exp.company} {exp.location ? `• ${exp.location}` : ''}</Text>
-                     <View style={styles.list}>
-                        {exp.description.split('\n').map((line, i) => line.trim() && (
-                          <View key={i} style={styles.listItem}>
-                             <Text style={styles.bullet}>–</Text>
-                             <Text style={styles.listContent}>{line.trim()}</Text>
-                          </View>
-                        ))}
-                     </View>
-                   </View>
-                 ))}
-               </View>
-             )}
+            {/* Experience */}
+            {experience.length > 0 && (
+              <View style={styles.experienceSection}>
+                {experience.map((exp, index) => (
+                  <View key={exp.id} wrap={false} style={styles.experienceBlock}>
+                    {index === 0 && <Text style={styles.experienceTitle}>Work Experience</Text>}
+                    <View style={styles.experienceHeader}>
+                      <Text style={styles.experiencePosition}>{exp.position}</Text>
+                      <Text style={styles.experienceDate}>{exp.startDate} – {exp.endDate}</Text>
+                    </View>
+                    <Text style={styles.experienceCompany}>{exp.company} {exp.location ? `• ${exp.location}` : ''}</Text>
+                    <View style={styles.experienceBulletList}>
+                      {exp.description.split('\n').map((line, i) => line.trim() && (
+                        <View key={i} style={styles.experienceBulletItem}>
+                          <Text style={styles.experienceBullet}>–</Text>
+                          <Text style={styles.experienceBulletContent}>{line.trim()}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  </View>
+                ))}
+              </View>
+            )}
 
-             {projects.length > 0 && (
-               <View style={styles.block}>
-                 {projects.map((proj, index) => (
-                   <View key={proj.id} wrap={false} style={{ marginBottom: 12 }}>
-                     {index === 0 && <Text style={styles.sectionTitle}>Projects</Text>}
-                     <View style={{ flexDirection: 'row', alignItems: 'baseline', marginBottom: 2 }}>
-                        <Text style={styles.blockTitle}>{proj.name}</Text>
-                        {proj.link && <Link src={proj.link} style={{ marginLeft: 6, fontSize: 8, color: '#1e3a5f' }}>| {proj.link.replace(/^https?:\/\//, "")}</Link>}
-                     </View>
-                     <View style={{ flexDirection: 'row', gap: 4, flexWrap: 'wrap', marginBottom: 4 }}>
-                       {proj.technologies.map((tech, i) => (
-                         <Text key={i} style={{ fontSize: 8, backgroundColor: '#f3f4f6', padding: '1 4', borderRadius: 2, color: '#4b5563' }}>{tech}</Text>
-                       ))}
-                     </View>
-                     <View style={styles.list}>
-                        {proj.description.split('\n').map((line, i) => line.trim() && (
-                          <View key={i} style={styles.listItem}>
-                             <Text style={styles.bullet}>–</Text>
-                             <Text style={styles.listContent}>{line.trim()}</Text>
-                          </View>
-                        ))}
-                     </View>
-                   </View>
-                 ))}
-               </View>
-             )}
+            {/* Projects */}
+            {projects.length > 0 && (
+              <View style={styles.projectsSection}>
+                {projects.map((proj, index) => (
+                  <View key={proj.id} wrap={false} style={styles.projectBlock}>
+                    {index === 0 && <Text style={styles.projectsTitle}>Projects</Text>}
+                    <View style={styles.projectHeader}>
+                      <Text style={styles.projectName}>{proj.name}</Text>
+                      {proj.link && <Link src={proj.link} style={styles.projectLink}>| {proj.link.replace(/^https?:\/\//, "")}</Link>}
+                    </View>
+                    <View style={styles.projectTechRow}>
+                      {proj.technologies.map((tech, i) => (
+                        <Text key={i} style={styles.projectTechTag}>{tech}</Text>
+                      ))}
+                    </View>
+                    <View style={styles.projectBulletList}>
+                      {proj.description.split('\n').map((line, i) => line.trim() && (
+                        <View key={i} style={styles.projectBulletItem}>
+                          <Text style={styles.projectBullet}>–</Text>
+                          <Text style={styles.projectBulletContent}>{line.trim()}</Text>
+                        </View>
+                      ))}
+                    </View>
+                  </View>
+                ))}
+              </View>
+            )}
           </View>
 
-          {/* Right Sidebar Column */}
+          {/* ===== RIGHT SIDEBAR COLUMN ===== */}
           <View style={styles.rightColumn}>
-             {skills.length > 0 && (
-               <View style={styles.sidebarSection}>
-                  <Text style={styles.sidebarTitle}>Skills</Text>
-                  <View style={styles.tagContainer}>
-                     {skills.map(skill => (
-                        <Text key={skill.id} style={styles.tag}>{skill.name}</Text>
-                     ))}
+            {/* Skills */}
+            {skills.length > 0 && (
+              <View style={styles.skillsSection}>
+                <Text style={styles.skillsTitle}>Skills</Text>
+                <View style={styles.skillsTagContainer}>
+                  {skills.map(skill => (
+                    <Text key={skill.id} style={styles.skillTag}>{skill.name}</Text>
+                  ))}
+                </View>
+              </View>
+            )}
+
+            {/* Education */}
+            {education.length > 0 && (
+              <View style={styles.educationSection}>
+                <Text style={styles.educationTitle}>Education</Text>
+                {education.map(edu => (
+                  <View key={edu.id} style={styles.educationBlock}>
+                    <Text style={styles.educationInstitution}>{edu.institution}</Text>
+                    <Text style={styles.educationDegree}>{edu.degree} in {edu.field}</Text>
+                    <Text style={styles.educationDate}>{edu.startDate} – {edu.endDate}</Text>
+                    {edu.score && <Text style={styles.educationScore}>{edu.score}</Text>}
                   </View>
-               </View>
-             )}
+                ))}
+              </View>
+            )}
 
-             {education.length > 0 && (
-               <View style={styles.sidebarSection}>
-                  <Text style={styles.sidebarTitle}>Education</Text>
-                  {education.map(edu => (
-                     <View key={edu.id} style={{ marginBottom: 8 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 10 }}>{edu.institution}</Text>
-                        <Text style={{ fontSize: 9, color: '#374151' }}>{edu.degree} in {edu.field}</Text>
-                        <Text style={{ fontSize: 8, color: '#6b7280', marginTop: 1 }}>{edu.startDate} – {edu.endDate}</Text>
-                        {edu.score && <Text style={{ fontSize: 8, color: '#1e3a5f', fontWeight: 'bold' }}>{edu.score}</Text>}
-                     </View>
-                  ))}
-               </View>
-             )}
+            {/* Languages */}
+            {languages.length > 0 && (
+              <View style={styles.languagesSection}>
+                <Text style={styles.languagesTitle}>Languages</Text>
+                {languages.map(lang => (
+                  <View key={lang.id} style={styles.languageRow}>
+                    <Text style={styles.languageName}>{lang.name}</Text>
+                    <Text style={styles.languageProficiency}>{lang.proficiency}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
 
-             {languages.length > 0 && (
-               <View style={styles.sidebarSection}>
-                  <Text style={styles.sidebarTitle}>Languages</Text>
-                  {languages.map(lang => (
-                     <View key={lang.id} style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 2 }}>
-                        <Text style={{ fontSize: 9 }}>{lang.name}</Text>
-                        <Text style={{ fontSize: 9, color: '#6b7280' }}>{lang.proficiency}</Text>
-                     </View>
-                  ))}
-               </View>
-             )}
-
-             {certifications.length > 0 && (
-               <View style={styles.sidebarSection}>
-                  <Text style={styles.sidebarTitle}>Certifications</Text>
-                  {certifications.map(cert => (
-                     <View key={cert.id} style={{ marginBottom: 6 }}>
-                        <Text style={{ fontWeight: 'bold', fontSize: 9 }}>{cert.name}</Text>
-                        <Text style={{ fontSize: 8, color: '#6b7280' }}>{cert.issuer} • {cert.date}</Text>
-                     </View>
-                  ))}
-               </View>
-             )}
+            {/* Certifications */}
+            {certifications.length > 0 && (
+              <View style={styles.certificationsSection}>
+                <Text style={styles.certificationsTitle}>Certifications</Text>
+                {certifications.map(cert => (
+                  <View key={cert.id} style={styles.certBlock}>
+                    <Text style={styles.certName}>{cert.name}</Text>
+                    <Text style={styles.certIssuer}>{cert.issuer} • {cert.date}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
           </View>
         </View>
       </Page>

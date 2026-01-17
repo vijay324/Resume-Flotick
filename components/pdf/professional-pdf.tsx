@@ -1,67 +1,68 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react';
 import { Page, Text, View, Document, StyleSheet, Link, Svg, Path } from '@react-pdf/renderer';
-import type { ResumeData, SkillItem, LanguageItem, CertificationItem, EducationItem, ExperienceItem, ProjectItem, AwardItem, VolunteerItem } from '@/types/resume';
+import type { ResumeData } from '@/types/resume';
+
+/**
+ * Professional Two-Column PDF Template
+ * 
+ * Section-specific styles for granular control over each section's spacing.
+ * Uses Times-Roman font family for professional appearance.
+ */
 
 const styles = StyleSheet.create({
+  // ===== PAGE =====
   page: {
     flexDirection: 'row',
     backgroundColor: '#ffffff',
     fontFamily: 'Times-Roman',
   },
+
+  // ===== LEFT COLUMN =====
   leftColumn: {
     width: '30%',
     backgroundColor: '#2c3e50',
     color: 'white',
-    padding: 20,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingHorizontal: 20,
     height: '100%',
   },
-  rightColumn: {
-    width: '70%',
-    padding: 24,
-    height: '100%',
-  },
-  // Typography
-  name: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 4,
-    lineHeight: 1.2,
-  },
-  jobTitle: {
-    fontSize: 10,
-    color: '#d1d5db', // gray-300
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    fontWeight: 'medium',
-    marginBottom: 8,
-  },
-  headerDivider: {
+
+  // ===== LEFT HEADER SECTION =====
+  leftHeaderSection: {
     borderBottomWidth: 1,
     borderBottomColor: 'rgba(255,255,255,0.2)',
     marginBottom: 24,
     paddingBottom: 16,
   },
-  sectionTitleLeft: {
+  leftHeaderName: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 4,
+    lineHeight: 1.2,
+  },
+  leftHeaderJobTitle: {
+    fontSize: 10,
+    color: '#d1d5db',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    fontWeight: 'medium',
+    marginBottom: 0,
+  },
+
+  // ===== CONTACT SECTION (Left) =====
+  contactSection: {
+    marginBottom: 24,
+  },
+  contactTitle: {
     fontSize: 9,
     fontWeight: 'bold',
     textTransform: 'uppercase',
     letterSpacing: 1,
     marginBottom: 12,
-    color: '#d1d5db', // gray-300
+    color: '#d1d5db',
   },
-  sectionTitleRight: {
-    fontSize: 11,
-    fontWeight: 'bold',
-    textTransform: 'uppercase',
-    letterSpacing: 1,
-    marginBottom: 12,
-    color: '#2c3e50',
-    borderBottomWidth: 2,
-    borderBottomColor: '#2c3e50',
-    paddingBottom: 4,
-  },
-  // Contact
   contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -72,24 +73,61 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     marginRight: 8,
-    color: '#9ca3af', // gray-400
+    color: '#9ca3af',
   },
   contactText: {
     color: 'white',
     textDecoration: 'none',
   },
-  // Content Items
+
+  // ===== SKILLS SECTION (Left) =====
+  skillsSection: {
+    marginBottom: 24,
+  },
+  skillsTitle: {
+    fontSize: 9,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 12,
+    color: '#d1d5db',
+  },
   skillItem: {
     marginBottom: 6,
     fontSize: 9,
   },
-  skillLevel: {
-    color: '#9ca3af',
-    fontSize: 8,
+
+  // ===== LANGUAGES SECTION (Left) =====
+  languagesSection: {
+    marginBottom: 24,
+  },
+  languagesTitle: {
+    fontSize: 9,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 12,
+    color: '#d1d5db',
   },
   languageItem: {
     marginBottom: 4,
     fontSize: 9,
+  },
+  languageProficiency: {
+    color: '#9ca3af',
+  },
+
+  // ===== CERTIFICATIONS SECTION (Left) =====
+  certificationsSection: {
+    marginBottom: 24,
+  },
+  certificationsTitle: {
+    fontSize: 9,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 12,
+    color: '#d1d5db',
   },
   certItem: {
     marginBottom: 8,
@@ -99,75 +137,296 @@ const styles = StyleSheet.create({
     color: '#9ca3af',
     fontSize: 8,
   },
-  // Right Column Items
-  summary: {
+
+  // ===== RIGHT COLUMN =====
+  rightColumn: {
+    width: '70%',
+    paddingTop: 24,
+    paddingBottom: 24,
+    paddingHorizontal: 24,
+    height: '100%',
+  },
+
+  // ===== PROFILE SECTION (Right) =====
+  profileSection: {
+    marginBottom: 20,
+  },
+  profileTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 12,
+    color: '#2c3e50',
+    borderBottomWidth: 2,
+    borderBottomColor: '#2c3e50',
+    paddingBottom: 4,
+  },
+  profileText: {
     fontSize: 10,
     lineHeight: 1.5,
-    marginBottom: 20,
     textAlign: 'justify',
-    color: '#374151', // gray-700
+    color: '#374151',
   },
-  block: {
+
+  // ===== EXPERIENCE SECTION (Right) =====
+  experienceSection: {
+    marginBottom: 20,
+  },
+  experienceTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 12,
+    color: '#2c3e50',
+    borderBottomWidth: 2,
+    borderBottomColor: '#2c3e50',
+    paddingBottom: 4,
+  },
+  experienceBlock: {
     marginBottom: 16,
   },
-  blockHeader: {
+  experienceHeader: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'baseline',
     marginBottom: 4,
   },
-  blockTitle: {
+  experiencePosition: {
     fontSize: 11,
     fontWeight: 'bold',
-    color: '#111827', // gray-900
+    color: '#111827',
   },
-  blockDate: {
+  experienceDate: {
     fontSize: 9,
-    color: '#4b5563', // gray-600
+    color: '#4b5563',
     fontWeight: 'medium',
   },
-  blockSubtitle: {
-    fontSize: 10,
-    fontWeight: 'bold', // Semibold equivalent
-    color: '#2c3e50',
-    marginBottom: 2,
+  experienceSubRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 4,
   },
-  blockLocation: {
+  experienceCompany: {
+    fontSize: 10,
+    fontWeight: 'bold',
+    color: '#2c3e50',
+  },
+  experienceLocation: {
     fontSize: 9,
     fontStyle: 'italic',
-    color: '#6b7280', // gray-500
+    color: '#6b7280',
   },
-  list: {
+  experienceBulletList: {
     marginTop: 4,
   },
-  listItem: {
+  experienceBulletItem: {
     flexDirection: 'row',
     marginBottom: 2,
   },
-  bullet: {
+  experienceBullet: {
     width: 10,
     fontSize: 10,
     color: '#2c3e50',
   },
-  listContent: {
+  experienceBulletContent: {
     flex: 1,
     fontSize: 10,
     lineHeight: 1.5,
     color: '#374151',
   },
-  link: {
-    color: '#374151',
+
+  // ===== PROJECTS SECTION (Right) =====
+  projectsSection: {
+    marginBottom: 20,
+  },
+  projectsTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 12,
+    color: '#2c3e50',
+    borderBottomWidth: 2,
+    borderBottomColor: '#2c3e50',
+    paddingBottom: 4,
+  },
+  projectBlock: {
+    marginBottom: 16,
+  },
+  projectHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    marginBottom: 0,
+  },
+  projectNameRow: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+  },
+  projectName: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#111827',
+  },
+  projectLink: {
+    marginLeft: 5,
+    fontSize: 8,
+    color: '#666',
     textDecoration: 'none',
   },
-  linkText: {
-     fontSize: 8,
-     color: '#6b7280',
-  }
-});
+  projectTech: {
+    fontSize: 9,
+    color: '#2c3e50',
+    fontStyle: 'italic',
+    marginBottom: 4,
+  },
+  projectBulletList: {
+    marginTop: 4,
+  },
+  projectBulletItem: {
+    flexDirection: 'row',
+    marginBottom: 2,
+  },
+  projectBullet: {
+    width: 10,
+    fontSize: 10,
+    color: '#2c3e50',
+  },
+  projectBulletContent: {
+    flex: 1,
+    fontSize: 10,
+    lineHeight: 1.5,
+    color: '#374151',
+  },
 
-interface Props {
-  data: ResumeData;
-}
+  // ===== EDUCATION SECTION (Right) =====
+  educationSection: {
+    marginBottom: 20,
+  },
+  educationTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 12,
+    color: '#2c3e50',
+    borderBottomWidth: 2,
+    borderBottomColor: '#2c3e50',
+    paddingBottom: 4,
+  },
+  educationBlock: {
+    marginBottom: 16,
+  },
+  educationHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    marginBottom: 4,
+  },
+  educationInstitution: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#111827',
+  },
+  educationDate: {
+    fontSize: 9,
+    color: '#4b5563',
+    fontWeight: 'medium',
+  },
+  educationDegree: {
+    fontSize: 10,
+    color: '#374151',
+  },
+  educationScore: {
+    fontSize: 9,
+    color: '#6b7280',
+    fontStyle: 'italic',
+    marginTop: 2,
+  },
+
+  // ===== VOLUNTEER SECTION (Right) =====
+  volunteerSection: {
+    marginBottom: 20,
+  },
+  volunteerTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 12,
+    color: '#2c3e50',
+    borderBottomWidth: 2,
+    borderBottomColor: '#2c3e50',
+    paddingBottom: 4,
+  },
+  volunteerBlock: {
+    marginBottom: 16,
+  },
+  volunteerHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    marginBottom: 4,
+  },
+  volunteerOrganization: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    color: '#111827',
+  },
+  volunteerDate: {
+    fontSize: 9,
+    color: '#4b5563',
+    fontWeight: 'medium',
+  },
+  volunteerRole: {
+    fontSize: 10,
+    fontStyle: 'italic',
+    marginBottom: 2,
+  },
+  volunteerDescription: {
+    flex: 1,
+    fontSize: 10,
+    lineHeight: 1.5,
+    color: '#374151',
+  },
+
+  // ===== AWARDS SECTION (Right) =====
+  awardsSection: {
+    marginBottom: 20,
+  },
+  awardsTitle: {
+    fontSize: 11,
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+    letterSpacing: 1,
+    marginBottom: 12,
+    color: '#2c3e50',
+    borderBottomWidth: 2,
+    borderBottomColor: '#2c3e50',
+    paddingBottom: 4,
+  },
+  awardRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'baseline',
+    marginBottom: 4,
+  },
+  awardTitle: {
+    fontSize: 10,
+    fontWeight: 'bold',
+  },
+  awardIssuer: {
+    fontWeight: 'normal',
+    color: '#666',
+  },
+  awardDate: {
+    fontSize: 9,
+    color: '#4b5563',
+    fontWeight: 'medium',
+  },
+});
 
 // Icon Components
 const Icon = ({ path }: { path: string }) => (
@@ -183,22 +442,27 @@ const LinkedinIcon = () => <Icon path="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2
 const GithubIcon = () => <Icon path="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />;
 const GlobeIcon = () => <Icon path="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20z M2 12h20 M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z" />;
 
+interface Props {
+  data: ResumeData;
+}
+
 export const ProfessionalPdf = ({ data }: Props) => {
   const { personalInfo, experience, education, skills, projects, languages, certifications, awards, volunteer } = data;
 
   return (
     <Document>
       <Page size="A4" style={styles.page}>
-        {/* Left Column */}
+        {/* ===== LEFT COLUMN ===== */}
         <View style={styles.leftColumn}>
-          <View style={styles.headerDivider}>
-            <Text style={styles.name}>{personalInfo.fullName}</Text>
-            {personalInfo.jobTitle && <Text style={styles.jobTitle}>{personalInfo.jobTitle}</Text>}
+          {/* Header */}
+          <View style={styles.leftHeaderSection}>
+            <Text style={styles.leftHeaderName}>{personalInfo.fullName}</Text>
+            {personalInfo.jobTitle && <Text style={styles.leftHeaderJobTitle}>{personalInfo.jobTitle}</Text>}
           </View>
 
           {/* Contact */}
-          <View style={{ marginBottom: 24 }}>
-            <Text style={styles.sectionTitleLeft}>Contact</Text>
+          <View style={styles.contactSection}>
+            <Text style={styles.contactTitle}>Contact</Text>
             {personalInfo.phone && (
               <View style={styles.contactItem}>
                 <PhoneIcon />
@@ -245,12 +509,11 @@ export const ProfessionalPdf = ({ data }: Props) => {
 
           {/* Skills */}
           {skills.length > 0 && (
-            <View style={{ marginBottom: 24 }}>
-              <Text style={styles.sectionTitleLeft}>Skills</Text>
+            <View style={styles.skillsSection}>
+              <Text style={styles.skillsTitle}>Skills</Text>
               {skills.map((skill) => (
                 <View key={skill.id} style={styles.skillItem}>
                   <Text>{skill.name}</Text>
-
                 </View>
               ))}
             </View>
@@ -258,11 +521,11 @@ export const ProfessionalPdf = ({ data }: Props) => {
 
           {/* Languages */}
           {languages.length > 0 && (
-            <View style={{ marginBottom: 24 }}>
-              <Text style={styles.sectionTitleLeft}>Languages</Text>
+            <View style={styles.languagesSection}>
+              <Text style={styles.languagesTitle}>Languages</Text>
               {languages.map((lang) => (
                 <View key={lang.id} style={styles.languageItem}>
-                  <Text>{lang.name} <Text style={{ color: '#9ca3af' }}>({lang.proficiency})</Text></Text>
+                  <Text>{lang.name} <Text style={styles.languageProficiency}>({lang.proficiency})</Text></Text>
                 </View>
               ))}
             </View>
@@ -270,8 +533,8 @@ export const ProfessionalPdf = ({ data }: Props) => {
 
           {/* Certifications */}
           {certifications.length > 0 && (
-            <View style={{ marginBottom: 24 }}>
-              <Text style={styles.sectionTitleLeft}>Certifications</Text>
+            <View style={styles.certificationsSection}>
+              <Text style={styles.certificationsTitle}>Certifications</Text>
               {certifications.map((cert) => (
                 <View key={cert.id} style={styles.certItem}>
                   <Text>{cert.name}</Text>
@@ -282,35 +545,35 @@ export const ProfessionalPdf = ({ data }: Props) => {
           )}
         </View>
 
-        {/* Right Column */}
+        {/* ===== RIGHT COLUMN ===== */}
         <View style={styles.rightColumn}>
-          {/* Summary */}
+          {/* Profile */}
           {personalInfo.summary && (
-             <View style={{ marginBottom: 20 }}>
-                <Text style={styles.sectionTitleRight}>Profile</Text>
-                <Text style={styles.summary}>{personalInfo.summary}</Text>
-             </View>
+            <View style={styles.profileSection}>
+              <Text style={styles.profileTitle}>Profile</Text>
+              <Text style={styles.profileText}>{personalInfo.summary}</Text>
+            </View>
           )}
 
           {/* Experience */}
           {experience.length > 0 && (
-            <View style={{ marginBottom: 20 }}>
+            <View style={styles.experienceSection}>
               {experience.map((exp, index) => (
-                <View key={exp.id} wrap={false} style={styles.block}>
-                  {index === 0 && <Text style={styles.sectionTitleRight}>Experience</Text>}
-                  <View style={styles.blockHeader}>
-                    <Text style={styles.blockTitle}>{exp.position}</Text>
-                    <Text style={styles.blockDate}>{exp.startDate} – {exp.endDate}</Text>
+                <View key={exp.id} wrap={false} style={styles.experienceBlock}>
+                  {index === 0 && <Text style={styles.experienceTitle}>Experience</Text>}
+                  <View style={styles.experienceHeader}>
+                    <Text style={styles.experiencePosition}>{exp.position}</Text>
+                    <Text style={styles.experienceDate}>{exp.startDate} – {exp.endDate}</Text>
                   </View>
-                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
-                     <Text style={styles.blockSubtitle}>{exp.company}</Text>
-                     {exp.location && <Text style={styles.blockLocation}>{exp.location}</Text>}
+                  <View style={styles.experienceSubRow}>
+                    <Text style={styles.experienceCompany}>{exp.company}</Text>
+                    {exp.location && <Text style={styles.experienceLocation}>{exp.location}</Text>}
                   </View>
-                  <View style={styles.list}>
+                  <View style={styles.experienceBulletList}>
                     {exp.description.split('\n').map((line, i) => line.trim() && (
-                      <View key={i} style={styles.listItem}>
-                        <Text style={styles.bullet}>▸</Text>
-                        <Text style={styles.listContent}>{line.trim()}</Text>
+                      <View key={i} style={styles.experienceBulletItem}>
+                        <Text style={styles.experienceBullet}>▸</Text>
+                        <Text style={styles.experienceBulletContent}>{line.trim()}</Text>
                       </View>
                     ))}
                   </View>
@@ -321,28 +584,28 @@ export const ProfessionalPdf = ({ data }: Props) => {
 
           {/* Projects */}
           {projects.length > 0 && (
-            <View style={{ marginBottom: 20 }}>
+            <View style={styles.projectsSection}>
               {projects.map((proj, index) => (
-                <View key={proj.id} wrap={false} style={styles.block}>
-                   {index === 0 && <Text style={styles.sectionTitleRight}>Projects</Text>}
-                   <View style={styles.blockHeader}>
-                     <View style={{flexDirection: 'row', alignItems: 'baseline'}}>
-                        <Text style={styles.blockTitle}>{proj.name}</Text>
-                        {proj.link && (
-                           <Text style={{marginLeft: 5, fontSize: 8, color: '#666'}}>
-                             | <Link src={proj.link} style={styles.link}>{proj.link.replace(/^https?:\/\//, "")}</Link>
-                           </Text>
-                        )}
-                     </View>
-                   </View>
-                   <Text style={{ fontSize: 9, color: '#2c3e50', fontStyle: 'italic', marginBottom: 4 }}>
-                      {proj.technologies.join(" • ")}
-                   </Text>
-                   <View style={styles.list}>
+                <View key={proj.id} wrap={false} style={styles.projectBlock}>
+                  {index === 0 && <Text style={styles.projectsTitle}>Projects</Text>}
+                  <View style={styles.projectHeader}>
+                    <View style={styles.projectNameRow}>
+                      <Text style={styles.projectName}>{proj.name}</Text>
+                      {proj.link && (
+                        <Text style={styles.projectLink}>
+                          | <Link src={proj.link} style={styles.projectLink}>{proj.link.replace(/^https?:\/\//, "")}</Link>
+                        </Text>
+                      )}
+                    </View>
+                  </View>
+                  <Text style={styles.projectTech}>
+                    {proj.technologies.join(" • ")}
+                  </Text>
+                  <View style={styles.projectBulletList}>
                     {proj.description.split('\n').map((line, i) => line.trim() && (
-                      <View key={i} style={styles.listItem}>
-                        <Text style={styles.bullet}>▸</Text>
-                        <Text style={styles.listContent}>{line.trim()}</Text>
+                      <View key={i} style={styles.projectBulletItem}>
+                        <Text style={styles.projectBullet}>▸</Text>
+                        <Text style={styles.projectBulletContent}>{line.trim()}</Text>
                       </View>
                     ))}
                   </View>
@@ -353,16 +616,16 @@ export const ProfessionalPdf = ({ data }: Props) => {
 
           {/* Education */}
           {education.length > 0 && (
-            <View style={{ marginBottom: 20 }}>
+            <View style={styles.educationSection}>
               {education.map((edu, index) => (
-                <View key={edu.id} wrap={false} style={styles.block}>
-                  {index === 0 && <Text style={styles.sectionTitleRight}>Education</Text>}
-                  <View style={styles.blockHeader}>
-                    <Text style={styles.blockTitle}>{edu.institution}</Text>
-                    <Text style={styles.blockDate}>{edu.startDate} – {edu.endDate}</Text>
+                <View key={edu.id} wrap={false} style={styles.educationBlock}>
+                  {index === 0 && <Text style={styles.educationTitle}>Education</Text>}
+                  <View style={styles.educationHeader}>
+                    <Text style={styles.educationInstitution}>{edu.institution}</Text>
+                    <Text style={styles.educationDate}>{edu.startDate} – {edu.endDate}</Text>
                   </View>
-                  <Text style={{ fontSize: 10, color: '#374151' }}>{edu.degree} in {edu.field}</Text>
-                  {edu.score && <Text style={{ fontSize: 9, color: '#6b7280', fontStyle: 'italic', marginTop: 2 }}>{edu.score}</Text>}
+                  <Text style={styles.educationDegree}>{edu.degree} in {edu.field}</Text>
+                  {edu.score && <Text style={styles.educationScore}>{edu.score}</Text>}
                 </View>
               ))}
             </View>
@@ -370,34 +633,33 @@ export const ProfessionalPdf = ({ data }: Props) => {
 
           {/* Volunteer */}
           {volunteer.length > 0 && (
-            <View style={{ marginBottom: 20 }}>
-              <Text style={styles.sectionTitleRight}>Volunteer</Text>
+            <View style={styles.volunteerSection}>
+              <Text style={styles.volunteerTitle}>Volunteer</Text>
               {volunteer.map((vol) => (
-                <View key={vol.id} style={styles.block}>
-                  <View style={styles.blockHeader}>
-                    <Text style={styles.blockTitle}>{vol.organization}</Text>
-                    <Text style={styles.blockDate}>{vol.startDate} – {vol.endDate}</Text>
+                <View key={vol.id} style={styles.volunteerBlock}>
+                  <View style={styles.volunteerHeader}>
+                    <Text style={styles.volunteerOrganization}>{vol.organization}</Text>
+                    <Text style={styles.volunteerDate}>{vol.startDate} – {vol.endDate}</Text>
                   </View>
-                  <Text style={{ fontSize: 10, fontStyle: 'italic', marginBottom: 2 }}>{vol.role}</Text>
-                  <Text style={styles.listContent}>{vol.description}</Text>
+                  <Text style={styles.volunteerRole}>{vol.role}</Text>
+                  <Text style={styles.volunteerDescription}>{vol.description}</Text>
                 </View>
               ))}
             </View>
           )}
 
-           {/* Awards */}
-           {awards.length > 0 && (
-            <View style={{ marginBottom: 20 }}>
-              <Text style={styles.sectionTitleRight}>Awards</Text>
+          {/* Awards */}
+          {awards.length > 0 && (
+            <View style={styles.awardsSection}>
+              <Text style={styles.awardsTitle}>Awards</Text>
               {awards.map((award) => (
-                <View key={award.id} style={styles.blockHeader}>
-                  <Text style={{ fontSize: 10, fontWeight: 'bold' }}>{award.title} <Text style={{ fontWeight: 'normal', color: '#666' }}>— {award.issuer}</Text></Text>
-                  <Text style={styles.blockDate}>{award.date}</Text>
+                <View key={award.id} style={styles.awardRow}>
+                  <Text style={styles.awardTitle}>{award.title} <Text style={styles.awardIssuer}>— {award.issuer}</Text></Text>
+                  <Text style={styles.awardDate}>{award.date}</Text>
                 </View>
               ))}
             </View>
           )}
-
         </View>
       </Page>
     </Document>
