@@ -27,6 +27,12 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
 
   /**
+   * Turbopack configuration
+   * Empty config to acknowledge Turbopack usage alongside webpack config
+   */
+  turbopack: {},
+
+  /**
    * Webpack configuration for PDF generation
    * Fixes production build issues with @react-pdf/renderer
    */
