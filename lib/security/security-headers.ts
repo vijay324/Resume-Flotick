@@ -19,6 +19,8 @@ export const contentSecurityPolicy = {
   "connect-src": [
     "'self'",
     "https://generativelanguage.googleapis.com", // Gemini API
+    "blob:", // Required for react-pdf blob URLs
+    "data:", // Required for react-pdf yoga-layout WASM engine
   ],
   "frame-ancestors": ["'none'"],
   "form-action": ["'self'"],

@@ -3,7 +3,7 @@
 import React from "react";
 import { useResume } from "@/context/resume-context";
 import { useTemplate } from "@/context/template-context";
-import { ClassicTemplate, ProfessionalTemplate, ModernTemplate } from "@/components/templates";
+import { ClassicTemplate, ProfessionalTemplate, ModernTemplate, AtsTemplate } from "@/components/templates";
 import { PaginatedResume } from "@/components/paginated-resume";
 
 export function ResumePreview() {
@@ -13,6 +13,8 @@ export function ResumePreview() {
   // Render the appropriate template based on selection
   const renderTemplate = () => {
     switch (templateType) {
+      case "ats":
+        return <AtsTemplate resumeData={resumeData} />;
       case "professional":
         return <ProfessionalTemplate resumeData={resumeData} />;
       case "modern":

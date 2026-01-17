@@ -12,6 +12,12 @@ interface TemplateContextType {
 // Available templates with metadata
 export const TEMPLATES: TemplateInfo[] = [
   {
+    id: "ats",
+    name: "Professional ATS",
+    description: "Industry-standard single-column. 100% ATS compatible. Recommended.",
+    layout: "single-column",
+  },
+  {
     id: "classic",
     name: "Classic",
     description: "Traditional single-column layout. Best for text-heavy resumes.",
@@ -19,14 +25,14 @@ export const TEMPLATES: TemplateInfo[] = [
   },
   {
     id: "professional",
-    name: "Professional",
-    description: "Two-column with sidebar. Ideal for tech and business roles.",
+    name: "Professional (Two-Column)",
+    description: "Two-column with sidebar. Note: Some ATS may have parsing issues.",
     layout: "two-column",
   },
   {
     id: "modern",
-    name: "Modern",
-    description: "Clean two-column design with skills sidebar.",
+    name: "Modern (Two-Column)",
+    description: "Clean two-column design. Note: Some ATS may have parsing issues.",
     layout: "two-column",
   },
 ];
@@ -34,7 +40,7 @@ export const TEMPLATES: TemplateInfo[] = [
 const TemplateContext = createContext<TemplateContextType | undefined>(undefined);
 
 export function TemplateProvider({ children }: { children: ReactNode }) {
-  const [templateType, setTemplateType] = useState<TemplateType>("classic");
+  const [templateType, setTemplateType] = useState<TemplateType>("ats");
 
   // Load from localStorage on mount
   useEffect(() => {
