@@ -124,7 +124,25 @@ html {
   html, body {
     -webkit-print-color-adjust: exact !important;
     print-color-adjust: exact !important;
-    color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Resume page sizing - fixed A4 */
+  .resume-page {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    height: auto !important;
+    margin: 0 auto !important;
+    background: white;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  }
+
+  /* Reset for print */
+  html, body {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
     margin: 0 !important;
     padding: 0 !important;
   }
@@ -135,16 +153,10 @@ html {
     gap: 0 !important;
   }
   
-  /* Resume page sizing - keep original padding from templates */
   .resume-page {
-    width: 210mm !important;
-    min-height: 297mm !important;
-    height: auto !important;
+    box-shadow: none !important;
     page-break-after: always;
     page-break-inside: avoid;
-    box-shadow: none !important;
-    margin: 0 auto !important;
-    /* DO NOT override padding - preserve template styling */
   }
   
   .resume-page:last-child {

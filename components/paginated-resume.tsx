@@ -61,7 +61,7 @@ export function PaginatedResume({ children }: PaginatedResumeProps) {
     pageBreaks.push(
       <div
         key={`page-break-${i}`}
-        className="page-break-indicator absolute left-0 right-0 z-20 pointer-events-none"
+        className="page-break-indicator absolute left-1/2 -translate-x-1/2 z-20 pointer-events-none w-[210mm]"
         style={{ top: `${i * PAGE_HEIGHT_PX}px` }}
       >
         {/* Page break line */}
@@ -83,11 +83,11 @@ export function PaginatedResume({ children }: PaginatedResumeProps) {
   return (
     <div className="resume-pages-container relative">
       {/* Page backgrounds - show multiple A4 sheets (hidden in print) */}
-      <div className="absolute inset-0 pointer-events-none page-break-indicator">
+      <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none page-break-indicator flex flex-col items-center">
         {Array.from({ length: pageCount }).map((_, i) => (
           <div
             key={`page-bg-${i}`}
-            className="absolute left-0 right-0 bg-white"
+            className="absolute bg-white w-[210mm]"
             style={{
               top: `${i * PAGE_HEIGHT_PX + (i > 0 ? i * 32 : 0)}px`,
               height: `${PAGE_HEIGHT_PX}px`,

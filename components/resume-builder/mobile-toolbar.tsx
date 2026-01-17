@@ -8,6 +8,8 @@ import { ZoomControls } from "@/components/ui/zoom-controls";
 
 import { PdfDownloadButton } from "@/components/pdf-download-button";
 import type { ResumeData, TemplateType } from "@/types/resume";
+import Image from "next/image";
+import { SaveStatusIndicator } from "@/components/ui/save-status-indicator";
 
 interface MobileToolbarProps {
   onClear: () => void;
@@ -27,7 +29,7 @@ export function MobileToolbar({
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="md:hidden fixed top-4 right-4 z-40">
+    <div className="md:hidden">
       <Button
         variant="outline"
         size="icon"
@@ -49,7 +51,16 @@ export function MobileToolbar({
           {/* Drawer Content */}
           <div className="relative w-3/4 max-w-xs bg-white h-full shadow-2xl p-6 flex flex-col gap-6 animate-in slide-in-from-right duration-300">
             <div className="flex items-center justify-between">
-              <h2 className="text-lg font-bold text-gray-900">Menu</h2>
+              <div className="flex items-center gap-3">
+                 <div className="h-10 w-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm">
+                    <Image src="/logo-black.svg" alt="Logo" width={22} height={22} />
+                 </div>
+                 <div>
+                    <h1 className="text-sm font-semibold text-gray-900 leading-tight">Professional Resume</h1>
+                    <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">ATS-Optimized</p>
+                 </div>
+              </div>
+
               <Button
                 variant="ghost"
                 size="icon"
@@ -62,6 +73,10 @@ export function MobileToolbar({
 
             {/* Actions */}
             <div className="space-y-6">
+              <div className="flex justify-center pb-2">
+                 <SaveStatusIndicator />
+              </div>
+
               {/* Main CTA */}
               <div onClick={() => setIsOpen(false)}>
                 <PdfDownloadButton resumeData={resumeData} templateType={templateType} />

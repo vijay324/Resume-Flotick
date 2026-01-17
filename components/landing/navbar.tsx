@@ -40,102 +40,110 @@ export function LandingNavbar() {
       >
         <div
           className={cn(
-            "relative flex items-center justify-between rounded-b-xl border px-6 py-3 transition-all duration-300 backdrop-blur-xl",
+            "relative overflow-hidden transition-all duration-300 backdrop-blur-xl  flex flex-col",
+            isMobileMenuOpen ? "rounded-b-2xl" : "rounded-b-xl",
             isScrolled
-              ? "bg-white/80 border-black/5 shadow-lg"
-              : "bg-white/50 border-white/20 shadow-sm"
+              ? "bg-white/90 border-black/5 shadow-lg"
+              : "bg-white/80 border-white/20 shadow-sm"
           )}
         >
-          {/* Logo */}
-          <Link href="/" className="flex items-center gap-2 group">
-            <div className="relative flex h-8 w-8 items-center justify-center rounded-xl text-white transition-transform group-hover:scale-105">
-              <Image src="/logo-black.svg" alt="Logo" width={24} height={24} />
-            </div>
-            <div className="flex flex-col">
-              <span className="text-sm font-bold leading-none tracking-tight text-gray-900">
-                Resume
-              </span>
-              <span className="text-[10px] font-medium leading-none text-gray-500">
-                by Flotick
-              </span>
-            </div>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.name}
-                href={link.href}
-                className="relative px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 group"
-              >
-                {link.name}
-                <span className="absolute inset-x-4 -bottom-px h-px bg-gradient-to-r from-blue-500/0 via-blue-500/70 to-blue-500/0 opacity-0 transition group-hover:opacity-100" />
-              </Link>
-            ))}
-          </div>
-
-          {/* Actions */}
-          <div className="hidden md:flex items-center gap-3">
-
-            <Link href="/builder">
-              <Button 
-                size="sm" 
-                className="rounded-md bg-gray-900 px-5 text-white shadow-lg shadow-gray-900/10 hover:bg-gray-800 hover:shadow-gray-900/20"
-              >
-                Get Started
-              </Button>
+          {/* Main Navbar Row */}
+          <div className="flex items-center justify-between px-6 py-3 shrink-0">
+            {/* Logo */}
+            <Link href="/" className="flex items-center gap-2 group">
+              <div className="relative flex h-8 w-8 items-center justify-center rounded-xl text-white transition-transform group-hover:scale-105">
+                <Image src="/logo-black.svg" alt="Logo" width={24} height={24} />
+              </div>
+              <div className="flex flex-col">
+                <span className="text-sm font-bold leading-none tracking-tight text-gray-900">
+                  Resume
+                </span>
+                <span className="text-[10px] font-medium leading-none text-gray-500">
+                  by Flotick
+                </span>
+              </div>
             </Link>
-          </div>
 
-          {/* Mobile Toggle */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden p-2 text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-full transition-colors"
-          >
-            {isMobileMenuOpen ? (
-              <X className="h-5 w-5" />
-            ) : (
-              <Menu className="h-5 w-5" />
-            )}
-          </button>
-        </div>
-      </motion.nav>
-
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.2 }}
-            className="fixed inset-x-4 top-24 z-40 rounded-2xl border border-gray-100 bg-white/50 p-4 shadow-xl backdrop-blur-sm md:hidden"
-          >
-            <div className="flex flex-col gap-2">
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-1">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.href}
-                  onClick={() => setIsMobileMenuOpen(false)}
-                  className="flex items-center justify-between rounded-xl p-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+                  className="relative px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 group"
                 >
                   {link.name}
-                  <ChevronRight className="h-4 w-4 text-gray-400" />
+                  <span className="absolute inset-x-4 -bottom-px h-px bg-gradient-to-r from-blue-500/0 via-blue-500/70 to-blue-500/0 opacity-0 transition group-hover:opacity-100" />
                 </Link>
               ))}
-              <hr className="my-2 border-gray-100" />
-              <div className="flex flex-col gap-2 p-2">
-                <Link href="/builder" onClick={() => setIsMobileMenuOpen(false)}>
-                  <Button className="w-full rounded-xl bg-blue-600 hover:bg-blue-700">
-                    Get Started
-                  </Button>
-                </Link>
-              </div>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+
+            {/* Actions */}
+            <div className="hidden md:flex items-center gap-3">
+              <Link href="/builder">
+                <Button 
+                  size="sm" 
+                  className="rounded-md bg-gray-900 px-5 text-white shadow-lg shadow-gray-900/10 hover:bg-gray-800 hover:shadow-gray-900/20"
+                >
+                  Get Started
+                </Button>
+              </Link>
+            </div>
+
+            {/* Mobile Toggle */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className={cn(
+                "md:hidden p-2 rounded-full transition-all duration-300",
+                isMobileMenuOpen 
+                  ? "bg-orange-50 text-orange-600 shadow-sm ring-2 ring-orange-200" 
+                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              )}
+            >
+              {isMobileMenuOpen ? (
+                <X className="h-5 w-5" />
+              ) : (
+                <Menu className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+
+          {/* Mobile Menu Content (Expanded) */}
+          <AnimatePresence>
+            {isMobileMenuOpen && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+                className="md:hidden overflow-hidden"
+              >
+                <div className="p-4 pt-0 flex flex-col gap-1">
+                  <div className="h-px bg-gray-100 mb-2 mx-2" />
+                  {navLinks.map((link) => (
+                    <Link
+                      key={link.name}
+                      href={link.href}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="flex items-center justify-between rounded-xl p-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all group"
+                    >
+                      {link.name}
+                      <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-gray-900 transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  ))}
+                  <div className="pt-2 mt-2">
+                    <Link href="/builder" onClick={() => setIsMobileMenuOpen(false)}>
+                      <Button className="w-full rounded-xl bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-500/20">
+                        Get Started
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.nav>
     </>
   );
 }
