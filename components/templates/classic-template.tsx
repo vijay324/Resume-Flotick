@@ -19,7 +19,7 @@ export function ClassicTemplate({ resumeData }: TemplateProps) {
       className="resume-pages-container"
     >
       <div 
-        className="resume-page bg-white shadow-none p-[40px] md:p-[50px] text-[10.5pt] leading-[1.45] text-[#1a1a1a]"
+        className="resume-page bg-white shadow-none p-[50px] text-[10.5pt] leading-[1.45] text-[#1a1a1a]"
         style={{ fontFamily: "Georgia, 'Times New Roman', Times, serif" }} 
       >
         {/* Header */}

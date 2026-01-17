@@ -81,7 +81,7 @@ export function PaginatedResume({ children }: PaginatedResumeProps) {
   }
 
   return (
-    <div className="resume-pages-container relative">
+    <div className="resume-pages-container relative w-[210mm] min-w-[210mm] mx-auto">
       {/* Page backgrounds - show multiple A4 sheets (hidden in print) */}
       <div className="absolute inset-x-0 top-0 bottom-0 pointer-events-none page-break-indicator flex flex-col items-center">
         {Array.from({ length: pageCount }).map((_, i) => (
@@ -100,7 +100,7 @@ export function PaginatedResume({ children }: PaginatedResumeProps) {
       {/* Content container */}
       <div 
         ref={contentRef}
-        className="relative z-10"
+        className="relative z-10 w-[210mm] min-w-[210mm]"
         style={{
           // Add gap between pages for visual separation (removed in print)
           paddingBottom: pageCount > 1 ? `${(pageCount - 1) * 32}px` : 0,
