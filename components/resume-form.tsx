@@ -79,19 +79,20 @@ export function ResumeForm() {
                 <hr className="border-dashed border-gray-200" />
                 <div className="space-y-4">
                    <div>
-                      <h2 className="text-lg font-bold text-gray-900">Languages</h2>
-                      <p className="text-sm text-gray-500">Spoken and written languages</p>
-                   </div>
-                   <LanguageForm />
-                </div>
-                <hr className="border-dashed border-gray-200" />
-                <div className="space-y-4">
-                   <div>
                       <h2 className="text-lg font-bold text-gray-900">Certifications</h2>
                       <p className="text-sm text-gray-500">Professional licenses & certs</p>
                    </div>
                    <CertificationForm />
                 </div>
+                <hr className="border-dashed border-gray-200" />
+                <div className="space-y-4">
+                   <div>
+                      <h2 className="text-lg font-bold text-gray-900">Languages</h2>
+                      <p className="text-sm text-gray-500">Spoken and written languages</p>
+                   </div>
+                   <LanguageForm />
+                </div>
+                
              </div>
           )}
 

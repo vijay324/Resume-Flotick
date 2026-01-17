@@ -63,7 +63,7 @@ export function VolunteerForm() {
                 <Trash2 className="h-4 w-4" />
              </button>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
                  <Label className={labelClass}>Organization</Label>
                  <Input name="organization" value={item.organization} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Non-profit Name" />
@@ -74,7 +74,7 @@ export function VolunteerForm() {
                </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
                  <Label className={labelClass}>Start Date</Label>
                  <Input name="startDate" type="text" placeholder="YYYY-MM" value={item.startDate} onChange={(e) => handleChange(index, e)} className={inputClass} />

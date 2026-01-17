@@ -68,7 +68,7 @@ export function ExperienceForm() {
                <Trash2 className="h-4 w-4" />
             </button>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
                  <Label className={labelClass}>Company Name</Label>
                  <Input name="company" value={item.company} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Google" />
@@ -79,7 +79,7 @@ export function ExperienceForm() {
                </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
                  <Label className={labelClass}>Start Date</Label>
                  <Input name="startDate" type="text" placeholder="Jan 2022" value={item.startDate} onChange={(e) => handleChange(index, e)} className={inputClass} />

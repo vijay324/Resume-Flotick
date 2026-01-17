@@ -65,7 +65,7 @@ export function ProjectsForm() {
                <Trash2 className="h-4 w-4" />
             </button>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                 <div className="space-y-1">
                    <Label className={labelClass}>Project Name</Label>
                    <Input value={item.name} onChange={(e) => handleChange(index, "name", e.target.value)} className={inputClass} placeholder="E-commerce Dashboard" />

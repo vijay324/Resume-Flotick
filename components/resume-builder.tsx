@@ -37,16 +37,17 @@ export function ResumeBuilder() {
     }
   };
 
-  // Default zoom
+  // Default zoom based on screen size
   React.useEffect(() => {
-    setZoom(0.8);
+    const isMobile = window.innerWidth < 768;
+    setZoom(isMobile ? 0.4 : 0.8);
   }, []);
 
   return (
     <>
-      <div className="flex flex-col md:flex-row h-screen overflow-hidden bg-gray-50/50">
+      <div className="flex flex-col lg:flex-row h-screen overflow-hidden bg-gray-50/50">
         {/* Mobile Tab Navigation & Header */}
-        <div className="md:hidden flex items-center justify-between px-4 h-16 bg-white border-b border-gray-200 shrink-0 z-30">
+        <div className="lg:hidden flex items-center justify-between px-4 h-16 bg-white border-b border-gray-200 shrink-0 z-30">
           <div className="flex items-center gap-3">
              <Link href="/" className="p-2 -ml-2 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all">
                <ChevronLeft className="h-5 w-5" />
@@ -85,20 +86,20 @@ export function ResumeBuilder() {
            className={`
              relative flex-col h-full bg-white/80 backdrop-blur-xl border-r border-gray-200/50 
              shadow-[4px_0_24px_-12px_rgba(0,0,0,0.05)] z-20 transition-all duration-500 ease-[bezier(0.25,1,0.5,1)]
-             ${activeMobileTab === 'editor' ? 'flex w-full' : 'hidden'} md:flex
-             ${isSidebarOpen ? "md:w-1/2 lg:w-2/5 md:translate-x-0 md:opacity-100" : "md:w-0 md:border-r-0 md:-translate-x-full md:opacity-0 md:overflow-hidden"}
+             ${activeMobileTab === 'editor' ? 'flex w-full' : 'hidden'} lg:flex
+             ${isSidebarOpen ? "lg:w-1/2 xl:w-2/5 lg:translate-x-0 lg:opacity-100" : "lg:w-0 lg:border-r-0 lg:-translate-x-full lg:opacity-0 lg:overflow-hidden"}
            `}
         >
           {/* Header */}
-          <div className="h-16 px-6 border-b border-gray-100 items-center justify-between shrink-0 bg-white/50 backdrop-blur-md sticky top-0 z-10 hidden md:flex">
+          <div className="h-16 px-6 border-b border-gray-100 items-center justify-between shrink-0 bg-white/50 backdrop-blur-md sticky top-0 z-10 hidden lg:flex">
              <div className="flex items-center gap-3">
-                <Link href="/" className="p-2 -ml-2 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all md:flex hidden">
+                <Link href="/" className="p-2 -ml-2 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all lg:flex hidden">
                   <ChevronLeft className="h-5 w-5" />
                 </Link>
-                <div className="h-10 w-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm md:flex hidden">
+                <div className="h-10 w-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm lg:flex hidden">
                    <Image src="/logo-black.svg" alt="Logo" width={22} height={22} />
                 </div>
-                <div className="hidden md:block">
+                <div className="hidden lg:block">
                    <h1 className="text-sm font-semibold text-gray-900 leading-tight">Professional Resume</h1>
                    <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">ATS-Optimized</p>
                 </div>
@@ -112,7 +113,7 @@ export function ResumeBuilder() {
                 <Button 
                   size="sm" 
                   variant="ghost"
-                  className="h-8 w-8 p-0 text-gray-400 hover:text-gray-900 hidden md:flex"
+                  className="h-8 w-8 p-0 text-gray-400 hover:text-gray-900 hidden lg:flex"
                   onClick={() => setIsSidebarOpen(false)}
                 >
        <PanelLeftClose className="h-4 w-4" />
@@ -139,9 +140,9 @@ export function ResumeBuilder() {
         </div>
 
         {/* Right Side - Preview */}
-        <div className={`flex-1 bg-[#F8F9FA] h-full overflow-auto overflow-x-auto relative flex-col items-start p-4 md:p-8 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent ${activeMobileTab === 'preview' ? 'flex' : 'hidden'} md:flex`}>
+        <div className={`flex-1 bg-[#F8F9FA] h-full overflow-auto overflow-x-auto relative flex-col items-start p-4 lg:p-8 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent ${activeMobileTab === 'preview' ? 'flex' : 'hidden'} lg:flex`}>
             {/* Template Selector & Download Button (Floating) - Desktop Only */}
-            <div className={`hidden md:flex fixed top-6 right-8 z-30 items-center gap-3 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
+            <div className={`hidden lg:flex fixed top-6 right-8 z-30 items-center gap-3 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
                 {/* Clear Resume Button */}
                 <Button
                   variant="ghost"

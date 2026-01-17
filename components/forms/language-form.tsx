@@ -6,16 +6,19 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Plus, X } from "lucide-react";
-
-import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { Plus, X, Languages } from "lucide-react";
 
 export function LanguageForm() {
   const { resumeData, updateSection } = useResume();
   const { languages } = resumeData;
   const [newLanguage, setNewLanguage] = React.useState("");
   const [proficiency, setProficiency] = React.useState("Professional");
-  const [deleteId, setDeleteId] = React.useState<string | null>(null);
+
+  const commonLanguages = ["English", "Telugu", "Hindi", "Tamil"];
+
+  const removeLanguage = (id: string) => {
+    updateSection("languages", languages.filter((l) => l.id !== id));
+  };
 
   const addLanguage = () => {
     if (!newLanguage.trim()) return;
@@ -28,10 +31,14 @@ export function LanguageForm() {
     setNewLanguage("");
   };
 
-  const confirmDelete = () => {
-    if (deleteId === null) return;
-    updateSection("languages", languages.filter((l) => l.id !== deleteId));
-    setDeleteId(null);
+  const addSpecificLanguage = (name: string) => {
+    if (languages.some(l => l.name.toLowerCase() === name.toLowerCase())) return;
+    const item = {
+      id: crypto.randomUUID(),
+      name: name,
+      proficiency: (name.toLowerCase() === "english" ? "Professional" : "Native") as any,
+    };
+    updateSection("languages", [...languages, item]);
   };
 
   const inputClass = "rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-11 transition-all duration-200 ease-in-out font-medium text-gray-800 placeholder:text-gray-400 text-sm";
@@ -39,6 +46,20 @@ export function LanguageForm() {
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+        <div className="flex flex-wrap gap-2 mb-2">
+          {commonLanguages.map((lang) => (
+            <button
+              key={lang}
+              onClick={() => addSpecificLanguage(lang)}
+              disabled={languages.some(l => l.name.toLowerCase() === lang.toLowerCase())}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 bg-white hover:bg-indigo-50 hover:border-indigo-200 text-gray-600 hover:text-indigo-600 text-xs font-medium transition-all disabled:opacity-50 disabled:hover:bg-white disabled:hover:border-gray-200 disabled:hover:text-gray-600"
+            >
+              <Plus className="h-3 w-3" />
+              {lang}
+            </button>
+          ))}
+        </div>
+
         <div className="grid grid-cols-[1fr,140px,auto] gap-3 items-end">
           <div className="space-y-1">
              <Label htmlFor="lang-input" className={labelClass}>Language</Label>
@@ -77,12 +98,12 @@ export function LanguageForm() {
                  className="group bg-white hover:bg-indigo-50 text-gray-700 hover:text-indigo-700 flex items-center gap-2 rounded-lg border border-gray-200 hover:border-indigo-200 pl-3 pr-2 py-1.5 text-xs font-semibold transition-all shadow-sm"
                >
                  <span>{lang.name} <span className="text-gray-400 font-normal group-hover:text-indigo-400">({lang.proficiency})</span></span>
-                 <button 
-                   onClick={() => setDeleteId(lang.id)}
-                   className="ml-1 text-gray-400 hover:text-red-500 transition-colors rounded-full p-0.5 hover:bg-red-50"
-                 >
-                   <X className="h-3 w-3" />
-                 </button>
+                  <button 
+                    onClick={() => removeLanguage(lang.id)}
+                    className="ml-1 text-gray-400 hover:text-red-500 transition-colors rounded-full p-0.5 hover:bg-red-50"
+                  >
+                    <X className="h-3 w-3" />
+                  </button>
                </div>
              ))}
            </div>
@@ -94,15 +115,6 @@ export function LanguageForm() {
           </div>
         )}
 
-        <ConfirmDialog
-          isOpen={deleteId !== null}
-          onClose={() => setDeleteId(null)}
-          onConfirm={confirmDelete}
-          title="Remove Language"
-          description="Are you sure you want to remove this language? This action cannot be undone."
-          confirmText="Remove"
-          variant="danger"
-        />
     </div>
   );
 }

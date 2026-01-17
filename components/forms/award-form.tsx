@@ -63,7 +63,7 @@ export function AwardForm() {
                <Input value={item.title} onChange={(e) => handleChange(index, "title", e.target.value)} className={inputClass} placeholder="Employee of the Year" />
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
                  <Label className={labelClass}>Issuer</Label>
                  <Input value={item.issuer} onChange={(e) => handleChange(index, "issuer", e.target.value)} className={inputClass} placeholder="Company Name" />

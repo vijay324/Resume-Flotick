@@ -39,8 +39,8 @@ const styles = StyleSheet.create({
   headerJobTitle: {
     fontSize: 10,
     color: '#4b5563',
-    marginTop: 1,
-    marginBottom: 1,
+    marginTop: 4,
+    marginBottom: 3,
     lineHeight: 1.0,
   },
   headerContactRow: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     fontSize: 8.5,
     color: '#374151',
-    marginBottom: 0,
+    marginBottom: 4,
     lineHeight: 1.0,
   },
   headerContactLink: {

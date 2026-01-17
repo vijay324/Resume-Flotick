@@ -65,7 +65,7 @@ export function EducationForm() {
                <Input name="institution" value={item.institution} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Stanford University" />
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
                  <Label className={labelClass}>Degree</Label>
                  <Input name="degree" value={item.degree} onChange={(e) => handleChange(index, e)} className={inputClass} placeholder="Bachelor of Science" />
@@ -76,7 +76,7 @@ export function EducationForm() {
                </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                <div className="space-y-1">
                  <Label className={labelClass}>Start Year</Label>
                  <Input name="startDate" placeholder="2018" value={item.startDate} onChange={(e) => handleChange(index, e)} className={inputClass} />
