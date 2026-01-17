@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
   // ===== HEADER SECTION =====
   headerSection: {
     backgroundColor: '#1e3a5f',
-    paddingTop: 24,
-    paddingBottom: 24,
-    paddingHorizontal: 24,
+    paddingTop: 28,
+    paddingBottom: 28,
+    paddingHorizontal: 28,
     color: '#ffffff',
   },
   headerName: {
@@ -70,20 +70,20 @@ const styles = StyleSheet.create({
   // ===== LEFT COLUMN =====
   leftColumn: {
     width: '65%',
-    paddingTop: 24,
-    paddingBottom: 24,
-    paddingLeft: 24,
-    paddingRight: 16,
+    paddingTop: 28,
+    paddingBottom: 28,
+    paddingLeft: 28,
+    paddingRight: 18,
   },
 
   // ===== RIGHT COLUMN =====
   rightColumn: {
     width: '35%',
     backgroundColor: '#f9fafb',
-    paddingTop: 24,
-    paddingBottom: 24,
-    paddingLeft: 16,
-    paddingRight: 24,
+    paddingTop: 28,
+    paddingBottom: 28,
+    paddingLeft: 18,
+    paddingRight: 28,
   },
 
   // ===== ABOUT SECTION (Left) =====

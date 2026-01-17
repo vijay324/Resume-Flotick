@@ -10,6 +10,7 @@ interface Props {
   template: TemplateType;
 }
 
+// Main PDF Document Manager
 export const PdfDocument = ({ data, template }: Props) => {
   switch (template) {
     case 'ats':
