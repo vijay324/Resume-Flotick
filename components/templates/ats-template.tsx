@@ -147,7 +147,6 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
               {skills.map((s: SkillItem, i: number) => (
                 <span key={s.id}>
                   {s.name}
-                  {s.level && <span className="text-gray-500 text-[8.5pt]"> ({s.level})</span>}
                   {i < skills.length - 1 && <span className="text-gray-400"> • </span>}
                 </span>
               ))}

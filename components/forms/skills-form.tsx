@@ -21,7 +21,6 @@ export function SkillsForm() {
     const skillItem = {
       id: crypto.randomUUID(),
       name: newSkill.trim(),
-      level: "Expert" as const, // Default, can be expanded
     };
     updateSection("skills", [...skills, skillItem]);
     setNewSkill("");

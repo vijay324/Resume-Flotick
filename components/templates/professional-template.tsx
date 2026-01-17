@@ -95,9 +95,6 @@ export function ProfessionalTemplate({ resumeData }: TemplateProps) {
                   {skills.map((skill: SkillItem) => (
                     <div key={skill.id} className="text-[9pt]">
                       <span>{skill.name}</span>
-                      {skill.level && (
-                        <span className="text-gray-400 text-[8pt] ml-1">• {skill.level}</span>
-                      )}
                     </div>
                   ))}
                 </div>

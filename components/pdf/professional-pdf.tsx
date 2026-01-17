@@ -250,7 +250,7 @@ export const ProfessionalPdf = ({ data }: Props) => {
               {skills.map((skill) => (
                 <View key={skill.id} style={styles.skillItem}>
                   <Text>{skill.name}</Text>
-                  {skill.level && <Text style={styles.skillLevel}>• {skill.level}</Text>}
+
                 </View>
               ))}
             </View>
