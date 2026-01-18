@@ -31,9 +31,9 @@ export function ResumeForm() {
   ];
 
   return (
-    <div className="flex flex-col h-full bg-white">
+    <div className="flex flex-col h-full bg-transparent">
        {/* Tab Navigation */}
-       <div className="flex items-center gap-2 px-6 py-4 border-b border-gray-100 overflow-x-auto no-scrollbar bg-white/50 backdrop-blur-sm sticky top-0 z-10 w-full">
+       <div className="flex items-center gap-2 px-6 py-4 border-b border-border overflow-x-auto no-scrollbar bg-transparent backdrop-blur-sm sticky top-0 z-10 w-full">
           {tabs.map((tab) => {
              const Icon = tab.icon;
              const isActive = activeTab === tab.id;
@@ -42,13 +42,13 @@ export function ResumeForm() {
                  key={tab.id}
                  onClick={() => setActiveTab(tab.id)}
                  className={cn(
-                    "relative flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-lg transition-all duration-300 whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-indigo-500",
+                    "relative flex items-center gap-2 px-3.5 py-2 text-xs font-semibold rounded-lg transition-all duration-300 whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-ring",
                     isActive 
-                        ? "bg-gray-900 text-white shadow-md shadow-gray-200 scale-105" 
-                        : "text-gray-500 hover:text-gray-900 hover:bg-gray-100/80"
+                        ? "bg-primary text-primary-foreground shadow-md shadow-primary/20 scale-105" 
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/80"
                  )}
                >
-                 <Icon className={`h-3.5 w-3.5 ${isActive ? "text-indigo-300" : ""}`} />
+                 <Icon className={`h-3.5 w-3.5 ${isActive ? "text-primary-foreground/90" : ""}`} />
                  <span>{tab.label}</span>
                </button>
              );
@@ -60,8 +60,8 @@ export function ResumeForm() {
           {activeTab === "identity" && (
              <div className="space-y-6 animate-in fade-in duration-300">
                 <div>
-                   <h2 className="text-xl font-bold text-gray-900 tracking-tight">Personal Identity</h2>
-                   <p className="text-sm text-gray-500 font-medium">Contact details and professional title</p>
+                   <h2 className="text-xl font-bold text-foreground tracking-tight">Personal Identity</h2>
+                   <p className="text-sm text-muted-foreground font-medium">Contact details and professional title</p>
                 </div>
                 <ATSScore />
                 <PersonalInfoForm />

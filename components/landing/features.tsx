@@ -90,9 +90,9 @@ const features = [
 
 export function LandingFeatures() {
   return (
-    <section id="features" className="py-24 bg-secondary/30 relative overflow-hidden">
+    <section id="features" className="py-24 bg-muted/30 relative overflow-hidden">
       {/* Background decoration */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-100/20 via-transparent to-transparent dark:from-blue-900/10" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-accent/20 via-transparent to-transparent" />
 
       <div className="container px-4 md:px-6 mx-auto relative z-10">
         <div className="text-center mb-16 space-y-4">

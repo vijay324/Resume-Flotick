@@ -10,8 +10,8 @@ export function LandingHero() {
     <section className="relative min-h-[90vh] flex flex-col justify-center items-center pt-32 pb-20 overflow-hidden">
       {/* Background Gradients */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-blue-500/20 rounded-full blur-[100px] opacity-50" />
-        <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-purple-500/20 rounded-full blur-[100px] opacity-30" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[500px] bg-primary/20 rounded-full blur-[100px] opacity-50" />
+        <div className="absolute bottom-0 right-0 w-[800px] h-[600px] bg-accent/20 rounded-full blur-[100px] opacity-30" />
       </div>
 
       <div className="container px-4 md:px-6 flex flex-col items-center text-center space-y-8 z-10">
@@ -19,7 +19,7 @@ export function LandingHero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-blue-200 bg-blue-50 text-blue-700 text-sm font-medium mb-4"
+          className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-border bg-accent text-accent-foreground text-sm font-medium mb-4"
         >
           <Sparkles className="h-4 w-4" />
           <span>Powered by <a href="https://Flotick.com" className="font-semibold hover:underline" target="_blank" rel="noopener noreferrer">Flotick</a></span>

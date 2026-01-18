@@ -21,15 +21,15 @@ export function UndoRedoControls() {
 
   const buttonClass = cn(
     "relative flex items-center justify-center h-8 w-8 rounded-lg",
-    "text-gray-400 transition-all duration-200",
-    "hover:text-gray-700 hover:bg-gray-100",
+    "text-muted-foreground transition-all duration-200",
+    "hover:text-foreground hover:bg-muted",
     "active:scale-95",
-    "disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-gray-400",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2"
+    "disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-transparent disabled:hover:text-muted-foreground",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
   );
 
   return (
-    <div className="flex items-center gap-0.5 border-r border-gray-200 pr-2 mr-1">
+    <div className="flex items-center gap-0.5 border-r border-border pr-2 mr-1">
       {/* Undo Button */}
       <button
         onClick={undo}

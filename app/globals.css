@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  /* Premium Light Mode */
+  /* Premium SaaS Light Mode (Zinc/Slate enhanced) */
   --background: #ffffff;
-  --foreground: #09090b; /* Zinc 950 */
+  --foreground: #020817; /* Deep Navy/Black */
   
   --card: #ffffff;
-  --card-foreground: #09090b;
+  --card-foreground: #020817;
   
   --popover: #ffffff;
-  --popover-foreground: #09090b;
+  --popover-foreground: #020817;
   
   --primary: #18181b; /* Zinc 950 */
   --primary-foreground: #fafafa; /* Zinc 50 */
@@ -20,23 +20,23 @@
   --muted: #f4f4f5;
   --muted-foreground: #71717a; /* Zinc 500 */
   
-  --accent: #f4f4f5;
-  --accent-foreground: #18181b;
+  --accent: #eff6ff; /* Blue 50 */
+  --accent-foreground: #1e40af; /* Blue 800 */
   
   --destructive: #ef4444;
   --destructive-foreground: #fafafa;
   
-  --border: #e4e4e7; /* Zinc 200 */
-  --input: #e4e4e7;
-  --ring: #18181b;
+  --border: #e2e8f0; /* Slate 200 */
+  --input: #e2e8f0;
+  --ring: #2563eb;
   
-  --radius: 0.75rem; /* Slightly more rounded for modern feel */
+  --radius: 0.5rem; /* 8px - Cleaner, more professional */
 
   /* Redesign Backgrounds */
-  --mesh-1: #f8fafc;
-  --mesh-2: #f1f5f9;
-  --mesh-3: #eff6ff;
-  --mesh-4: #fafafa;
+  --mesh-1: #f0f9ff;
+  --mesh-2: #e0f2fe;
+  --mesh-3: #dbeafe;
+  --mesh-4: #eff6ff;
 }
 
 
@@ -63,9 +63,13 @@
   --radius-sm: calc(var(--radius) - 2px);
   --radius-md: calc(var(--radius) - 1px);
   --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   
   --animate-shimmer: shimmer 2s linear infinite;
+  --animate-fade-in: fadeIn 0.5s ease-out;
+  --animate-slide-up: slideUp 0.5s ease-out;
+  --animate-scale-in: scaleIn 0.3s ease-out;
 
   @keyframes shimmer {
     from {
@@ -74,6 +78,21 @@
     to {
       transform: translateX(100%);
     }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  @keyframes scaleIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
   }
 }
 

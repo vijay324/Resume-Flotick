@@ -84,8 +84,8 @@ export function ResumeBuilder() {
         {/* Left Side - Editor */}
         <div 
            className={`
-             relative flex-col h-full bg-white/80 backdrop-blur-xl border-r border-gray-200/50 
-             shadow-[4px_0_24px_-12px_rgba(0,0,0,0.05)] z-20 transition-all duration-500 ease-[bezier(0.25,1,0.5,1)]
+             relative flex-col h-full bg-background/95 backdrop-blur-xl border-r border-border/60 
+             shadow-[4px_0_24px_-12px_rgba(0,0,0,0.02)] z-20 transition-all duration-500 ease-[bezier(0.25,1,0.5,1)]
              ${activeMobileTab === 'editor' ? 'flex w-full' : 'hidden'} lg:flex
              ${isSidebarOpen ? "lg:w-1/2 xl:w-2/5 lg:translate-x-0 lg:opacity-100" : "lg:w-0 lg:border-r-0 lg:-translate-x-full lg:opacity-0 lg:overflow-hidden"}
            `}
@@ -140,7 +140,7 @@ export function ResumeBuilder() {
         </div>
 
         {/* Right Side - Preview */}
-        <div className={`flex-1 bg-[#F8F9FA] h-full overflow-auto overflow-x-auto relative flex-col items-start p-4 lg:p-8 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-gray-200 scrollbar-track-transparent ${activeMobileTab === 'preview' ? 'flex' : 'hidden'} lg:flex`}>
+        <div className={`flex-1 bg-muted/30 h-full overflow-auto overflow-x-auto relative flex-col items-start p-4 lg:p-8 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent ${activeMobileTab === 'preview' ? 'flex' : 'hidden'} lg:flex`}>
             {/* Template Selector & Download Button (Floating) - Desktop Only */}
             <div className={`hidden lg:flex fixed top-6 right-8 z-30 items-center gap-3 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
                 {/* Clear Resume Button */}
@@ -160,9 +160,9 @@ export function ResumeBuilder() {
             </div>
 
             {/* Background Pattern */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.6]" 
+            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.4]" 
                 style={{ 
-                    backgroundImage: "radial-gradient(#94a3b8 1px, transparent 1px)", 
+                    backgroundImage: "radial-gradient(var(--border) 1px, transparent 1px)", 
                     backgroundSize: "24px 24px",
                     maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)"
                 }} 
