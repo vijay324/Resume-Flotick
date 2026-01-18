@@ -17,6 +17,7 @@ import { useResume } from "@/context/resume-context";
 import { useTemplate } from "@/context/template-context";
 import { MobileToolbar } from "@/components/resume-builder/mobile-toolbar";
 import { PdfDownloadButton } from "@/components/pdf-download-button";
+import { ProfileSelector } from "@/components/role-profile/profile-selector";
 
 export function ResumeBuilder() {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -116,7 +117,7 @@ export function ResumeBuilder() {
            `}
         >
           {/* Header */}
-          <div className="h-16 px-6 border-b border-zinc-100 items-center justify-between shrink-0 bg-white/50 backdrop-blur-md sticky top-0 z-10 hidden lg:flex">
+          <div className="h-16 px-6 border-b border-zinc-100 items-center justify-between shrink-0 bg-white/50 backdrop-blur-md sticky top-0 z-40 hidden lg:flex">
              <div className="flex items-center gap-3">
                 <Link href="/" className="p-2 -ml-2 rounded-lg text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all lg:flex hidden">
                   <ChevronLeft className="h-5 w-5" />
@@ -124,9 +125,13 @@ export function ResumeBuilder() {
                 <div className="h-10 w-10 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm lg:flex hidden">
                    <Image src="/logo-black.svg" alt="Logo" width={22} height={22} />
                 </div>
-                <div className="hidden lg:block">
+                {/* <div className="hidden lg:block">
                    <h1 className="text-sm font-semibold text-zinc-900 leading-tight">Professional Resume</h1>
                    <p className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">ATS-Optimized</p>
+                </div> */}
+                <div className="hidden lg:block h-6 w-px bg-zinc-200 mx-1"></div>
+                <div className="hidden lg:block">
+                  <ProfileSelector />
                 </div>
              </div>
 

@@ -7,9 +7,11 @@
  * - Schema versioning for migrations
  * - Corruption detection and recovery
  * - Offline-first design
+ * - Role Profile support
  */
 
 import type { ResumeData } from "@/types/resume";
+import type { RoleProfile } from "@/types/role-profile";
 import {
   encryptJSON,
   decryptJSON,
@@ -18,10 +20,12 @@ import {
 } from "./secure-storage";
 
 const DB_NAME = "ResumeBuilderDB";
-const DB_VERSION = 1;
+const DB_VERSION = 2; // Incremented for Role Profiles
 const STORE_NAME = "resume";
-const RESUME_KEY = "current_resume";
-const BACKUP_KEY = "resume_backup";
+const RESUME_KEY_PREFIX = "resume_";
+const PROFILES_KEY = "role_profiles";
+const LEGACY_RESUME_KEY = "current_resume"; // For migration
+const BACKUP_KEY_PREFIX = "resume_backup_";
 const SCHEMA_VERSION_KEY = "resume_schema_version";
 const CURRENT_SCHEMA_VERSION = 1;
 
@@ -178,10 +182,118 @@ async function clearIndexedDB(): Promise<void> {
 }
 
 /**
- * Save resume with encryption
+ * Generate a generic ID
  */
-export async function saveResume(data: ResumeData): Promise<void> {
+function generateId(): string {
+  return typeof crypto !== 'undefined' && crypto.randomUUID 
+    ? crypto.randomUUID() 
+    : Math.random().toString(36).substring(2, 15);
+}
+
+/**
+ * Get all role profiles (Handles Migration)
+ */
+export async function getRoleProfiles(): Promise<RoleProfile[]> {
+  try {
+    let encryptedProfiles: string | null = null;
+
+    // Try IndexedDB
+    if (isIndexedDBAvailable()) {
+      encryptedProfiles = await loadFromIndexedDB(PROFILES_KEY);
+    }
+    // Fallback localStorage
+    if (!encryptedProfiles) {
+      encryptedProfiles = localStorage.getItem(PROFILES_KEY);
+    }
+
+    if (encryptedProfiles) {
+      return await decryptJSON<RoleProfile[]>(encryptedProfiles);
+    }
+
+    // --- MIGRATION LOGIC ---
+    // No profiles found. Check for legacy resume data.
+    console.log("[Resume Persistence] No profiles found. Checking for legacy data...");
+    
+    // Check if legacy data exists
+    let legacyDataEncrypted: string | null = null;
+    if (isIndexedDBAvailable()) {
+      legacyDataEncrypted = await loadFromIndexedDB(LEGACY_RESUME_KEY);
+    }
+    if (!legacyDataEncrypted) {
+      legacyDataEncrypted = localStorage.getItem(LEGACY_RESUME_KEY);
+    }
+
+    const defaultProfile: RoleProfile = {
+      id: generateId(),
+      name: "Default Profile",
+      jobTitle: "",
+      color: "#4f46e5", // Default indigo
+      isDefault: true,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    };
+
+    if (legacyDataEncrypted) {
+      console.log("[Resume Persistence] Migrating legacy data to default profile.");
+      // Move legacy data to new profile key
+      const newKey = RESUME_KEY_PREFIX + defaultProfile.id;
+      
+      if (isIndexedDBAvailable()) {
+        await saveToIndexedDB(newKey, legacyDataEncrypted);
+        // Optional: Delete legacy key or keep as backup? keeping for safety for now.
+      } else {
+        localStorage.setItem(newKey, legacyDataEncrypted);
+      }
+    }
+
+    // Save the new default profile list
+    await saveRoleProfiles([defaultProfile]);
+    
+    return [defaultProfile];
+
+  } catch (error) {
+    console.error("[Resume Persistence] Failed to get role profiles:", error);
+    // Return a temp default array to allow app to function
+    return [{
+       id: "temp-default", 
+       name: "Default", 
+       color: "#4f46e5", 
+       createdAt: Date.now(), 
+       updatedAt: Date.now() 
+    }];
+  }
+}
+
+/**
+ * Save role profiles list
+ */
+export async function saveRoleProfiles(profiles: RoleProfile[]): Promise<void> {
+  try {
+    const encrypted = await encryptJSON(profiles);
+    
+    if (isIndexedDBAvailable()) {
+      await saveToIndexedDB(PROFILES_KEY, encrypted);
+    } else {
+      localStorage.setItem(PROFILES_KEY, encrypted);
+    }
+  } catch (error) {
+    console.error("[Resume Persistence] Failed to save role profiles:", error);
+    throw error;
+  }
+}
+
+/**
+ * Save resume for a specific profile
+ */
+export async function saveResume(data: ResumeData, profileId: string): Promise<void> {
+  if (!profileId) {
+    throw new Error("Profile ID is required to save resume");
+  }
+
   updateStatus({ isSaving: true, error: null });
+
+  const key = RESUME_KEY_PREFIX + profileId;
+  const backupKey = BACKUP_KEY_PREFIX + profileId;
 
   try {
     // Encrypt the data
@@ -195,16 +307,16 @@ export async function saveResume(data: ResumeData): Promise<void> {
 
     if (isIndexedDBAvailable()) {
       // Primary: IndexedDB
-      await saveToIndexedDB(RESUME_KEY, encryptedData);
+      await saveToIndexedDB(key, encryptedData);
       updateStatus({ storageType: "indexeddb" });
     } else {
       // Fallback: localStorage
-      localStorage.setItem(RESUME_KEY, encryptedData);
+      localStorage.setItem(key, encryptedData);
       updateStatus({ storageType: "localstorage" });
     }
 
     // Create backup in localStorage
-    localStorage.setItem(BACKUP_KEY, encryptedData);
+    localStorage.setItem(backupKey, encryptedData);
 
     updateStatus({ isSaving: false, lastSaved: new Date() });
   } catch (error) {
@@ -217,15 +329,20 @@ export async function saveResume(data: ResumeData): Promise<void> {
 }
 
 /**
- * Load resume with decryption
+ * Load resume for a specific profile
  */
-export async function loadResume(): Promise<ResumeData | null> {
+export async function loadResume(profileId: string): Promise<ResumeData | null> {
+  if (!profileId) return null;
+
+  const key = RESUME_KEY_PREFIX + profileId;
+  const backupKey = BACKUP_KEY_PREFIX + profileId;
+
   try {
     let encryptedData: string | null = null;
 
     // Try IndexedDB first
     if (isIndexedDBAvailable()) {
-      encryptedData = await loadFromIndexedDB(RESUME_KEY);
+      encryptedData = await loadFromIndexedDB(key);
       if (encryptedData) {
         updateStatus({ storageType: "indexeddb" });
       }
@@ -233,7 +350,7 @@ export async function loadResume(): Promise<ResumeData | null> {
 
     // Fallback to localStorage
     if (!encryptedData) {
-      encryptedData = localStorage.getItem(RESUME_KEY);
+      encryptedData = localStorage.getItem(key);
       if (encryptedData) {
         updateStatus({ storageType: "localstorage" });
       }
@@ -241,23 +358,11 @@ export async function loadResume(): Promise<ResumeData | null> {
 
     // Try backup if primary failed
     if (!encryptedData) {
-      encryptedData = localStorage.getItem(BACKUP_KEY);
+      encryptedData = localStorage.getItem(backupKey);
     }
 
     if (!encryptedData) {
       return null;
-    }
-
-    // Check and handle schema migrations
-    const savedVersion = parseInt(
-      localStorage.getItem(SCHEMA_VERSION_KEY) || "1",
-      10
-    );
-    if (savedVersion < CURRENT_SCHEMA_VERSION) {
-      // Future: handle migrations here
-      console.log(
-        `[Resume Persistence] Migrating from schema v${savedVersion} to v${CURRENT_SCHEMA_VERSION}`
-      );
     }
 
     // Decrypt and return
@@ -268,7 +373,7 @@ export async function loadResume(): Promise<ResumeData | null> {
 
     // Attempt recovery from backup
     try {
-      const backup = localStorage.getItem(BACKUP_KEY);
+      const backup = localStorage.getItem(backupKey);
       if (backup) {
         console.log("[Resume Persistence] Attempting recovery from backup");
         return await decryptJSON<ResumeData>(backup);
@@ -283,9 +388,25 @@ export async function loadResume(): Promise<ResumeData | null> {
 }
 
 /**
+ * Delete resume data for a profile
+ */
+export async function deleteResume(profileId: string): Promise<void> {
+    const key = RESUME_KEY_PREFIX + profileId;
+    const backupKey = BACKUP_KEY_PREFIX + profileId;
+
+    if (isIndexedDBAvailable()) {
+        await deleteFromIndexedDB(key);
+    }
+    localStorage.removeItem(key);
+    localStorage.removeItem(backupKey);
+}
+
+/**
  * Debounced save for autosave functionality
  */
-export function debouncedSaveResume(data: ResumeData): void {
+export function debouncedSaveResume(data: ResumeData, profileId: string): void {
+  if (!profileId) return;
+
   if (saveDebounceTimer) {
     clearTimeout(saveDebounceTimer);
   }
@@ -294,7 +415,7 @@ export function debouncedSaveResume(data: ResumeData): void {
 
   saveDebounceTimer = setTimeout(async () => {
     try {
-      await saveResume(data);
+      await saveResume(data, profileId);
     } catch (error) {
       console.error("[Resume Persistence] Autosave failed:", error);
     }
@@ -302,7 +423,7 @@ export function debouncedSaveResume(data: ResumeData): void {
 }
 
 /**
- * Clear all resume data
+ * Clear all resume data (Wipes everything including profiles)
  */
 export async function clearAllResumeData(): Promise<void> {
   try {
@@ -311,9 +432,17 @@ export async function clearAllResumeData(): Promise<void> {
       await clearIndexedDB();
     }
 
-    // Clear localStorage
-    localStorage.removeItem(RESUME_KEY);
-    localStorage.removeItem(BACKUP_KEY);
+    // Clear localStorage (remove all resume relative keys)
+    // We iterate to find all keys starting with resume_
+    const keysToRemove: string[] = [];
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && (key.startsWith(RESUME_KEY_PREFIX) || key.startsWith(BACKUP_KEY_PREFIX) || key === PROFILES_KEY || key === LEGACY_RESUME_KEY)) {
+            keysToRemove.push(key);
+        }
+    }
+    keysToRemove.forEach(k => localStorage.removeItem(k));
+    
     localStorage.removeItem(SCHEMA_VERSION_KEY);
 
     // Clear encryption keys
@@ -331,15 +460,12 @@ export async function clearAllResumeData(): Promise<void> {
 }
 
 /**
- * Check if resume data exists
+ * Check if resume data exists (Legacy check - updated for profiles)
  */
 export async function hasStoredResume(): Promise<boolean> {
   try {
-    if (isIndexedDBAvailable()) {
-      const data = await loadFromIndexedDB(RESUME_KEY);
-      if (data) return true;
-    }
-    return localStorage.getItem(RESUME_KEY) !== null;
+     const profiles = await getRoleProfiles();
+     return profiles.length > 0;
   } catch {
     return false;
   }

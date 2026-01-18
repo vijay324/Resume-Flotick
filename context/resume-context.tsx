@@ -9,24 +9,14 @@ import React, {
   useRef,
   type ReactNode,
 } from "react";
-import type {
-  ResumeData,
-  ExperienceItem,
-  EducationItem,
-  SkillItem,
-  ProjectItem,
-  LanguageItem,
-  CertificationItem,
-  AwardItem,
-  VolunteerItem,
-} from "@/types/resume";
+import type { ResumeData } from "@/types/resume";
 import {
   loadResume,
   debouncedSaveResume,
-  clearAllResumeData,
-  hasStoredResume,
+  deleteResume,
 } from "@/lib/client/resume-persistence";
 import { useKeyboardShortcuts } from "@/hooks/use-keyboard-shortcuts";
+import { useRoleProfile } from "./role-profile-context";
 
 // History configuration
 const MAX_HISTORY = 50;
@@ -259,6 +249,8 @@ function deepClone<T>(obj: T): T {
 const ResumeContext = createContext<ResumeContextType | undefined>(undefined);
 
 export function ResumeProvider({ children }: { children: ReactNode }) {
+  const { activeProfile, isLoading: isProfilesLoading } = useRoleProfile();
+
   // Core state
   const [resumeData, setResumeDataInternal] = useState<ResumeData>(initialResumeData);
   const [isLoading, setIsLoading] = useState(true);
@@ -275,28 +267,49 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
   const pendingStateRef = useRef<ResumeData | null>(null);
 
   /**
-   * Load data on mount (encrypted from storage)
+   * Load data when active profile changes
    */
   useEffect(() => {
+    // Wait for profiles to be loaded
+    if (isProfilesLoading) return;
+    
+    // If no active profile (e.g., initial load or deleted), don't load data yet
+    // RoleProfileContext should handle selecting a default, but handle safeguard here
+    if (!activeProfile) {
+        setIsLoading(false);
+        return;
+    }
+
     async function initializeData() {
       try {
         setIsLoading(true);
-        const stored = await loadResume();
+        // Reset history when switching profiles
+        setPast([]);
+        setFuture([]);
+        pendingStateRef.current = null;
+
+        const stored = await loadResume(activeProfile!.id);
+        
         if (stored) {
           setResumeDataInternal(stored);
           lastCommittedStateRef.current = deepClone(stored);
           setHasStoredData(true);
         } else {
-          // Use sample data for new users
-          setResumeDataInternal(sampleResumeData);
-          lastCommittedStateRef.current = deepClone(sampleResumeData);
+          // New profile or no data: use sample data or empty?
+          // For new "empty" profiles, we might want actual empty data, 
+          // but the requirements say "pre-filled with data from previously active"
+          // which is handled by createProfile cloning. 
+          // If we reach here and it's null, it implies a fresh start or failed load.
+          // Let's use sample data for now to keep experience consistent.
+          const freshData = activeProfile?.isDefault ? sampleResumeData : deepClone(initialResumeData);
+          setResumeDataInternal(freshData);
+          lastCommittedStateRef.current = deepClone(freshData);
           setHasStoredData(false);
         }
       } catch (error) {
         console.error("[ResumeContext] Failed to load resume:", error);
-        // Fall back to sample data
-        setResumeDataInternal(sampleResumeData);
-        lastCommittedStateRef.current = deepClone(sampleResumeData);
+        setResumeDataInternal(initialResumeData);
+        lastCommittedStateRef.current = deepClone(initialResumeData);
       } finally {
         setIsLoading(false);
         setIsInitialized(true);
@@ -304,16 +317,16 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
     }
 
     initializeData();
-  }, []);
+  }, [activeProfile, isProfilesLoading]);
 
   /**
    * Auto-save on data changes (encrypted, debounced)
    */
   useEffect(() => {
-    if (!isInitialized) return;
-    debouncedSaveResume(resumeData);
+    if (!isInitialized || !activeProfile || isLoading) return;
+    debouncedSaveResume(resumeData, activeProfile.id);
     setHasStoredData(true);
-  }, [resumeData, isInitialized]);
+  }, [resumeData, isInitialized, activeProfile, isLoading]);
 
   /**
    * Commit pending state to history after debounce
@@ -459,24 +472,31 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
   }, [resumeData]);
 
   /**
-   * Clear all stored data and reset history
+   * Clear all stored data for current profile
    */
   const clearAllData = useCallback(async () => {
-    await clearAllResumeData();
+    if (!activeProfile) return;
+    
+    // Clear only the current profile's data
     setResumeDataInternal(initialResumeData);
     lastCommittedStateRef.current = deepClone(initialResumeData);
     setHasStoredData(false);
+    
     // Clear history on hard reset
     setPast([]);
     setFuture([]);
     pendingStateRef.current = null;
-  }, []);
+    
+    // Force a save to "clear" the storage (save empty state)
+    debouncedSaveResume(initialResumeData, activeProfile.id);
+    
+  }, [activeProfile]);
 
   // Register keyboard shortcuts
   useKeyboardShortcuts({
     onUndo: undo,
     onRedo: redo,
-    enabled: isInitialized && !isLoading,
+    enabled: isInitialized && !isLoading && !isProfilesLoading,
   });
 
   // Cleanup debounce timer on unmount
@@ -498,7 +518,7 @@ export function ResumeProvider({ children }: { children: ReactNode }) {
         resumeData,
         setResumeData,
         updateSection,
-        isLoading,
+        isLoading: isLoading || isProfilesLoading,
         clearAllData,
         hasStoredData,
         undo,

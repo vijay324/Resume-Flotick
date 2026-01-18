@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, Menu, X, Download, Trash2, ZoomIn, ZoomOut } from "lucide-react";
 import { TemplateSelector } from "@/components/template-selector";
 import { ZoomControls } from "@/components/ui/zoom-controls";
+import { ProfileSelector } from "@/components/role-profile/profile-selector";
 
 import { PdfDownloadButton } from "@/components/pdf-download-button";
 import type { ResumeData, TemplateType } from "@/types/resume";
@@ -115,6 +116,15 @@ export function MobileToolbar({
                    >
                      <ZoomIn className="h-4 w-4" />
                    </Button>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                 <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">
+                  Role Profile
+                </label>
+                <div className="overflow-visible w-full">
+                   <ProfileSelector className="w-full" />
                 </div>
               </div>
 
