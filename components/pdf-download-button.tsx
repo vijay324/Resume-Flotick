@@ -118,7 +118,7 @@ export function PdfDownloadButton({ resumeData, templateType }: PdfDownloadButto
     return (
        <Button 
           size="sm" 
-          className="h-9 gap-2 shadow-lg hover:shadow-xl bg-gray-900 hover:bg-black text-white rounded-full px-5 transition-all hover:-translate-y-0.5"
+          className="h-9 gap-2 shadow-lg hover:shadow-xl bg-zinc-900 hover:bg-black text-white rounded-full px-5 transition-all hover:-translate-y-0.5"
           disabled
         >
            <Download className="h-3.5 w-3.5" /> 
@@ -144,7 +144,7 @@ export function PdfDownloadButton({ resumeData, templateType }: PdfDownloadButto
   return (
     <Button 
       size="sm" 
-      className="h-9 gap-2 shadow-lg hover:shadow-xl bg-gray-900 hover:bg-black text-white rounded-full px-5 transition-all hover:-translate-y-0.5"
+      className="h-9 gap-2 shadow-lg hover:shadow-xl bg-zinc-900 hover:bg-black text-white rounded-full px-5 transition-all hover:-translate-y-0.5"
       disabled={loading}
       onClick={handleDownload}
     >

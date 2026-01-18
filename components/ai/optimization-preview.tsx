@@ -116,21 +116,21 @@ export function OptimizationPreview({ result, onBack }: OptimizationPreviewProps
   };
 
   return (
-    <div className="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
+    <div className="bg-white border border-zinc-100 rounded-xl shadow-sm overflow-hidden animate-in fade-in slide-in-from-bottom-4 duration-500">
       {/* Header */}
-      <div className="p-5 border-b border-gray-100 bg-gradient-to-r from-gray-50 to-indigo-50/20">
+      <div className="p-5 border-b border-zinc-100 bg-gradient-to-r from-zinc-50 to-indigo-50/20">
         <div className="flex items-center justify-between mb-4">
           <Button 
             variant="ghost" 
             size="sm" 
             onClick={onBack}
-            className="text-gray-500 hover:text-gray-900 -ml-2"
+            className="text-zinc-500 hover:text-zinc-900 -ml-2"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Input
           </Button>
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-gray-500">Match Score</span>
+            <span className="text-sm font-medium text-zinc-500">Match Score</span>
             <div className={`
               flex items-center justify-center px-3 py-1 rounded-full text-sm font-bold
               ${result.matchScore >= 80 ? "bg-green-100 text-green-700" : 
@@ -142,38 +142,38 @@ export function OptimizationPreview({ result, onBack }: OptimizationPreviewProps
         </div>
 
         <div>
-          <h2 className="text-xl font-bold text-gray-900">
+          <h2 className="text-xl font-bold text-zinc-900">
             Optimization Results
           </h2>
-          <p className="text-sm text-gray-500 flex items-center gap-2 mt-1">
-            Tailored for <span className="font-semibold text-gray-800">{result.jobTitle}</span>
+          <p className="text-sm text-zinc-500 flex items-center gap-2 mt-1">
+            Tailored for <span className="font-semibold text-zinc-800">{result.jobTitle}</span>
             {result.company && <span>at {result.company}</span>}
           </p>
         </div>
       </div>
 
       {/* Stats Bar */}
-      <div className="flex divide-x divide-gray-100 border-b border-gray-100 bg-white">
+      <div className="flex divide-x divide-zinc-100 border-b border-zinc-100 bg-white">
         <div className="flex-1 p-4 text-center">
           <div className="text-2xl font-bold text-indigo-600">{result.sections.length}</div>
-          <div className="text-xs uppercase font-bold text-gray-400 tracking-wider">Sections Improved</div>
+          <div className="text-xs uppercase font-bold text-zinc-400 tracking-wider">Sections Improved</div>
         </div>
         <div className="flex-1 p-4 text-center">
           <div className="text-2xl font-bold text-emerald-600">{result.keywordsAdded.length}</div>
-          <div className="text-xs uppercase font-bold text-gray-400 tracking-wider">Keywords Added</div>
+          <div className="text-xs uppercase font-bold text-zinc-400 tracking-wider">Keywords Added</div>
         </div>
         <div className="flex-1 p-4 text-center">
           <div className="text-2xl font-bold text-amber-600">{result.gapSuggestions.length}</div>
-          <div className="text-xs uppercase font-bold text-gray-400 tracking-wider">Skill Gaps</div>
+          <div className="text-xs uppercase font-bold text-zinc-400 tracking-wider">Skill Gaps</div>
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="divide-y divide-gray-100">
+      <div className="divide-y divide-zinc-100">
         
         {/* Bulk Action */}
-        <div className="p-4 bg-gray-50/50 flex justify-end">
-          <Button onClick={handleApplyAll} className="bg-gray-900 text-white hover:bg-black gap-2">
+        <div className="p-4 bg-zinc-50/50 flex justify-end">
+          <Button onClick={handleApplyAll} className="bg-zinc-900 text-white hover:bg-black gap-2">
             <Sparkles className="w-4 h-4" />
             Apply All Changes
           </Button>
@@ -203,7 +203,7 @@ export function OptimizationPreview({ result, onBack }: OptimizationPreviewProps
           {/* Keyword Gaps */}
           {result.gapSuggestions.length > 0 && (
              <div className="p-6 bg-amber-50/30">
-               <h3 className="font-bold text-gray-900 flex items-center gap-2 mb-4">
+               <h3 className="font-bold text-zinc-900 flex items-center gap-2 mb-4">
                  <Lightbulb className="w-5 h-5 text-amber-500" />
                  Recommended Gaps to Fill
                </h3>
@@ -216,7 +216,7 @@ export function OptimizationPreview({ result, onBack }: OptimizationPreviewProps
                      )}>
                        {gap.type}
                      </Badge>
-                     <p className="text-sm text-gray-700">{gap.suggestion}</p>
+                     <p className="text-sm text-zinc-700">{gap.suggestion}</p>
                    </div>
                  ))}
                </div>
@@ -253,15 +253,15 @@ function SectionComparison({
   };
 
   return (
-    <div className="p-6 hover:bg-gray-50 transition-colors group">
+    <div className="p-6 hover:bg-zinc-50 transition-colors group">
       <div className="flex items-center justify-between mb-4">
-        <h4 className="font-semibold text-gray-900 text-sm uppercase tracking-wide flex items-center gap-2">
+        <h4 className="font-semibold text-zinc-900 text-sm uppercase tracking-wide flex items-center gap-2">
           {isApplied && <CheckCircle2 className="w-4 h-4 text-green-600" />}
           {data.sectionLabel}
         </h4>
         <div className="flex items-center gap-2">
            {isApplied ? (
-             <Button variant="outline" size="sm" onClick={onRevert} className="text-gray-500 h-8 text-xs">
+             <Button variant="outline" size="sm" onClick={onRevert} className="text-zinc-500 h-8 text-xs">
                <RotateCcw className="w-3 h-3 mr-1.5" />
                Revert
              </Button>
@@ -286,8 +286,8 @@ function SectionComparison({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Original */}
         <div className="space-y-1.5">
-          <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Original</div>
-          <div className="p-3 bg-red-50/50 border border-red-100 rounded-lg text-sm text-gray-600 leading-relaxed font-mono whitespace-pre-wrap">
+          <div className="text-xs font-semibold text-zinc-400 uppercase tracking-wider">Original</div>
+          <div className="p-3 bg-red-50/50 border border-red-100 rounded-lg text-sm text-zinc-600 leading-relaxed font-mono whitespace-pre-wrap">
              {renderContent(data.original)}
           </div>
         </div>
@@ -298,7 +298,7 @@ function SectionComparison({
             <span>Optimized Version</span>
             <Sparkles className="w-3 h-3" />
           </div>
-          <div className="p-3 bg-emerald-50/50 border border-emerald-100 rounded-lg text-sm text-gray-800 leading-relaxed shadow-sm font-medium whitespace-pre-wrap">
+          <div className="p-3 bg-emerald-50/50 border border-emerald-100 rounded-lg text-sm text-zinc-800 leading-relaxed shadow-sm font-medium whitespace-pre-wrap">
              {renderContent(data.optimized)}
           </div>
         </div>

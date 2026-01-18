@@ -18,7 +18,7 @@ export function LandingSocialProof() {
         <p className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-8">
           Trusted by professionals at top companies
         </p>
-        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+        <div className="flex flex-wrap justify-center items-center gap-8 md:gap-16 opacity-50 zincscale hover:zincscale-0 transition-all duration-500">
           {companies.map((company, index) => (
              <motion.div
                key={index}

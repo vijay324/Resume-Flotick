@@ -45,7 +45,7 @@ export function SaveStatusIndicator() {
 
   if (status.isSaving) {
     return (
-      <div className={`${baseClasses} text-gray-500 bg-gray-50 border-gray-100`}>
+      <div className={`${baseClasses} text-zinc-500 bg-zinc-50 border-zinc-100`}>
         <Loader2 className="h-3.5 w-3.5 animate-spin" />
         <span className="font-medium">Saving...</span>
       </div>
@@ -62,7 +62,7 @@ export function SaveStatusIndicator() {
   }
 
   return (
-    <div className={`${baseClasses} text-gray-400 bg-gray-50 border-gray-100`}>
+    <div className={`${baseClasses} text-zinc-400 bg-zinc-50 border-zinc-100`}>
       <Cloud className="h-3.5 w-3.5" />
       <span className="font-medium">Auto-save on</span>
     </div>

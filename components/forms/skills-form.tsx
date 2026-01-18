@@ -34,8 +34,8 @@ export function SkillsForm() {
     }
   };
 
-  const inputClass = "rounded-lg border-gray-200 bg-gray-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-11 transition-all duration-200 ease-in-out font-medium text-gray-800 placeholder:text-gray-400 text-sm";
-  const labelClass = "text-[10px] font-bold text-gray-500 uppercase tracking-wider mb-1.5 block ml-0.5";
+  const inputClass = "rounded-lg border-zinc-200 bg-zinc-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-11 transition-all duration-200 ease-in-out font-medium text-zinc-800 placeholder:text-zinc-400 text-sm";
+  const labelClass = "text-[10px] font-bold text-zinc-500 uppercase tracking-wider mb-1.5 block ml-0.5";
 
   return (
     <div className="space-y-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
@@ -51,30 +51,30 @@ export function SkillsForm() {
               onKeyDown={handleKeyDown}
               className={`${inputClass} pr-12`}
             />
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-gray-400 font-medium">
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-zinc-400 font-medium">
                ENTER
             </div>
           </div>
         </div>
         <div className="pt-[1.4rem]">
-           <Button onClick={addSkill} size="icon" className="h-11 w-11 rounded-xl bg-gray-900 hover:bg-black text-white shadow-lg shadow-gray-200 transition-all hover:scale-105 active:scale-95">
+           <Button onClick={addSkill} size="icon" className="h-11 w-11 rounded-xl bg-zinc-900 hover:bg-black text-white shadow-lg shadow-zinc-200 transition-all hover:scale-105 active:scale-95">
              <Plus className="h-5 w-5" />
            </Button>
         </div>
       </div>
 
       {skills.length > 0 && (
-          <div className="p-4 bg-gray-50/50 rounded-2xl border border-gray-100">
+          <div className="p-4 bg-zinc-50/50 rounded-2xl border border-zinc-100">
              <div className="flex flex-wrap gap-2">
                {skills.map((skill) => (
                  <div 
                    key={skill.id} 
-                   className="group bg-white hover:bg-indigo-50 text-gray-700 hover:text-indigo-700 flex items-center gap-1.5 rounded-lg border border-gray-200 hover:border-indigo-200 px-3 py-1.5 text-xs font-semibold transition-all shadow-sm"
+                   className="group bg-white hover:bg-indigo-50 text-zinc-700 hover:text-indigo-700 flex items-center gap-1.5 rounded-lg border border-zinc-200 hover:border-indigo-200 px-3 py-1.5 text-xs font-semibold transition-all shadow-sm"
                  >
                    {skill.name}
                    <button 
                      onClick={() => removeSkill(skill.id)}
-                     className="ml-1 text-gray-400 hover:text-red-500 transition-colors rounded-full p-0.5 hover:bg-red-50"
+                     className="ml-1 text-zinc-400 hover:text-red-500 transition-colors rounded-full p-0.5 hover:bg-red-50"
                    >
                      <X className="h-3 w-3" />
                      <span className="sr-only">Remove {skill.name}</span>
@@ -86,8 +86,8 @@ export function SkillsForm() {
       )}
       
       {skills.length === 0 && (
-         <div className="text-center py-8 border-2 border-dashed border-gray-100 rounded-xl">
-            <p className="text-sm text-gray-400">No skills added yet. Add your key skills above.</p>
+         <div className="text-center py-8 border-2 border-dashed border-zinc-100 rounded-xl">
+            <p className="text-sm text-zinc-400">No skills added yet. Add your key skills above.</p>
          </div>
       )}
 

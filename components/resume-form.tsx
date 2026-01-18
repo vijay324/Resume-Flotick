@@ -72,24 +72,24 @@ export function ResumeForm() {
              <div className="space-y-8 animate-in fade-in duration-300">
                 <div className="space-y-4">
                    <div>
-                      <h2 className="text-lg font-bold text-gray-900">Technical Skills</h2>
-                      <p className="text-sm text-gray-500">Highlight your technical expertise</p>
+                      <h2 className="text-lg font-bold text-zinc-900">Technical Skills</h2>
+                      <p className="text-sm text-zinc-500">Highlight your technical expertise</p>
                    </div>
                    <SkillsForm />
                 </div>
-                <hr className="border-dashed border-gray-200" />
+                <hr className="border-dashed border-zinc-200" />
                 <div className="space-y-4">
                    <div>
-                      <h2 className="text-lg font-bold text-gray-900">Certifications</h2>
-                      <p className="text-sm text-gray-500">Professional licenses & certs</p>
+                      <h2 className="text-lg font-bold text-zinc-900">Certifications</h2>
+                      <p className="text-sm text-zinc-500">Professional licenses & certs</p>
                    </div>
                    <CertificationForm />
                 </div>
-                <hr className="border-dashed border-gray-200" />
+                <hr className="border-dashed border-zinc-200" />
                 <div className="space-y-4">
                    <div>
-                      <h2 className="text-lg font-bold text-gray-900">Languages</h2>
-                      <p className="text-sm text-gray-500">Spoken and written languages</p>
+                      <h2 className="text-lg font-bold text-zinc-900">Languages</h2>
+                      <p className="text-sm text-zinc-500">Spoken and written languages</p>
                    </div>
                    <LanguageForm />
                 </div>
@@ -101,32 +101,32 @@ export function ResumeForm() {
              <div className="space-y-8 animate-in fade-in duration-300">
                 <div className="space-y-4">
                    <div>
-                      <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2"><History className="h-4 w-4"/> Work Experience</h2>
-                       <p className="text-sm text-gray-500">Past professional roles</p>
+                      <h2 className="text-lg font-bold text-zinc-900 flex items-center gap-2"><History className="h-4 w-4"/> Work Experience</h2>
+                       <p className="text-sm text-zinc-500">Past professional roles</p>
                    </div>
                    <ExperienceForm />
                 </div>
-                <hr className="border-dashed border-gray-200" />
+                <hr className="border-dashed border-zinc-200" />
                 <div className="space-y-4">
                    <div>
-                       <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2"><GraduationCap className="h-4 w-4"/> Education</h2>
-                       <p className="text-sm text-gray-500">Academic background</p>
+                       <h2 className="text-lg font-bold text-zinc-900 flex items-center gap-2"><GraduationCap className="h-4 w-4"/> Education</h2>
+                       <p className="text-sm text-zinc-500">Academic background</p>
                    </div>
                    <EducationForm />
                 </div>
-                <hr className="border-dashed border-gray-200" />
+                <hr className="border-dashed border-zinc-200" />
                 <div className="space-y-4">
                    <div>
-                       <h2 className="text-lg font-bold text-gray-900">Volunteering</h2>
-                       <p className="text-sm text-gray-500">Community service & leadership</p>
+                       <h2 className="text-lg font-bold text-zinc-900">Volunteering</h2>
+                       <p className="text-sm text-zinc-500">Community service & leadership</p>
                    </div>
                    <VolunteerForm />
                 </div>
-                <hr className="border-dashed border-gray-200" />
+                <hr className="border-dashed border-zinc-200" />
                 <div className="space-y-4">
                    <div>
-                       <h2 className="text-lg font-bold text-gray-900">Honors & Awards</h2>
-                       <p className="text-sm text-gray-500">Achievements and recognition</p>
+                       <h2 className="text-lg font-bold text-zinc-900">Honors & Awards</h2>
+                       <p className="text-sm text-zinc-500">Achievements and recognition</p>
                    </div>
                    <AwardForm />
                 </div>
@@ -136,8 +136,8 @@ export function ResumeForm() {
            {activeTab === "works" && (
               <div className="space-y-6 animate-in fade-in duration-300">
                  <div>
-                    <h2 className="text-lg font-bold text-gray-900">Selected Works</h2>
-                    <p className="text-sm text-gray-500">Projects and achievements</p>
+                    <h2 className="text-lg font-bold text-zinc-900">Selected Works</h2>
+                    <p className="text-sm text-zinc-500">Projects and achievements</p>
                  </div>
                  <ProjectsForm />
               </div>
@@ -146,28 +146,28 @@ export function ResumeForm() {
            {activeTab === "ai-tools" && (
               <div className="space-y-6 animate-in fade-in duration-300">
                  <div>
-                    <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                    <h2 className="text-lg font-bold text-zinc-900 flex items-center gap-2">
                       <Sparkles className="h-5 w-5 text-indigo-600" />
                       AI-Powered Tools
                     </h2>
-                    <p className="text-sm text-gray-500">Enhance your resume and LinkedIn profile with AI</p>
+                    <p className="text-sm text-zinc-500">Enhance your resume and LinkedIn profile with AI</p>
                  </div>
                  
                  <ApiKeySettings />
                  
                  <Tabs defaultValue="tailor" className="w-full">
-                   <TabsList className="grid w-full grid-cols-3 mb-6 bg-gray-100/80 p-1.5 h-auto gap-2 rounded-xl">
-                     <TabsTrigger value="tailor" className="gap-2 py-2.5 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm border border-transparent data-[state=active]:border-gray-200/50">
+                   <TabsList className="grid w-full grid-cols-3 mb-6 bg-zinc-100/80 p-1.5 h-auto gap-2 rounded-xl">
+                     <TabsTrigger value="tailor" className="gap-2 py-2.5 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm border border-transparent data-[state=active]:border-zinc-200/50">
                        <Briefcase className="w-4 h-4" />
                        <span className="hidden sm:inline">Tailor Resume</span>
                        <span className="sm:hidden">Tailor</span>
                      </TabsTrigger>
-                     <TabsTrigger value="analyze" className="gap-2 py-2.5 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm border border-transparent data-[state=active]:border-gray-200/50">
+                     <TabsTrigger value="analyze" className="gap-2 py-2.5 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm border border-transparent data-[state=active]:border-zinc-200/50">
                        <Sparkles className="w-4 h-4" />
                        <span className="hidden sm:inline">Analysis</span>
                        <span className="sm:hidden">Analyze</span>
                      </TabsTrigger>
-                     <TabsTrigger value="linkedin" className="gap-2 py-2.5 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm border border-transparent data-[state=active]:border-gray-200/50">
+                     <TabsTrigger value="linkedin" className="gap-2 py-2.5 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm border border-transparent data-[state=active]:border-zinc-200/50">
                        <span className="font-bold text-blue-600 bg-white rounded flex items-center justify-center w-4 h-4 leading-none text-xs">in</span>
                        <span className="hidden sm:inline">LinkedIn</span>
                        <span className="sm:hidden">Profile</span>
@@ -176,21 +176,21 @@ export function ResumeForm() {
 
                    <TabsContent value="tailor" className="mt-0 focus-visible:outline-none">
                      <div className="flex items-center justify-between mb-4 px-1">
-                        <h3 className="text-sm font-semibold text-gray-700">Optimize for a specific job description</h3>
+                        <h3 className="text-sm font-semibold text-zinc-700">Optimize for a specific job description</h3>
                      </div>
                      <JobOptimizerPanel />
                    </TabsContent>
                    
                    <TabsContent value="analyze" className="mt-0 focus-visible:outline-none">
                      <div className="flex items-center justify-between mb-4 px-1">
-                        <h3 className="text-sm font-semibold text-gray-700">Get detailed feedback and scoring</h3>
+                        <h3 className="text-sm font-semibold text-zinc-700">Get detailed feedback and scoring</h3>
                      </div>
                      <ResumeAIPanel />
                    </TabsContent>
                    
                    <TabsContent value="linkedin" className="mt-0 focus-visible:outline-none">
                      <div className="flex items-center justify-between mb-4 px-1">
-                        <h3 className="text-sm font-semibold text-gray-700">Optimize your LinkedIn profile</h3>
+                        <h3 className="text-sm font-semibold text-zinc-700">Optimize your LinkedIn profile</h3>
                      </div>
                      <LinkedInAnalyzer />
                    </TabsContent>

@@ -67,18 +67,18 @@ export function JobOptimizerPanel() {
   }
 
   return (
-    <div className="bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] overflow-hidden">
-      <div className="p-5 border-b border-gray-100 bg-gray-50/30">
+    <div className="bg-white border border-zinc-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] overflow-hidden">
+      <div className="p-5 border-b border-zinc-100 bg-zinc-50/30">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <h3 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+            <h3 className="text-lg font-bold text-zinc-900 flex items-center gap-2">
               <Briefcase className="w-5 h-5 text-indigo-600" />
               Tailor Resume to Job
             </h3>
             <AIBadge variant={isLoading ? "loading" : "enabled"} />
           </div>
         </div>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-1 text-sm text-zinc-500">
           Paste a job description to get AI-powered optimizations for this specific role.
         </p>
       </div>
@@ -93,7 +93,7 @@ export function JobOptimizerPanel() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
-            <Label htmlFor="jobTitle" className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <Label htmlFor="jobTitle" className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
               Job Title <span className="text-red-500">*</span>
             </Label>
             <Input
@@ -101,11 +101,11 @@ export function JobOptimizerPanel() {
               placeholder="e.g. Senior Frontend Engineer"
               value={jobTitle}
               onChange={(e) => setJobTitle(e.target.value)}
-              className="bg-gray-50/50 focus:bg-white transition-colors"
+              className="bg-zinc-50/50 focus:bg-white transition-colors"
             />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="company" className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+            <Label htmlFor="company" className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
               Company (Optional)
             </Label>
             <Input
@@ -113,13 +113,13 @@ export function JobOptimizerPanel() {
               placeholder="e.g. Acme Corp"
               value={company}
               onChange={(e) => setCompany(e.target.value)}
-              className="bg-gray-50/50 focus:bg-white transition-colors"
+              className="bg-zinc-50/50 focus:bg-white transition-colors"
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="description" className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+          <Label htmlFor="description" className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
             Job Description <span className="text-red-500">*</span>
           </Label>
           <Textarea
@@ -127,19 +127,19 @@ export function JobOptimizerPanel() {
             placeholder="Paste the full job description here..."
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="min-h-[150px] bg-gray-50/50 focus:bg-white transition-colors leading-relaxed"
+            className="min-h-[150px] bg-zinc-50/50 focus:bg-white transition-colors leading-relaxed"
           />
         </div>
 
         <div className="space-y-2">
-          <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+          <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
              Output Length
           </Label>
-          <LengthSelector value={length} onChange={setLength} className="w-full [&>button]:w-full bg-gray-50/50" />
+          <LengthSelector value={length} onChange={setLength} className="w-full [&>button]:w-full bg-zinc-50/50" />
         </div>
 
         <div className="space-y-2">
-          <Label className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+          <Label className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
             Required Skills
           </Label>
           <div className="flex gap-2">
@@ -148,7 +148,7 @@ export function JobOptimizerPanel() {
               value={newSkill}
               onChange={(e) => setNewSkill(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleAddSkill(e)}
-              className="bg-gray-50/50 focus:bg-white transition-colors"
+              className="bg-zinc-50/50 focus:bg-white transition-colors"
             />
             <Button 
               type="button" 
@@ -182,7 +182,7 @@ export function JobOptimizerPanel() {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="responsibilities" className="text-xs font-semibold uppercase tracking-wider text-gray-500">
+          <Label htmlFor="responsibilities" className="text-xs font-semibold uppercase tracking-wider text-zinc-500">
             Key Responsibilities (Optional)
           </Label>
           <Textarea
@@ -190,7 +190,7 @@ export function JobOptimizerPanel() {
             placeholder="Paste key responsibilities or requirements..."
             value={responsibilities}
             onChange={(e) => setResponsibilities(e.target.value)}
-            className="min-h-[100px] bg-gray-50/50 focus:bg-white transition-colors"
+            className="min-h-[100px] bg-zinc-50/50 focus:bg-white transition-colors"
           />
         </div>
 
@@ -203,7 +203,7 @@ export function JobOptimizerPanel() {
           >
             {isLoading ? "Analyzing Job & Optimizing Resume..." : "Optimize Resume for This Job"}
           </AIButton>
-          <p className="text-xs text-center text-gray-400 mt-3">
+          <p className="text-xs text-center text-zinc-400 mt-3">
             AI will analyze your resume against this job description to suggest improvements.
           </p>
         </div>

@@ -51,7 +51,7 @@ export function LandingFooter() {
         
         <div className="flex flex-col md:flex-row justify-between items-center gap-4 pt-8 border-t border-border">
           <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} Flotick Resume. A product of <a href="https://Flotick.com" className="font-bold text-gray-900 hover:underline" target="_blank" rel="noopener noreferrer">Flotick</a>.
+            © {new Date().getFullYear()} Flotick Resume. A product of <a href="https://Flotick.com" className="font-bold text-zinc-900 hover:underline" target="_blank" rel="noopener noreferrer">Flotick</a>.
           </p>
           <div className="flex gap-4 text-xs text-muted-foreground">
             <span>AI-Powered Resume Builder</span>

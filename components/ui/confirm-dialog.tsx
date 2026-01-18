@@ -102,11 +102,11 @@ export function ConfirmDialog({
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+          className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-zinc-100 transition-colors"
           disabled={isLoading}
           type="button"
         >
-          <X className="h-4 w-4 text-gray-500" />
+          <X className="h-4 w-4 text-zinc-500" />
         </button>
 
         {/* Warning icon */}
@@ -115,12 +115,12 @@ export function ConfirmDialog({
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-bold text-gray-900 mb-2">
+        <h3 className="text-lg font-bold text-zinc-900 mb-2">
           {title}
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 mb-6">
+        <p className="text-sm text-zinc-600 mb-6">
           {description}
         </p>
 

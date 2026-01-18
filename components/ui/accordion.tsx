@@ -11,7 +11,7 @@ const AccordionItemContext = React.createContext<{
 
 const Accordion = ({ children, className }: { children: React.ReactNode; className?: string }) => {
   return (
-    <div className={cn("divide-y divide-gray-100 border border-gray-100 rounded-xl overflow-hidden shadow-sm bg-white", className)}>
+    <div className={cn("divide-y divide-zinc-100 border border-zinc-100 rounded-xl overflow-hidden shadow-sm bg-white", className)}>
       {children}
     </div>
   );
@@ -56,13 +56,13 @@ const AccordionTrigger = ({
   return (
     <button
       onClick={context.toggle}
-      className="flex w-full items-center justify-between p-5 text-left transition-all hover:bg-gray-50/50"
+      className="flex w-full items-center justify-between p-5 text-left transition-all hover:bg-zinc-50/50"
     >
       <div className="flex items-center gap-3">
         {Icon && (
           <div className={cn(
             "flex h-9 w-9 items-center justify-center rounded-lg border transition-colors",
-            context.isOpen ? "bg-indigo-50 border-indigo-100 text-indigo-600" : "bg-gray-50 border-gray-100 text-gray-500"
+            context.isOpen ? "bg-indigo-50 border-indigo-100 text-indigo-600" : "bg-zinc-50 border-zinc-100 text-zinc-500"
           )}>
             <Icon className="h-5 w-5" />
           </div>
@@ -70,15 +70,15 @@ const AccordionTrigger = ({
         <div>
           <h4 className={cn(
             "font-bold transition-colors",
-            context.isOpen ? "text-indigo-600" : "text-gray-900"
+            context.isOpen ? "text-indigo-600" : "text-zinc-900"
           )}>
             {title}
           </h4>
-          {subtitle && <p className="text-xs text-gray-500 mt-0.5">{subtitle}</p>}
+          {subtitle && <p className="text-xs text-zinc-500 mt-0.5">{subtitle}</p>}
         </div>
       </div>
       <ChevronDown className={cn(
-        "h-5 w-5 text-gray-400 transition-transform duration-300",
+        "h-5 w-5 text-zinc-400 transition-transform duration-300",
         context.isOpen && "rotate-180 text-indigo-500"
       )} />
     </button>

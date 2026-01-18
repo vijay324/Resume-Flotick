@@ -67,11 +67,11 @@ export function ClearDataDialog({
         {/* Close button */}
         <button
           onClick={handleClose}
-          className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-gray-100 transition-colors"
+          className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-zinc-100 transition-colors"
           disabled={isClearing}
           type="button"
         >
-          <X className="h-4 w-4 text-gray-500" />
+          <X className="h-4 w-4 text-zinc-500" />
         </button>
 
         {/* Warning icon */}
@@ -80,19 +80,19 @@ export function ClearDataDialog({
         </div>
 
         {/* Title */}
-        <h3 className="text-lg font-bold text-gray-900 mb-2">
+        <h3 className="text-lg font-bold text-zinc-900 mb-2">
           Clear All Data
         </h3>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 mb-4">
+        <p className="text-sm text-zinc-600 mb-4">
           This will permanently delete your resume data, API keys, and all
           preferences stored in this browser. This action cannot be undone.
         </p>
 
         {/* Confirmation input */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1.5">
+          <label className="block text-sm font-medium text-zinc-700 mb-1.5">
             Type <span className="font-mono text-red-600">DELETE</span> to confirm
           </label>
           <input
@@ -100,7 +100,7 @@ export function ClearDataDialog({
             value={confirmText}
             onChange={(e) => setConfirmText(e.target.value.toUpperCase())}
             placeholder="Type DELETE"
-            className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+            className="w-full px-3 py-2 border border-zinc-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
             disabled={isClearing}
           />
         </div>

@@ -95,7 +95,7 @@ export function LandingHero() {
          viewport={{ once: true }}
          className="mt-20 relative w-full h-[500px] max-w-6xl mx-auto rounded-t-3xl border border-border bg-white shadow-2xl overflow-hidden glass-panel"
       >
-         <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-200">
+         <div className="absolute inset-0 bg-gradient-to-br from-zinc-50 to-zinc-200">
              <div className="flex items-center gap-2 p-4 border-b border-border">
                  <div className="h-3 w-3 rounded-full bg-red-400"/>
                  <div className="h-3 w-3 rounded-full bg-yellow-400"/>

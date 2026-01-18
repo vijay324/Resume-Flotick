@@ -103,20 +103,20 @@ export function ApiKeySettings() {
 
   if (!hasApiKey) {
     return (
-      <div className="p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+      <div className="p-5 bg-white border border-zinc-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
         <div className="flex items-center gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-50 border border-gray-100">
-            <Key className="h-5 w-5 text-gray-500" />
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-50 border border-zinc-100">
+            <Key className="h-5 w-5 text-zinc-500" />
           </div>
           <div className="flex-1">
-            <h3 className="font-semibold text-gray-900">No API Key Added</h3>
-            <p className="text-sm text-gray-500">
+            <h3 className="font-semibold text-zinc-900">No API Key Added</h3>
+            <p className="text-sm text-zinc-500">
               Add your Gemini API key to use AI features
             </p>
           </div>
           <Button
             onClick={() => setShowModal(true)}
-            className="bg-black hover:bg-gray-800 text-white rounded-lg"
+            className="bg-black hover:bg-zinc-800 text-white rounded-lg"
           >
             Add API Key
           </Button>
@@ -128,7 +128,7 @@ export function ApiKeySettings() {
 
   return (
     <>
-      <div className="p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
+      <div className="p-5 bg-white border border-zinc-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)]">
         <div className="flex items-start gap-4">
           <div
             className={`flex h-10 w-10 items-center justify-center rounded-full ${
@@ -146,7 +146,7 @@ export function ApiKeySettings() {
 
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
-              <h3 className="font-semibold text-gray-900">
+              <h3 className="font-semibold text-zinc-900">
                 API Key Configured
               </h3>
               <span
@@ -161,11 +161,11 @@ export function ApiKeySettings() {
             </div>
 
             {/* Masked key display */}
-            <div className="text-sm text-gray-500 mb-1 font-mono">
+            <div className="text-sm text-zinc-500 mb-1 font-mono">
               {maskedKey}
             </div>
 
-            <p className="text-xs text-gray-400 mb-4 flex items-center gap-1">
+            <p className="text-xs text-zinc-400 mb-4 flex items-center gap-1">
               <Shield className="h-3 w-3" />
               Encrypted in browser storage
             </p>
@@ -191,7 +191,7 @@ export function ApiKeySettings() {
                 size="sm"
                 onClick={handleTestKey}
                 disabled={isTesting}
-                className="h-9 rounded-lg border-gray-200 text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                className="h-9 rounded-lg border-zinc-200 text-zinc-700 hover:text-zinc-900 hover:bg-zinc-50"
               >
                 <TestTube className="h-4 w-4 mr-2" />
                 {isTesting ? "Testing..." : "Test Key"}
@@ -200,7 +200,7 @@ export function ApiKeySettings() {
                 variant="outline"
                 size="sm"
                 onClick={handleUpdateKey}
-                className="h-9 rounded-lg border-gray-200 text-gray-700 hover:text-gray-900 hover:bg-gray-50"
+                className="h-9 rounded-lg border-zinc-200 text-zinc-700 hover:text-zinc-900 hover:bg-zinc-50"
               >
                 <RefreshCw className="h-4 w-4 mr-2" />
                 Update Key
@@ -210,7 +210,7 @@ export function ApiKeySettings() {
                 size="sm"
                 onClick={() => setShowRemoveConfirm(true)}
                 disabled={isRemoving}
-                className="h-9 rounded-lg border-gray-200 text-gray-700 hover:text-red-600 hover:bg-red-50 hover:border-red-100"
+                className="h-9 rounded-lg border-zinc-200 text-zinc-700 hover:text-red-600 hover:bg-red-50 hover:border-red-100"
               >
                 <Trash2 className="h-4 w-4 mr-2" />
                 {isRemoving ? "Removing..." : "Remove Key"}

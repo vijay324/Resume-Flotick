@@ -31,7 +31,7 @@ export function ResumePage({
       
       {/* Page number indicator (preview only, hidden via CSS @media print) */}
       {showPageNumber && (
-        <div className="page-number-indicator absolute bottom-2 right-4 text-[9pt] text-gray-400">
+        <div className="page-number-indicator absolute bottom-2 right-4 text-[9pt] text-zinc-400">
           Page {pageNumber}
         </div>
       )}

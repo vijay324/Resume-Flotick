@@ -29,7 +29,7 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
   const { personalInfo, experience, education, skills, projects, languages, certifications } = resumeData;
 
   // Text separator for contact info (ATS-friendly, no icons)
-  const Separator = () => <span className="text-gray-400 mx-2">|</span>;
+  const Separator = () => <span className="text-zinc-400 mx-2">|</span>;
 
   return (
     <div 
@@ -55,17 +55,17 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
           
           {/* Job Title */}
           {personalInfo.jobTitle && (
-            <p className="text-[11pt] text-gray-600 font-medium mb-2">
+            <p className="text-[11pt] text-zinc-600 font-medium mb-2">
               {personalInfo.jobTitle}
             </p>
           )}
           
           {/* Contact Info - Single line, pipe-separated (ATS-friendly) */}
-          <div className="text-[9pt] text-gray-700 flex flex-wrap justify-center items-center">
+          <div className="text-[9pt] text-zinc-700 flex flex-wrap justify-center items-center">
             {personalInfo.phone && (
               <a 
                 href={`tel:${personalInfo.phone}`} 
-                className="text-gray-800 hover:text-blue-600 transition-colors"
+                className="text-zinc-800 hover:text-blue-600 transition-colors"
               >
                 {personalInfo.phone}
               </a>
@@ -74,26 +74,26 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
             {personalInfo.email && (
               <a 
                 href={`mailto:${personalInfo.email}`} 
-                className="text-gray-800 hover:text-blue-600 transition-colors"
+                className="text-zinc-800 hover:text-blue-600 transition-colors"
               >
                 {personalInfo.email}
               </a>
             )}
             {(personalInfo.phone || personalInfo.email) && personalInfo.location && <Separator />}
             {personalInfo.location && (
-              <span className="text-gray-800">{personalInfo.location}</span>
+              <span className="text-zinc-800">{personalInfo.location}</span>
             )}
           </div>
           
           {/* Links Row */}
           {(personalInfo.linkedin || personalInfo.github || personalInfo.website) && (
-            <div className="text-[9pt] text-gray-600 flex flex-wrap justify-center items-center mt-1">
+            <div className="text-[9pt] text-zinc-600 flex flex-wrap justify-center items-center mt-1">
               {personalInfo.linkedin && (
                 <a 
                   href={personalInfo.linkedin} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-700 hover:text-blue-600 transition-colors underline underline-offset-2"
+                  className="text-zinc-700 hover:text-blue-600 transition-colors underline underline-offset-2"
                 >
                   {personalInfo.linkedin.replace(/^https?:\/\/(www\.)?/, "")}
                 </a>
@@ -104,7 +104,7 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
                   href={personalInfo.github} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-700 hover:text-blue-600 transition-colors underline underline-offset-2"
+                  className="text-zinc-700 hover:text-blue-600 transition-colors underline underline-offset-2"
                 >
                   {personalInfo.github.replace(/^https?:\/\/(www\.)?/, "")}
                 </a>
@@ -115,7 +115,7 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
                   href={personalInfo.website} 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="text-gray-700 hover:text-blue-600 transition-colors underline underline-offset-2"
+                  className="text-zinc-700 hover:text-blue-600 transition-colors underline underline-offset-2"
                 >
                   {personalInfo.website.replace(/^https?:\/\/(www\.)?/, "")}
                 </a>
@@ -130,7 +130,7 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
             <h2 className="text-[10pt] font-bold uppercase border-b border-black mb-1.5 pb-0.5 tracking-wider text-black">
               Professional Summary
             </h2>
-            <p className="text-justify text-gray-800 leading-snug text-[9.5pt]">
+            <p className="text-justify text-zinc-800 leading-snug text-[9.5pt]">
               {personalInfo.summary}
             </p>
           </section>
@@ -142,12 +142,12 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
             <h2 className="text-[10pt] font-bold uppercase border-b border-black mb-1.5 pb-0.5 tracking-wider text-black">
               Skills
             </h2>
-            <p className="text-gray-800 leading-snug text-[9.5pt]">
+            <p className="text-zinc-800 leading-snug text-[9.5pt]">
               <span className="font-bold text-black">Technical Skills: </span>
               {skills.map((s: SkillItem, i: number) => (
                 <span key={s.id}>
                   {s.name}
-                  {i < skills.length - 1 && <span className="text-gray-400"> • </span>}
+                  {i < skills.length - 1 && <span className="text-zinc-400"> • </span>}
                 </span>
               ))}
             </p>
@@ -165,24 +165,24 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
                 {/* Position and Date */}
                 <div className="flex justify-between items-baseline">
                   <h3 className="font-bold text-[10pt] text-black">{exp.position}</h3>
-                  <span className="text-[9pt] text-gray-600 font-medium whitespace-nowrap ml-4">
+                  <span className="text-[9pt] text-zinc-600 font-medium whitespace-nowrap ml-4">
                     {exp.startDate} – {exp.current ? "Present" : exp.endDate}
                   </span>
                 </div>
                 {/* Company and Location */}
                 <div className="flex justify-between items-baseline mb-1 text-[9.5pt]">
-                  <span className="font-semibold italic text-gray-700">{exp.company}</span>
+                  <span className="font-semibold italic text-zinc-700">{exp.company}</span>
                   {exp.location && (
-                    <span className="text-gray-500 italic text-[9pt]">{exp.location}</span>
+                    <span className="text-zinc-500 italic text-[9pt]">{exp.location}</span>
                   )}
                 </div>
                 {/* Description bullets */}
-                <div className="text-gray-800 ml-1.5 text-[9.5pt]">
+                <div className="text-zinc-800 ml-1.5 text-[9.5pt]">
                   {exp.description.split('\n').map((line: string, i: number) => (
                     line.trim() && (
                       <div 
                         key={i} 
-                        className="relative pl-3 mb-0.5 before:content-['•'] before:absolute before:left-0 before:text-gray-600"
+                        className="relative pl-3 mb-0.5 before:content-['•'] before:absolute before:left-0 before:text-zinc-600"
                       >
                         {line.trim()}
                       </div>
@@ -206,7 +206,7 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
                 <div className="flex items-baseline gap-1">
                   <h3 className="font-bold text-[10pt] text-black">{proj.name}</h3>
                   {proj.link && (
-                    <span className="text-[8.5pt] text-gray-500">
+                    <span className="text-[8.5pt] text-zinc-500">
                       | <a 
                           href={proj.link} 
                           target="_blank"
@@ -220,17 +220,17 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
                 </div>
                 {/* Technologies */}
                 {proj.technologies.length > 0 && (
-                  <p className="text-[9pt] text-gray-600 italic mb-0.5">
+                  <p className="text-[9pt] text-zinc-600 italic mb-0.5">
                     Technologies: {proj.technologies.join(", ")}
                   </p>
                 )}
                 {/* Description bullets */}
-                <div className="text-gray-800 ml-1.5 text-[9.5pt]">
+                <div className="text-zinc-800 ml-1.5 text-[9.5pt]">
                   {proj.description.split('\n').map((line: string, i: number) => (
                     line.trim() && (
                       <div 
                         key={i} 
-                        className="relative pl-3 mb-0.5 before:content-['•'] before:absolute before:left-0 before:text-gray-600"
+                        className="relative pl-3 mb-0.5 before:content-['•'] before:absolute before:left-0 before:text-zinc-600"
                       >
                         {line.trim()}
                       </div>
@@ -252,16 +252,16 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
               <article key={edu.id} className="flex justify-between items-start mb-1.5 break-inside-avoid">
                 <div>
                   <h3 className="font-bold text-[10pt] text-black">{edu.institution}</h3>
-                  <p className="text-[9.5pt] text-gray-700">
+                  <p className="text-[9.5pt] text-zinc-700">
                     {edu.degree} in {edu.field}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-[9pt] text-gray-600 font-medium">
+                  <p className="text-[9pt] text-zinc-600 font-medium">
                     {edu.startDate} – {edu.current ? "Present" : edu.endDate}
                   </p>
                   {edu.score && (
-                    <p className="text-[8.5pt] text-gray-500 italic">Score: {edu.score}</p>
+                    <p className="text-[8.5pt] text-zinc-500 italic">Score: {edu.score}</p>
                   )}
                 </div>
               </article>
@@ -279,10 +279,10 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
               {certifications.map((cert: CertificationItem) => (
                 <div key={cert.id} className="flex justify-between text-[9.5pt]">
                   <span>
-                    <span className="font-semibold text-gray-900">{cert.name}</span>
-                    <span className="text-gray-500 italic ml-1">— {cert.issuer}</span>
+                    <span className="font-semibold text-zinc-900">{cert.name}</span>
+                    <span className="text-zinc-500 italic ml-1">— {cert.issuer}</span>
                   </span>
-                  <span className="text-gray-600 text-[9pt]">{cert.date}</span>
+                  <span className="text-zinc-600 text-[9pt]">{cert.date}</span>
                 </div>
               ))}
             </div>
@@ -295,11 +295,11 @@ export function AtsTemplate({ resumeData }: TemplateProps) {
             <h2 className="text-[10pt] font-bold uppercase border-b border-black mb-1.5 pb-0.5 tracking-wider text-black">
               Languages
             </h2>
-            <p className="text-[9.5pt] text-gray-800">
+            <p className="text-[9.5pt] text-zinc-800">
               {languages.map((lang: LanguageItem, i: number) => (
                 <span key={lang.id}>
-                  {lang.name} <span className="text-gray-500">({lang.proficiency})</span>
-                  {i < languages.length - 1 && <span className="text-gray-400"> • </span>}
+                  {lang.name} <span className="text-zinc-500">({lang.proficiency})</span>
+                  {i < languages.length - 1 && <span className="text-zinc-400"> • </span>}
                 </span>
               ))}
             </p>

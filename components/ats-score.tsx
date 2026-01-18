@@ -32,15 +32,15 @@ export function ATSScore() {
          onClick={() => setIsOpen(!isOpen)}
       >
          <div className="flex items-center gap-4">
-             <div className={cn("relative flex items-center justify-center w-12 h-12 rounded-full font-bold text-lg border-4 shadow-md", getColor(result.score), getBgColor(result.score).replace("bg-", "border-").replace("100", "200"))}>
+             <div className={cn("relative flex items-center justify-center w-12 h-12 rounded-full font-bold text-lg border-4", getColor(result.score), getBgColor(result.score).replace("bg-", "border-").replace("100", "200"))}>
                  {result.score}
              </div>
              <div>
                  <h3 className="font-bold text-lg">ATS Score</h3>
-                 <p className="text-sm text-gray-500">{result.score >= 80 ? "Excellent" : result.score >= 50 ? "Needs Improvement" : "Critical Fixes Needed"}</p>
+                 <p className="text-sm text-zinc-500">{result.score >= 80 ? "Excellent" : result.score >= 50 ? "Needs Improvement" : "Critical Fixes Needed"}</p>
              </div>
          </div>
-         <button className="text-gray-500">
+         <button className="text-zinc-500">
              {isOpen ? <ChevronUp /> : <ChevronDown />}
          </button>
       </div>
@@ -56,7 +56,7 @@ export function ATSScore() {
                    <li key={s.id} className="flex items-start gap-2 text-sm">
                        {s.type === "error" && <XCircle className="h-4 w-4 text-red-500 mt-0.5" />}
                        {s.type === "warning" && <AlertTriangle className="h-4 w-4 text-yellow-500 mt-0.5" />}
-                       <span className={s.type === "error" ? "text-red-700 font-medium" : "text-gray-700"}>{s.message}</span>
+                       <span className={s.type === "error" ? "text-red-700 font-medium" : "text-zinc-700"}>{s.message}</span>
                    </li>
                ))}
             </ul>

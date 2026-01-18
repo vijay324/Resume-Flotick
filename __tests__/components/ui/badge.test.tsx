@@ -42,8 +42,8 @@ describe("Badge", () => {
       render(<Badge variant="secondary">Secondary</Badge>);
 
       const badge = screen.getByText("Secondary");
-      expect(badge).toHaveClass("bg-gray-100");
-      expect(badge).toHaveClass("text-gray-900");
+      expect(badge).toHaveClass("bg-zinc-100");
+      expect(badge).toHaveClass("text-zinc-900");
     });
 
     it("should apply destructive variant classes", () => {
@@ -58,7 +58,7 @@ describe("Badge", () => {
       render(<Badge variant="outline">Outline</Badge>);
 
       const badge = screen.getByText("Outline");
-      expect(badge).toHaveClass("text-gray-900");
+      expect(badge).toHaveClass("text-zinc-900");
     });
 
     it("should use default variant when not specified", () => {

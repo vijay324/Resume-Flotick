@@ -55,10 +55,10 @@ export function LandingNavbar() {
                 <Image src="/logo-black.svg" alt="Logo" width={24} height={24} />
               </div>
               <div className="flex flex-col">
-                <span className="text-sm font-bold leading-none tracking-tight text-gray-900">
+                <span className="text-sm font-bold leading-none tracking-tight text-zinc-900">
                   Resume
                 </span>
-                <span className="text-[10px] font-medium leading-none text-gray-500">
+                <span className="text-[10px] font-medium leading-none text-zinc-500">
                   by Flotick
                 </span>
               </div>
@@ -70,7 +70,7 @@ export function LandingNavbar() {
                 <Link
                   key={link.name}
                   href={link.href}
-                  className="relative px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 group"
+                  className="relative px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:text-zinc-900 group"
                 >
                   {link.name}
                   <span className="absolute inset-x-4 -bottom-px h-px bg-gradient-to-r from-blue-500/0 via-blue-500/70 to-blue-500/0 opacity-0 transition group-hover:opacity-100" />
@@ -83,7 +83,7 @@ export function LandingNavbar() {
               <Link href="/builder">
                 <Button 
                   size="sm" 
-                  className="rounded-md bg-gray-900 px-5 text-white shadow-lg shadow-gray-900/10 hover:bg-gray-800 hover:shadow-gray-900/20"
+                  className="rounded-md bg-zinc-900 px-5 text-white shadow-lg shadow-zinc-900/10 hover:bg-zinc-800 hover:shadow-zinc-900/20"
                 >
                   Get Started
                 </Button>
@@ -97,7 +97,7 @@ export function LandingNavbar() {
                 "md:hidden p-2 rounded-full transition-all duration-300",
                 isMobileMenuOpen 
                   ? "bg-orange-50 text-orange-600 shadow-sm ring-2 ring-orange-200" 
-                  : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                  : "text-zinc-600 hover:text-zinc-900 hover:bg-zinc-100"
               )}
             >
               {isMobileMenuOpen ? (
@@ -119,16 +119,16 @@ export function LandingNavbar() {
                 className="md:hidden overflow-hidden"
               >
                 <div className="p-4 pt-0 flex flex-col gap-1">
-                  <div className="h-px bg-gray-100 mb-2 mx-2" />
+                  <div className="h-px bg-zinc-100 mb-2 mx-2" />
                   {navLinks.map((link) => (
                     <Link
                       key={link.name}
                       href={link.href}
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="flex items-center justify-between rounded-xl p-3 text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all group"
+                      className="flex items-center justify-between rounded-xl p-3 text-sm font-medium text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 transition-all group"
                     >
                       {link.name}
-                      <ChevronRight className="h-4 w-4 text-gray-400 group-hover:text-gray-900 transition-transform group-hover:translate-x-1" />
+                      <ChevronRight className="h-4 w-4 text-zinc-400 group-hover:text-zinc-900 transition-transform group-hover:translate-x-1" />
                     </Link>
                   ))}
                   <div className="pt-2 mt-2">

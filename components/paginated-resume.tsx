@@ -115,7 +115,7 @@ export function PaginatedResume({ children }: PaginatedResumeProps) {
       {/* Page count indicator at bottom (hidden in print via CSS) */}
       {pageCount > 1 && (
         <div className="page-count-indicator sticky bottom-4 left-0 right-0 flex justify-center z-30 pointer-events-none">
-          <div className="bg-gray-900/80 backdrop-blur-sm text-white text-xs font-medium px-4 py-2 rounded-full shadow-xl">
+          <div className="bg-zinc-900/80 backdrop-blur-sm text-white text-xs font-medium px-4 py-2 rounded-full shadow-xl">
             {pageCount} page{pageCount > 1 ? "s" : ""} • A4 Format
           </div>
         </div>

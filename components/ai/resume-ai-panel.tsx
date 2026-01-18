@@ -23,10 +23,10 @@ export function ResumeAIPanel() {
   };
 
   return (
-    <div className="p-5 bg-white border border-gray-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-4">
+    <div className="p-5 bg-white border border-zinc-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-bold text-gray-900">AI Resume Analysis</h3>
+          <h3 className="text-lg font-bold text-zinc-900">AI Resume Analysis</h3>
           <AIBadge variant={isLoading ? "loading" : "enabled"} />
         </div>
         <AIButton onClick={handleAnalyze} isLoading={isLoading}>
@@ -44,17 +44,17 @@ export function ResumeAIPanel() {
       {analysis && (
         <div className="space-y-6 animate-in fade-in slide-in-from-bottom-2 duration-500">
           {/* Overall Score */}
-          <div className="flex items-center gap-4 p-4 bg-gray-50/50 rounded-xl border border-gray-100">
+          <div className="flex items-center gap-4 p-4 bg-zinc-50/50 rounded-xl border border-zinc-100">
             <div className="flex-1">
-              <div className="text-xs uppercase font-bold text-gray-400 mb-2 tracking-wider">Overall Score</div>
+              <div className="text-xs uppercase font-bold text-zinc-400 mb-2 tracking-wider">Overall Score</div>
               <div className="flex items-center gap-3">
-                <div className="flex-1 h-3 bg-gray-200 rounded-full overflow-hidden">
+                <div className="flex-1 h-3 bg-zinc-200 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-gray-900 transition-all duration-1000 ease-out"
+                    className="h-full bg-zinc-900 transition-all duration-1000 ease-out"
                     style={{ width: `${analysis.overallScore}%` }}
                   />
                 </div>
-                <span className="text-3xl font-bold text-gray-900">{analysis.overallScore}</span>
+                <span className="text-3xl font-bold text-zinc-900">{analysis.overallScore}</span>
               </div>
             </div>
           </div>
@@ -98,15 +98,15 @@ export function ResumeAIPanel() {
           {/* Suggestions */}
           {analysis.suggestions.length > 0 && (
             <div className="space-y-3">
-              <div className="flex items-center gap-2 text-sm font-bold text-gray-700 uppercase tracking-wide">
+              <div className="flex items-center gap-2 text-sm font-bold text-zinc-700 uppercase tracking-wide">
                 <Lightbulb className="w-4 h-4 text-yellow-500" />
                 Actionable Suggestions
               </div>
               <div className="space-y-3">
                 {analysis.suggestions.map((suggestion, index) => (
-                  <div key={index} className="p-4 bg-white border border-gray-100 rounded-xl shadow-sm space-y-2">
+                  <div key={index} className="p-4 bg-white border border-zinc-100 rounded-xl shadow-sm space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-gray-500 uppercase tracking-wider">
+                      <span className="text-xs font-bold text-zinc-500 uppercase tracking-wider">
                         {suggestion.section}
                       </span>
                       <span
@@ -121,7 +121,7 @@ export function ResumeAIPanel() {
                         {suggestion.priority}
                       </span>
                     </div>
-                    <p className="text-sm text-gray-700 leading-relaxed">{suggestion.suggestion}</p>
+                    <p className="text-sm text-zinc-700 leading-relaxed">{suggestion.suggestion}</p>
                   </div>
                 ))}
               </div>

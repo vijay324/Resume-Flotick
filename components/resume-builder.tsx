@@ -45,23 +45,23 @@ export function ResumeBuilder() {
 
   return (
     <>
-      <div className="flex flex-col lg:flex-row h-screen overflow-hidden bg-gray-50/50">
+      <div className="flex flex-col lg:flex-row h-screen overflow-hidden bg-zinc-50/50">
         {/* Mobile Tab Navigation & Header */}
-        <div className="lg:hidden flex items-center justify-between px-4 h-16 bg-white border-b border-gray-200 shrink-0 z-30">
+        <div className="lg:hidden flex items-center justify-between px-4 h-16 bg-white border-b border-zinc-200 shrink-0 z-30">
           <div className="flex items-center gap-3">
-             <Link href="/" className="p-2 -ml-2 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all">
+             <Link href="/" className="p-2 -ml-2 rounded-lg text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all">
                <ChevronLeft className="h-5 w-5" />
              </Link>
-             <div className="flex bg-gray-100/80 p-1 rounded-lg">
+             <div className="flex bg-zinc-100/80 p-1 rounded-lg">
                 <button 
                   onClick={() => setActiveMobileTab('editor')} 
-                  className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all ${activeMobileTab === 'editor' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
+                  className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all ${activeMobileTab === 'editor' ? 'bg-white shadow-sm text-zinc-900' : 'text-zinc-500 hover:text-zinc-900'}`}
                 >
                   Editor
                 </button>
                 <button 
                   onClick={() => setActiveMobileTab('preview')} 
-                  className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all ${activeMobileTab === 'preview' ? 'bg-white shadow-sm text-gray-900' : 'text-gray-500 hover:text-gray-900'}`}
+                  className={`px-4 py-1.5 text-xs font-semibold rounded-md transition-all ${activeMobileTab === 'preview' ? 'bg-white shadow-sm text-zinc-900' : 'text-zinc-500 hover:text-zinc-900'}`}
                 >
                   Preview
                 </button>
@@ -91,17 +91,17 @@ export function ResumeBuilder() {
            `}
         >
           {/* Header */}
-          <div className="h-16 px-6 border-b border-gray-100 items-center justify-between shrink-0 bg-white/50 backdrop-blur-md sticky top-0 z-10 hidden lg:flex">
+          <div className="h-16 px-6 border-b border-zinc-100 items-center justify-between shrink-0 bg-white/50 backdrop-blur-md sticky top-0 z-10 hidden lg:flex">
              <div className="flex items-center gap-3">
-                <Link href="/" className="p-2 -ml-2 rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-all lg:flex hidden">
+                <Link href="/" className="p-2 -ml-2 rounded-lg text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all lg:flex hidden">
                   <ChevronLeft className="h-5 w-5" />
                 </Link>
-                <div className="h-10 w-10 rounded-lg bg-white border border-gray-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm lg:flex hidden">
+                <div className="h-10 w-10 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm lg:flex hidden">
                    <Image src="/logo-black.svg" alt="Logo" width={22} height={22} />
                 </div>
                 <div className="hidden lg:block">
-                   <h1 className="text-sm font-semibold text-gray-900 leading-tight">Professional Resume</h1>
-                   <p className="text-[10px] font-medium text-gray-500 uppercase tracking-wider">ATS-Optimized</p>
+                   <h1 className="text-sm font-semibold text-zinc-900 leading-tight">Professional Resume</h1>
+                   <p className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">ATS-Optimized</p>
                 </div>
              </div>
 
@@ -113,7 +113,7 @@ export function ResumeBuilder() {
                 <Button 
                   size="sm" 
                   variant="ghost"
-                  className="h-8 w-8 p-0 text-gray-400 hover:text-gray-900 hidden lg:flex"
+                  className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-900 hidden lg:flex"
                   onClick={() => setIsSidebarOpen(false)}
                 >
        <PanelLeftClose className="h-4 w-4" />
@@ -132,7 +132,7 @@ export function ResumeBuilder() {
         <div className={`absolute left-6 top-6 z-30 transition-all duration-500 ${!isSidebarOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'}`}>
           <button 
             onClick={() => setIsSidebarOpen(true)}
-            className="p-3 bg-white border border-gray-200 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] text-gray-500 hover:text-indigo-600 hover:scale-105 transition-all"
+            className="p-3 bg-white border border-zinc-200 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] text-zinc-500 hover:text-indigo-600 hover:scale-105 transition-all"
             title="Open Sidebar"
           >
             <PanelLeft className="h-5 w-5" />
@@ -147,7 +147,7 @@ export function ResumeBuilder() {
                 <Button
                   variant="ghost"
                   size="sm"
-                  className="h-9 gap-2 bg-white border border-gray-200 rounded-xl shadow-sm hover:bg-red-50 hover:border-red-200 hover:text-red-600 text-gray-600 transition-all"
+                  className="h-9 gap-2 bg-white border border-zinc-200 rounded-xl shadow-sm hover:bg-red-50 hover:border-red-200 hover:text-red-600 text-zinc-600 transition-all"
                   onClick={() => setIsClearDialogOpen(true)}
                   title="Clear Resume"
                 >

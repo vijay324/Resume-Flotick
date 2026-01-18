@@ -32,7 +32,7 @@ import {
 const RATING_OPTIONS = [
   { value: "very-useful", label: "Brilliant", icon: <Heart className="h-3 w-3" />, color: "bg-emerald-500", ring: "ring-emerald-500", text: "text-emerald-700", bg: "bg-emerald-50" },
   { value: "useful", label: "Great", icon: <Zap className="h-3 w-3" />, color: "bg-blue-500", ring: "ring-blue-500", text: "text-blue-700", bg: "bg-blue-50" },
-  { value: "neutral", label: "Good", icon: <CheckCircle2 className="h-3 w-3" />, color: "bg-gray-500", ring: "ring-gray-500", text: "text-gray-700", bg: "bg-gray-50" },
+  { value: "neutral", label: "Good", icon: <CheckCircle2 className="h-3 w-3" />, color: "bg-zinc-500", ring: "ring-zinc-500", text: "text-zinc-700", bg: "bg-zinc-50" },
   { value: "not-useful", label: "Average", icon: <AlertCircle className="h-3 w-3" />, color: "bg-amber-500", ring: "ring-amber-500", text: "text-amber-700", bg: "bg-amber-50" },
   { value: "not-used", label: "Poor", icon: <ArrowRight className="h-3 w-3" />, color: "bg-neutral-400", ring: "ring-neutral-400", text: "text-neutral-600", bg: "bg-neutral-100" },
 ] as const;

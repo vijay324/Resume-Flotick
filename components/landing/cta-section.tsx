@@ -39,7 +39,7 @@ export function LandingCTA() {
            viewport={{ once: true }}
         >
           <Link href="/builder">
-            <Button size="lg" variant="outline" className="h-14 px-8 rounded-full text-lg font-semibold gap-2 border-none bg-white text-blue-600 hover:bg-gray-100">
+            <Button size="lg" variant="outline" className="h-14 px-8 rounded-full text-lg font-semibold gap-2 border-none bg-white text-blue-600 hover:bg-zinc-100">
               Build My Resume Now
             </Button>
           </Link>

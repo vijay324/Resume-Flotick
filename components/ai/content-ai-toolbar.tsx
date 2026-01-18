@@ -62,7 +62,7 @@ export function ContentAIToolbar({
 
   return (
     <div className="space-y-2">
-      <div className="flex items-center gap-2 flex-wrap bg-gray-50/50 p-1.5 rounded-lg border border-gray-100">
+      <div className="flex items-center gap-2 flex-wrap bg-zinc-50/50 p-1.5 rounded-lg border border-zinc-100">
         <AIButton
           onClick={handleSummarize}
           isLoading={isSummarizing}
@@ -74,10 +74,10 @@ export function ContentAIToolbar({
           Summarize
         </AIButton>
 
-        <div className="w-px h-6 bg-gray-200 mx-1" />
+        <div className="w-px h-6 bg-zinc-200 mx-1" />
 
         <div className="flex items-center gap-2">
-          <span className="text-xs font-medium text-gray-500">Rewrite:</span>
+          <span className="text-xs font-medium text-zinc-500">Rewrite:</span>
           
           <Select value={tone} onValueChange={setTone}>
             <SelectTrigger className="h-8 w-[110px] text-xs bg-white">
@@ -121,13 +121,13 @@ export function ContentAIToolbar({
               variant="ghost"
               size="sm"
               onClick={() => setShowPreview(false)}
-              className="h-6 w-6 p-0 hover:bg-gray-100 rounded-full"
+              className="h-6 w-6 p-0 hover:bg-zinc-100 rounded-full"
             >
               <X className="w-3.5 h-3.5" />
             </Button>
           </div>
 
-          <div className="p-3 rounded-lg bg-indigo-50/50 text-sm text-gray-800 whitespace-pre-wrap leading-relaxed border border-indigo-50">
+          <div className="p-3 rounded-lg bg-indigo-50/50 text-sm text-zinc-800 whitespace-pre-wrap leading-relaxed border border-indigo-50">
             {previewContent}
           </div>
 
@@ -140,7 +140,7 @@ export function ContentAIToolbar({
               onClick={() => setShowPreview(false)}
               size="sm"
               variant="outline"
-              className="border-gray-200"
+              className="border-zinc-200"
             >
               Discard
             </Button>

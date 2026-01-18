@@ -103,17 +103,17 @@ export function DescriptionRewriteButton({
                   <Sparkles className="h-4 w-4 text-indigo-600" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-gray-900">
+                  <h3 className="font-semibold text-zinc-900">
                     {step === "config" ? "Configure Rewrite" : "AI Suggestion"}
                   </h3>
-                  <p className="text-xs text-gray-500">
+                  <p className="text-xs text-zinc-500">
                     {step === "config" ? "Choose how you want to rewrite" : "Review the rewritten description"}
                   </p>
                 </div>
               </div>
               <button
                 onClick={handleCancel}
-                className="p-1.5 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                className="p-1.5 text-zinc-400 hover:text-zinc-600 hover:bg-zinc-100 rounded-lg transition-colors"
               >
                 <X className="h-4 w-4" />
               </button>
@@ -123,7 +123,7 @@ export function DescriptionRewriteButton({
               <div className="space-y-4 py-2">
                 <div className="space-y-3">
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Tone</label>
+                    <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Tone</label>
                     <Select value={tone} onValueChange={setTone}>
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select Tone" />
@@ -137,7 +137,7 @@ export function DescriptionRewriteButton({
                   </div>
                   
                   <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Length</label>
+                    <label className="text-xs font-semibold text-zinc-500 uppercase tracking-wider">Length</label>
                     <div className="w-full">
                       <LengthSelector value={length} onChange={setLength} className="w-full [&>button]:w-full" />
                     </div>
@@ -168,7 +168,7 @@ export function DescriptionRewriteButton({
               // Preview Step
               <>
                 <div className="p-4 rounded-xl bg-gradient-to-br from-indigo-50 to-purple-50 border border-indigo-100 max-h-[300px] overflow-y-auto">
-                  <p className="text-sm text-gray-700 whitespace-pre-wrap leading-relaxed">
+                  <p className="text-sm text-zinc-700 whitespace-pre-wrap leading-relaxed">
                     {previewContent}
                   </p>
                 </div>
@@ -177,7 +177,7 @@ export function DescriptionRewriteButton({
                   <Button
                     onClick={() => setStep("config")}
                     variant="ghost"
-                    className="text-gray-500"
+                    className="text-zinc-500"
                   >
                     Back
                   </Button>
