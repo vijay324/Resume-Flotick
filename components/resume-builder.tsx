@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { ResumeForm } from "@/components/resume-form";
 import { ResumePreview } from "@/components/resume-preview";
 import { TemplateSelector } from "@/components/template-selector";
@@ -9,6 +9,7 @@ import { SaveStatusIndicator } from "@/components/ui/save-status-indicator";
 import { UndoRedoControls } from "@/components/ui/undo-redo-controls";
 import { ZoomControls } from "@/components/ui/zoom-controls";
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
+import { PrivacyAlertDialog } from "@/components/ui/privacy-alert-dialog";
 import { Download, PanelLeftClose, PanelLeft, ChevronLeft, Trash2 } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
@@ -24,6 +25,7 @@ export function ResumeBuilder() {
   const [zoom, setZoom] = useState(0.9); // Default scale
   const [isClearDialogOpen, setIsClearDialogOpen] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
+  const [showPrivacyDialog, setShowPrivacyDialog] = useState(false);
   const { resumeData, clearAllData } = useResume();
   const { templateType } = useTemplate();
 
@@ -37,8 +39,31 @@ export function ResumeBuilder() {
     }
   };
 
+  const handlePrivacyConfirm = () => {
+    try {
+      localStorage.setItem("resume_builder_privacy_accepted", "true");
+      setShowPrivacyDialog(false);
+    } catch (e) {
+      console.error("Failed to save privacy acceptance to localStorage", e);
+      // Still close the dialog even if localStorage fails (e.g. storage full or disabled)
+      setShowPrivacyDialog(false);
+    }
+  };
+
+  // Check privacy acceptance on mount
+  useEffect(() => {
+    try {
+      const hasAccepted = localStorage.getItem("resume_builder_privacy_accepted");
+      if (!hasAccepted) {
+        setShowPrivacyDialog(true);
+      }
+    } catch (e) {
+      console.error("Failed to read from localStorage", e);
+    }
+  }, []);
+
   // Default zoom based on screen size
-  React.useEffect(() => {
+  useEffect(() => {
     const isMobile = window.innerWidth < 768;
     setZoom(isMobile ? 0.4 : 0.8);
   }, []);
@@ -193,7 +218,14 @@ export function ResumeBuilder() {
         isLoading={isClearing}
         waitDuration={4}
       />
+
+      {/* Privacy Alert Dialog - First Visit Only */}
+      <PrivacyAlertDialog 
+        isOpen={showPrivacyDialog} 
+        onConfirm={handlePrivacyConfirm}
+      />
     </>
   );
 }
+
 
