@@ -239,6 +239,19 @@ function SectionComparison({
   onApply: () => void; 
   onRevert: () => void;
 }) {
+  // Helper to safe render content that might be an object (e.g. skills array)
+  const renderContent = (content: any) => {
+    if (typeof content === 'string') return content;
+    if (typeof content === 'object') {
+      // If it's a list of skills (objects), map them to names
+      if (Array.isArray(content) && content.length > 0 && typeof content[0] === 'object' && 'name' in content[0]) {
+        return content.map((s: any) => s.name).join(", ");
+      }
+      return JSON.stringify(content, null, 2);
+    }
+    return String(content);
+  };
+
   return (
     <div className="p-6 hover:bg-gray-50 transition-colors group">
       <div className="flex items-center justify-between mb-4">
@@ -274,8 +287,8 @@ function SectionComparison({
         {/* Original */}
         <div className="space-y-1.5">
           <div className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Original</div>
-          <div className="p-3 bg-red-50/50 border border-red-100 rounded-lg text-sm text-gray-600 leading-relaxed font-mono">
-             {data.original}
+          <div className="p-3 bg-red-50/50 border border-red-100 rounded-lg text-sm text-gray-600 leading-relaxed font-mono whitespace-pre-wrap">
+             {renderContent(data.original)}
           </div>
         </div>
 
@@ -285,8 +298,8 @@ function SectionComparison({
             <span>Optimized Version</span>
             <Sparkles className="w-3 h-3" />
           </div>
-          <div className="p-3 bg-emerald-50/50 border border-emerald-100 rounded-lg text-sm text-gray-800 leading-relaxed shadow-sm font-medium">
-             {data.optimized}
+          <div className="p-3 bg-emerald-50/50 border border-emerald-100 rounded-lg text-sm text-gray-800 leading-relaxed shadow-sm font-medium whitespace-pre-wrap">
+             {renderContent(data.optimized)}
           </div>
         </div>
       </div>

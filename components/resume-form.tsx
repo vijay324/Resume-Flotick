@@ -17,6 +17,7 @@ import { ResumeAIPanel } from "./ai/resume-ai-panel";
 import { JobOptimizerPanel } from "./ai/job-optimizer-panel";
 import { LinkedInAnalyzer } from "./ai/linkedin-analyzer";
 import { ApiKeySettings } from "./ai/api-key-settings";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export function ResumeForm() {
   const [activeTab, setActiveTab] = React.useState("identity");
@@ -143,10 +144,10 @@ export function ResumeForm() {
            )}
 
            {activeTab === "ai-tools" && (
-              <div className="space-y-8 animate-in fade-in duration-300">
+              <div className="space-y-6 animate-in fade-in duration-300">
                  <div>
                     <h2 className="text-lg font-bold text-gray-900 flex items-center gap-2">
-                      <Sparkles className="h-5 w-5 text-primary" />
+                      <Sparkles className="h-5 w-5 text-indigo-600" />
                       AI-Powered Tools
                     </h2>
                     <p className="text-sm text-gray-500">Enhance your resume and LinkedIn profile with AI</p>
@@ -154,16 +155,46 @@ export function ResumeForm() {
                  
                  <ApiKeySettings />
                  
-                 <hr className="border-dashed border-gray-200" />
-                 <JobOptimizerPanel />
-                 <hr className="border-dashed border-gray-200" />
-                 <ResumeAIPanel />
-                 <hr className="border-dashed border-gray-200" />
-                 <div>
-                    <h3 className="text-md font-bold text-gray-900">LinkedIn Profile Optimizer</h3>
-                    <p className="text-xs text-gray-500 mb-4">Get AI-powered suggestions to improve your LinkedIn presence</p>
-                    <LinkedInAnalyzer />
-                 </div>
+                 <Tabs defaultValue="tailor" className="w-full">
+                   <TabsList className="grid w-full grid-cols-3 mb-6 bg-gray-100/80 p-1.5 h-auto gap-2 rounded-xl">
+                     <TabsTrigger value="tailor" className="gap-2 py-2.5 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm border border-transparent data-[state=active]:border-gray-200/50">
+                       <Briefcase className="w-4 h-4" />
+                       <span className="hidden sm:inline">Tailor Resume</span>
+                       <span className="sm:hidden">Tailor</span>
+                     </TabsTrigger>
+                     <TabsTrigger value="analyze" className="gap-2 py-2.5 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm border border-transparent data-[state=active]:border-gray-200/50">
+                       <Sparkles className="w-4 h-4" />
+                       <span className="hidden sm:inline">Analysis</span>
+                       <span className="sm:hidden">Analyze</span>
+                     </TabsTrigger>
+                     <TabsTrigger value="linkedin" className="gap-2 py-2.5 data-[state=active]:bg-white data-[state=active]:text-indigo-600 data-[state=active]:shadow-sm border border-transparent data-[state=active]:border-gray-200/50">
+                       <span className="font-bold text-blue-600 bg-white rounded flex items-center justify-center w-4 h-4 leading-none text-xs">in</span>
+                       <span className="hidden sm:inline">LinkedIn</span>
+                       <span className="sm:hidden">Profile</span>
+                     </TabsTrigger>
+                   </TabsList>
+
+                   <TabsContent value="tailor" className="mt-0 focus-visible:outline-none">
+                     <div className="flex items-center justify-between mb-4 px-1">
+                        <h3 className="text-sm font-semibold text-gray-700">Optimize for a specific job description</h3>
+                     </div>
+                     <JobOptimizerPanel />
+                   </TabsContent>
+                   
+                   <TabsContent value="analyze" className="mt-0 focus-visible:outline-none">
+                     <div className="flex items-center justify-between mb-4 px-1">
+                        <h3 className="text-sm font-semibold text-gray-700">Get detailed feedback and scoring</h3>
+                     </div>
+                     <ResumeAIPanel />
+                   </TabsContent>
+                   
+                   <TabsContent value="linkedin" className="mt-0 focus-visible:outline-none">
+                     <div className="flex items-center justify-between mb-4 px-1">
+                        <h3 className="text-sm font-semibold text-gray-700">Optimize your LinkedIn profile</h3>
+                     </div>
+                     <LinkedInAnalyzer />
+                   </TabsContent>
+                 </Tabs>
               </div>
            )}
        </div>
