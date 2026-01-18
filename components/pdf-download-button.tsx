@@ -9,6 +9,7 @@ import { PdfDocument } from "./pdf/pdf-document";
 interface PdfDownloadButtonProps {
   resumeData: ResumeData;
   templateType: TemplateType;
+  compactOnLg?: boolean;
 }
 
 /**
@@ -78,7 +79,7 @@ async function downloadPdfBlob(blob: Blob, filename: string) {
   }
 }
 
-export function PdfDownloadButton({ resumeData, templateType }: PdfDownloadButtonProps) {
+export function PdfDownloadButton({ resumeData, templateType, compactOnLg = false }: PdfDownloadButtonProps) {
   const [isClient, setIsClient] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -114,15 +115,23 @@ export function PdfDownloadButton({ resumeData, templateType }: PdfDownloadButto
     }
   };
 
+  const responsiveButtonClass = compactOnLg 
+    ? "lg:w-9 lg:px-0 xl:w-auto xl:px-5" 
+    : "px-5";
+
+  const responsiveTextClass = compactOnLg
+    ? "hidden xl:inline"
+    : "";
+
   if (!isClient) {
     return (
        <Button 
           size="sm" 
-          className="h-9 gap-2 shadow-lg hover:shadow-xl bg-zinc-900 hover:bg-black text-white rounded-full px-5 transition-all hover:-translate-y-0.5"
+          className={`h-9 gap-2 shadow-lg hover:shadow-xl bg-zinc-900 hover:bg-black text-white rounded-full transition-all hover:-translate-y-0.5 ${responsiveButtonClass}`}
           disabled
         >
            <Download className="h-3.5 w-3.5" /> 
-           <span className="font-medium">Download PDF</span>
+           <span className={`font-medium ${responsiveTextClass}`}>Download PDF</span>
         </Button>
     );
   }
@@ -131,12 +140,12 @@ export function PdfDownloadButton({ resumeData, templateType }: PdfDownloadButto
     return (
       <Button 
         size="sm" 
-        className="h-9 gap-2 shadow-lg bg-red-600 hover:bg-red-700 text-white rounded-full px-5"
+        className={`h-9 gap-2 shadow-lg bg-red-600 hover:bg-red-700 text-white rounded-full ${responsiveButtonClass}`}
         onClick={handleDownload}
         title={error}
       >
         <AlertCircle className="h-3.5 w-3.5" />
-        <span className="font-medium">Retry Download</span>
+        <span className={`font-medium ${responsiveTextClass}`}>Retry Download</span>
       </Button>
     );
   }
@@ -144,12 +153,12 @@ export function PdfDownloadButton({ resumeData, templateType }: PdfDownloadButto
   return (
     <Button 
       size="sm" 
-      className="h-9 gap-2 shadow-lg hover:shadow-xl bg-zinc-900 hover:bg-black text-white rounded-full px-5 transition-all hover:-translate-y-0.5"
+      className={`h-9 gap-2 shadow-lg hover:shadow-xl bg-zinc-900 hover:bg-black text-white rounded-full transition-all hover:-translate-y-0.5 ${responsiveButtonClass}`}
       disabled={loading}
       onClick={handleDownload}
     >
        {loading ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Download className="h-3.5 w-3.5" />}
-       <span className="font-medium">{loading ? "Preparing..." : "Download PDF"}</span>
+       <span className={`font-medium ${responsiveTextClass}`}>{loading ? "Preparing..." : "Download PDF"}</span>
     </Button>
   );
 }

@@ -158,54 +158,74 @@ export function ResumeBuilder() {
 
         {/* Mobile Toolbar - Removed (Moved to Header) */}
         
-        {/* Floating Open Button when collapsed */}
-        <div className={`absolute left-6 top-6 z-30 transition-all duration-500 ${!isSidebarOpen ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-4 pointer-events-none'}`}>
-          <button 
-            onClick={() => setIsSidebarOpen(true)}
-            className="p-3 bg-white border border-zinc-200 rounded-xl shadow-[0_8px_30px_rgba(0,0,0,0.12)] text-zinc-500 hover:text-indigo-600 hover:scale-105 transition-all"
-            title="Open Sidebar"
-          >
-            <PanelLeft className="h-5 w-5" />
-          </button>
-        </div>
-
         {/* Right Side - Preview */}
-        <div className={`flex-1 bg-muted/30 h-full overflow-auto overflow-x-auto relative flex-col items-start p-4 lg:p-8 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent ${activeMobileTab === 'preview' ? 'flex' : 'hidden'} lg:flex`}>
-            {/* Template Selector & Download Button (Floating) - Desktop Only */}
-            <div className={`hidden lg:flex fixed top-6 right-8 z-30 items-center gap-3 transition-all duration-500 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-0'}`}>
-                {/* Clear Resume Button */}
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="h-9 gap-2 bg-white border border-zinc-200 rounded-xl shadow-sm hover:bg-red-50 hover:border-red-200 hover:text-red-600 text-zinc-600 transition-all"
-                  onClick={() => setIsClearDialogOpen(true)}
-                  title="Clear Resume"
-                >
-                  <Trash2 className="h-3.5 w-3.5" />
-                  <span className="font-medium">Clear</span>
-                </Button>
-                <ZoomControls zoom={zoom} onZoomChange={setZoom} />
-                <TemplateSelector />
-                <PdfDownloadButton resumeData={resumeData} templateType={templateType} />
+        <div className={`flex-1 bg-muted/30 h-full relative flex flex-col min-w-0 ${activeMobileTab === 'preview' ? 'flex' : 'hidden'} lg:flex`}>
+            
+            {/* Right Pane Header (Desktop Only) */}
+            <div className="h-16 px-4 xl:px-6 border-b border-zinc-200 items-center justify-between shrink-0 bg-white/80 backdrop-blur-md z-30 hidden lg:flex gap-2">
+               <div className="flex items-center gap-3 min-w-0">
+                  {!isSidebarOpen && (
+                    <Button 
+                      onClick={() => setIsSidebarOpen(true)}
+                      variant="ghost" 
+                      size="sm"
+                      className="p-2 gap-2 text-zinc-500 hover:text-indigo-600 transition-all shrink-0"
+                      title="Open Sidebar"
+                    >
+                      <PanelLeft className="h-5 w-5" />
+                      <span className="text-sm font-medium hidden xl:inline">Editor</span>
+                    </Button>
+                  )}
+               </div>
+
+               <div className="flex items-center gap-2 xl:gap-3 shrink-0">
+                 {/* Clear Resume Button */}
+                 <Button
+                    variant="ghost"
+                    size="sm"
+                    className="h-9 gap-2 bg-white border border-zinc-200 rounded-xl shadow-sm hover:bg-red-50 hover:border-red-200 hover:text-red-600 text-zinc-600 transition-all shrink-0"
+                    onClick={() => setIsClearDialogOpen(true)}
+                    title="Clear Resume"
+                 >
+                    <Trash2 className="h-3.5 w-3.5" />
+                    <span className="font-medium hidden xl:inline">Clear</span>
+                 </Button>
+                 
+                 <div className="h-6 w-px bg-zinc-200 mx-1 hidden xl:block" />
+                 
+                 <div className="shrink-0 scale-90 xl:scale-100 flex items-center">
+                    <ZoomControls zoom={zoom} onZoomChange={setZoom} />
+                 </div>
+                 
+                 <div className="shrink-0 max-w-[140px] xl:max-w-none">
+                    <TemplateSelector />
+                 </div>
+                 
+                 <PdfDownloadButton resumeData={resumeData} templateType={templateType} compactOnLg />
+               </div>
             </div>
 
-            {/* Background Pattern */}
-            <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.4]" 
-                style={{ 
-                    backgroundImage: "radial-gradient(var(--border) 1px, transparent 1px)", 
-                    backgroundSize: "24px 24px",
-                    maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)"
-                }} 
-            />
-            
-            {/* Resume Container */}
-            <div className="z-10 my-auto transition-transform duration-300 ease-out origin-top mx-auto" style={{ transform: `scale(${zoom})` }}>
-               <div 
-                  className="shadow-[0_24px_60px_-12px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.02)] print:shadow-none bg-white"
-                  ref={contentRef}
-                >
-                  <ResumePreview />
-               </div>
+            {/* Scrollable Content Area */}
+            <div className="flex-1 overflow-auto overflow-x-auto relative p-4 lg:p-8 pb-32 print:p-0 print:w-full print:h-auto print:static print:bg-white scrollbar-thin scrollbar-thumb-border scrollbar-track-transparent flex flex-col items-center">
+                
+                {/* Background Pattern */}
+                <div className="absolute inset-0 z-0 pointer-events-none opacity-[0.4]" 
+                    style={{ 
+                        backgroundImage: "radial-gradient(var(--border) 1px, transparent 1px)", 
+                        backgroundSize: "24px 24px",
+                        maskImage: "linear-gradient(to bottom, black 40%, transparent 100%)"
+                    }} 
+                />
+                
+                {/* Resume Container */}
+                <div className="z-10 my-auto transition-transform duration-300 ease-out origin-top mx-auto" style={{ transform: `scale(${zoom})` }}>
+                   <div 
+                      className="shadow-[0_24px_60px_-12px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.02)] print:shadow-none bg-white"
+                      ref={contentRef}
+                    >
+                      <ResumePreview />
+                   </div>
+                </div>
             </div>
         </div>
       </div>

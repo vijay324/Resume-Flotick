@@ -15,11 +15,11 @@ export function TemplateSelector() {
     <div className="relative">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-4 py-2 bg-white border border-zinc-200 rounded-xl shadow-sm hover:shadow-md hover:border-zinc-300 transition-all text-sm font-medium text-zinc-700"
+        className="flex items-center gap-2 px-3 py-2 bg-white border border-zinc-200 rounded-xl shadow-sm hover:shadow-md hover:border-zinc-300 transition-all text-sm font-medium text-zinc-700 w-full"
       >
-        <LayoutTemplate className="h-4 w-4 text-indigo-500" />
-        <span>{currentTemplate?.name || "Classic"}</span>
-        <ChevronDown className={`h-4 w-4 text-zinc-400 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
+        <LayoutTemplate className="h-4 w-4 text-indigo-500 shrink-0" />
+        <span className="truncate block max-w-[80px] xl:max-w-none">{currentTemplate?.name || "Classic"}</span>
+        <ChevronDown className={`h-4 w-4 text-zinc-400 transition-transform ml-auto shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
       {isOpen && (
