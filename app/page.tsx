@@ -156,6 +156,22 @@ export default function LandingPage() {
       }
     ]
   };
+  
+  // WebSite schema for search actions
+  const websiteSchema = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Flotick Resume",
+    "url": "https://resume.flotick.org",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": {
+        "@type": "EntryPoint",
+        "urlTemplate": "https://resume.flotick.org/search?q={search_term_string}"
+      },
+      "query-input": "required name=search_term_string"
+    }
+  };
 
   return (
     <main className="min-h-screen bg-background selection:bg-blue-500/30">
@@ -174,6 +190,10 @@ export default function LandingPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
       />
       <LandingHero />
       {/* <LandingSocialProof /> */}

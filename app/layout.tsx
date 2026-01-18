@@ -33,10 +33,14 @@ export const metadata: Metadata = {
     "resume creator",
     "job resume builder",
     "Flotick",
+    "Flotik", 
+    "Flotik resume",
     "enterprise resume builder",
     "AI CV builder",
     "resume generator",
-    "online resume builder"
+    "online resume builder",
+    "resume optimization",
+    "resume writer AI"
   ],
   authors: [{ name: "Flotick", url: "https://Flotick.com" }],
   creator: "Flotick",
@@ -48,7 +52,7 @@ export const metadata: Metadata = {
     locale: "en_US",
     url: "https://resume.flotick.org",
     title: "Flotick Resume - AI-Powered Resume Builder",
-    description: "Build professional, ATS-optimized resumes with Flotick's AI-powered resume builder. Free templates, intelligent content suggestions, and instant PDF downloads.",
+    description: "Build job-winning resumes in minutes with Flotick's free AI resume builder. ATS-friendly templates, expert content suggestions, and instant PDF download.",
     siteName: "Flotick Resume",
     images: [
       {

@@ -92,7 +92,7 @@ export interface ResumeData {
 }
 
 // Template types for resume layouts
-export type TemplateType = "classic" | "professional" | "modern" | "ats";
+export type TemplateType = "professional" | "ats";
 
 export interface TemplateInfo {
   id: TemplateType;

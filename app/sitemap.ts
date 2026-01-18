@@ -1,14 +1,8 @@
 import { MetadataRoute } from "next";
 
 // Blog posts for sitemap generation
-const blogPosts = [
-  "what-is-Flotick-resume",
-  "how-Flotick-uses-ai",
-  "best-resume-builder-enterprise",
-  "optimize-resume-with-ai",
-  "about-Flotick-enterprise",
-  "traditional-vs-ai-resume-builders",
-];
+// Blog pages are dynamically generated, but for this static list we'll keep it simple
+const blogPosts: string[] = [];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = "https://resume.flotick.org";
