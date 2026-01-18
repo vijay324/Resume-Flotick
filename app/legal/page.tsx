@@ -1,56 +1,56 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Flotik Resume",
-  description: "Privacy Policy for Flotik Resume Builder.",
+  title: "Privacy Policy | Flotick Resume",
+  description: "Privacy Policy for Flotick Resume Builder.",
 };
 
 export default function LegalPage() {
   return (
-    <div className="min-h-screen bg-white dark:bg-neutral-950 py-12 px-4 sm:px-6 lg:px-8 pt-24">
-      <div className="max-w-3xl mx-auto prose dark:prose-invert">
-        <h1 className="text-3xl font-bold tracking-tight text-neutral-900 dark:text-white mb-8">Privacy Policy</h1>
+    <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8 pt-24">
+      <div className="max-w-3xl mx-auto prose">
+        <h1 className="text-3xl font-bold tracking-tight text-neutral-900 mb-8">Privacy Policy</h1>
         
         <p className="text-sm text-neutral-500 mb-8">Last updated: {new Date().toLocaleDateString()}</p>
 
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">1. Information Collection</h2>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            We collect information you provide directly to us when you use our resume builder, including personal information you include in your resume such as your name, contact details, work experience, and education.
+          <h2 className="text-xl font-semibold text-neutral-900 mb-4">1. No Data Storage on Our Servers</h2>
+          <p className="text-neutral-600">
+            Flotick Resume is a "browser-first" application. We do not maintain any databases to store your personal information, work history, or contact details. All data you enter into the builder is stored locally in your browser's storage (LocalStorage) and is never transmitted to our servers for storage.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">2. Use of Information</h2>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            We use the information we collect to provide, maintain, and improve our services, including to generate your resume, improve our AI algorithms (in an anonymized manner), and communicate with you.
+          <h2 className="text-xl font-semibold text-neutral-900 mb-4">2. No User Accounts</h2>
+          <p className="text-neutral-600">
+            There are no sign-ups, registrations, or user accounts required to use Flotick Resume. We do not collect or store email addresses, passwords, or profile information.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">3. Data Storage and Security</h2>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            We value your trust in providing us your Personal Information, thus we are striving to use commercially acceptable means of protecting it. However, remember that no method of transmission over the internet, or method of electronic storage is 100% secure and reliable, and we cannot guarantee its absolute security.
+          <h2 className="text-xl font-semibold text-neutral-900 mb-4">3. AI Analysis & Processing</h2>
+          <p className="text-neutral-600">
+            When you use our AI analysis tools, your resume content is sent to an AI processing service (such as Gemini or OpenAI) to provide suggestions and analysis. This data is processed ephemerally and is not stored by Flotick. We do not use your personal resume data to train AI models.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">4. Cookies</h2>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            We use cookies and similar tracking technologies to track the activity on our Service and hold certain information. You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent.
+          <h2 className="text-xl font-semibold text-neutral-900 mb-4">4. No Payments or Financial Data</h2>
+          <p className="text-neutral-600">
+            Flotick Resume is 100% free. We do not have any payment systems integrated, and we never ask for credit card information or any other financial data.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">5. Changes to This Privacy Policy</h2>
-          <p className="text-neutral-600 dark:text-neutral-400">
-            We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.
+          <h2 className="text-xl font-semibold text-neutral-900 mb-4">5. Cookies & Analytics</h2>
+          <p className="text-neutral-600">
+            We may use minimal analytics cookies to understand how our visitors interact with the website. These analytics are anonymized and do not include any personal information from your resumes.
           </p>
         </section>
 
         <section className="mb-8">
-          <h2 className="text-xl font-semibold text-neutral-900 dark:text-white mb-4">6. Contact Us</h2>
-          <p className="text-neutral-600 dark:text-neutral-400">
+          <h2 className="text-xl font-semibold text-neutral-900 mb-4">6. Contact Us</h2>
+          <p className="text-neutral-600">
             If you have any questions about this Privacy Policy, please contact us at <a href="mailto:support@flotick.com" className="text-blue-600 hover:underline">support@flotick.com</a>
           </p>
         </section>
