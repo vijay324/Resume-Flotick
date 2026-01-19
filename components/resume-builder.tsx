@@ -117,36 +117,39 @@ export function ResumeBuilder() {
            `}
         >
           {/* Header */}
-          <div className="h-16 px-6 border-b border-zinc-100 items-center justify-between shrink-0 bg-white/50 backdrop-blur-md sticky top-0 z-40 hidden lg:flex">
-             <div className="flex items-center gap-3">
-                <Link href="/" className="p-2 -ml-2 rounded-lg text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all lg:flex hidden">
+          <div className="h-16 px-6 border-b border-zinc-100 items-center justify-between shrink-0 bg-white/50 backdrop-blur-md sticky top-0 z-40 hidden lg:flex min-w-0">
+             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                <Link href="/" className="p-2 -ml-2 rounded-lg text-zinc-400 hover:text-zinc-900 hover:bg-zinc-100 transition-all lg:flex hidden shrink-0">
                   <ChevronLeft className="h-5 w-5" />
                 </Link>
-                <div className="h-10 w-10 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm lg:flex hidden">
-                   <Image src="/logo-black.svg" alt="Logo" width={22} height={22} />
+                <div className="relative shrink-0">
+                  <div className="h-10 w-10 rounded-lg bg-white border border-zinc-200 flex items-center justify-center text-white font-bold text-xs ring-2 ring-white shadow-sm lg:flex hidden">
+                    <Image src="/logo-black.svg" alt="Logo" width={22} height={22} />
+                  </div>
+                  <div className="absolute -bottom-0.5 -right-0.5 z-10 hidden lg:block">
+                    <SaveStatusIndicator />
+                  </div>
                 </div>
-                {/* <div className="hidden lg:block">
-                   <h1 className="text-sm font-semibold text-zinc-900 leading-tight">Professional Resume</h1>
-                   <p className="text-[10px] font-medium text-zinc-500 uppercase tracking-wider">ATS-Optimized</p>
-                </div> */}
-                <div className="hidden lg:block h-6 w-px bg-zinc-200 mx-1"></div>
-                <div className="hidden lg:block">
+                
+                <div className="hidden lg:block h-6 w-px bg-zinc-200 mx-1 shrink-0"></div>
+                
+                <div className="shrink-0 scale-90 sm:scale-100 origin-left">
+                  <UndoRedoControls />
+                </div>
+
+                <div className="min-w-0">
                   <ProfileSelector />
                 </div>
              </div>
 
-             <div className="flex items-center gap-2">
-                <UndoRedoControls />
-                <div className="hidden md:block">
-                  <SaveStatusIndicator />
-                </div>
+             <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
                 <Button 
                   size="sm" 
                   variant="ghost"
-                  className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-900 hidden lg:flex"
+                  className="h-8 w-8 p-0 text-zinc-400 hover:text-zinc-900 hidden lg:flex shrink-0"
                   onClick={() => setIsSidebarOpen(false)}
                 >
-       <PanelLeftClose className="h-4 w-4" />
+                  <PanelLeftClose className="h-4 w-4" />
                 </Button>
              </div>
           </div>

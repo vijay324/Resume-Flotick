@@ -33,7 +33,7 @@ export function ProfileSelector({ className }: { className?: string }) {
           <Button
             variant="outline"
             role="combobox"
-            className={cn("w-[200px] justify-between pl-3 pr-2 h-9 border-zinc-200 bg-white/50 backdrop-blur-sm hover:bg-white hover:border-zinc-300 transition-all group", className)}
+            className={cn("w-[140px] sm:w-[200px] lg:w-[180px] xl:w-[200px] justify-between pl-3 pr-2 h-9 border-zinc-200 bg-white/50 backdrop-blur-sm hover:bg-white hover:border-zinc-300 transition-all group", className)}
           >
             <div className="flex items-center gap-2 truncate">
               {activeProfile ? (

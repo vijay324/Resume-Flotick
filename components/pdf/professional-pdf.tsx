@@ -13,7 +13,7 @@ import type { ResumeData } from '@/types/resume';
 
 const styles = StyleSheet.create({
   page: {
-    padding: 40,
+    padding: 20,
     fontFamily: 'Times-Roman',
     fontSize: 10,
     lineHeight: 1.4,
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
   
   // Header
   header: {
-    marginBottom: 24,
+    marginBottom: 6,
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#000000',
@@ -37,7 +37,8 @@ const styles = StyleSheet.create({
   },
   jobTitle: {
     fontSize: 12,
-    marginBottom: 8,
+    marginTop: 4,
+    marginBottom: 5,
     textTransform: 'uppercase',
     letterSpacing: 1.5,
   },
@@ -50,12 +51,12 @@ const styles = StyleSheet.create({
   contactItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 3,
+    gap: 2,
   },
   contactIcon: {
     width: 9,
     height: 9,
-    marginRight: 2,
+    marginRight: 1,
   },
   contactText: {
     fontSize: 9,
