@@ -58,11 +58,14 @@ const styles = StyleSheet.create({
     width: 9,
     height: 9,
     marginRight: 1,
+    marginTop: 1,
   },
   contactText: {
     fontSize: 9,
     color: '#000000',
     textDecoration: 'none',
+     marginRight: 1,
+    marginTop: 1,
   },
   separator: {
     marginHorizontal: 5,
