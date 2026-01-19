@@ -13,9 +13,9 @@ import type { ResumeData } from '@/types/resume';
 const styles = StyleSheet.create({
   // ===== PAGE =====
   page: {
-    paddingTop: 28,
-    paddingBottom: 28,
-    paddingHorizontal: 35,
+    paddingTop: 20,
+    paddingBottom: 20,
+    paddingHorizontal: 25,
     backgroundColor: '#ffffff',
     fontFamily: 'Times-Roman',
     fontSize: 9.5,
@@ -68,8 +68,8 @@ const styles = StyleSheet.create({
 
   // ===== SUMMARY SECTION =====
   summarySection: {
-    marginTop: 6,
-    marginBottom: 6,
+    marginTop: 5,
+    marginBottom: 4,
   },
   summaryTitle: {
     fontSize: 10,
@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     borderBottomWidth: 0.5,
     borderBottomColor: '#000000',
-    paddingBottom: 1,
+    paddingBottom: 2,
     marginBottom: 4,
     letterSpacing: 0.5,
     color: '#000000',
@@ -94,8 +94,8 @@ const styles = StyleSheet.create({
 
   // ===== SKILLS SECTION =====
   skillsSection: {
-    marginTop: 6,
-    marginBottom: 6,
+    marginTop: 2,
+    marginBottom: 4,
   },
   skillsTitle: {
     fontSize: 10,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     borderBottomWidth: 0.5,
     borderBottomColor: '#000000',
-    paddingBottom: 1,
+    paddingBottom: 2,
     marginBottom: 4,
     letterSpacing: 0.5,
     color: '#000000',
@@ -123,8 +123,8 @@ const styles = StyleSheet.create({
 
   // ===== EXPERIENCE SECTION =====
   experienceSection: {
-    marginTop: 6,
-    marginBottom: 6,
+    marginTop: 2,
+    marginBottom: 2,
   },
   experienceTitle: {
     fontSize: 10,
@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     borderBottomWidth: 0.5,
     borderBottomColor: '#000000',
-    paddingBottom: 1,
+    paddingBottom: 2,
     marginBottom: 4,
     letterSpacing: 0.5,
     color: '#000000',
@@ -194,8 +194,8 @@ const styles = StyleSheet.create({
 
   // ===== PROJECTS SECTION =====
   projectsSection: {
-    marginTop: 6,
-    marginBottom: 6,
+    marginTop: 2,
+    marginBottom: 2,
   },
   projectsTitle: {
     fontSize: 10,
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     borderBottomWidth: 0.5,
     borderBottomColor: '#000000',
-    paddingBottom: 1,
+    paddingBottom: 2,
     marginBottom: 4,
     letterSpacing: 0.5,
     color: '#000000',
@@ -257,8 +257,8 @@ const styles = StyleSheet.create({
 
   // ===== EDUCATION SECTION =====
   educationSection: {
-    marginTop: 6,
-    marginBottom: 6,
+    marginTop: 2,
+    marginBottom: 2,
   },
   educationTitle: {
     fontSize: 10,
@@ -266,7 +266,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     borderBottomWidth: 0.5,
     borderBottomColor: '#000000',
-    paddingBottom: 1,
+    paddingBottom: 2,
     marginBottom: 4,
     letterSpacing: 0.5,
     color: '#000000',
@@ -301,8 +301,8 @@ const styles = StyleSheet.create({
 
   // ===== CERTIFICATIONS SECTION =====
   certificationsSection: {
-    marginTop: 6,
-    marginBottom: 6,
+    marginTop: 2,
+    marginBottom: 2,
   },
   certificationsTitle: {
     fontSize: 10,
@@ -310,7 +310,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     borderBottomWidth: 0.5,
     borderBottomColor: '#000000',
-    paddingBottom: 1,
+    paddingBottom: 2,
     marginBottom: 4,
     letterSpacing: 0.5,
     color: '#000000',
@@ -337,8 +337,8 @@ const styles = StyleSheet.create({
 
   // ===== LANGUAGES SECTION =====
   languagesSection: {
-    marginTop: 6,
-    marginBottom: 6,
+    marginTop: 2,
+    marginBottom: 2,
   },
   languagesTitle: {
     fontSize: 10,
@@ -346,7 +346,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     borderBottomWidth: 0.5,
     borderBottomColor: '#000000',
-    paddingBottom: 1,
+    paddingBottom: 2,
     marginBottom: 4,
     letterSpacing: 0.5,
     color: '#000000',

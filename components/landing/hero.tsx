@@ -59,11 +59,11 @@ export function LandingHero() {
               Build My Resume <ArrowRight className="h-4 w-4" />
             </Button>
           </Link>
-          <Link href="#features">
+          {/* <Link href="#features">
             <Button variant="outline" size="lg" className="h-12 px-8 rounded-full text-base backdrop-blur-sm">
               View Examples
             </Button>
-          </Link>
+          </Link> */}
         </motion.div>
 
         <motion.div
