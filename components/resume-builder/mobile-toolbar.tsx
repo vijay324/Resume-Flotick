@@ -75,7 +75,7 @@ export function MobileToolbar({
             {/* Actions */}
             <div className="space-y-6">
               <div className="flex justify-center pb-2">
-                 <SaveStatusIndicator />
+                 <SaveStatusIndicator variant="badge" />
               </div>
 
               {/* Main CTA */}

@@ -31,14 +31,14 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 5,
+    marginBottom: 8,
     textTransform: 'uppercase',
     letterSpacing: 1,
   },
   jobTitle: {
     fontSize: 12,
     marginTop: 4,
-    marginBottom: 5,
+    marginBottom: 6,
     textTransform: 'uppercase',
     letterSpacing: 1.5,
   },
@@ -46,7 +46,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'center',
-    gap: 15,
+    columnGap: 12,
+    rowGap: 3,
   },
   contactItem: {
     flexDirection: 'row',

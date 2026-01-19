@@ -10,9 +10,9 @@ import { cn } from "@/lib/utils";
 
 /**
  * Visual indicator for save status
- * Redesigned as a discrete dot with animations
+ * Redesigned as a discrete dot with animations, but supports a badge variant for mobile.
  */
-export function SaveStatusIndicator() {
+export function SaveStatusIndicator({ variant = "dot" }: { variant?: "dot" | "badge" }) {
   const [status, setStatus] = useState<StorageStatus | null>(null);
   const [isHovered, setIsHovered] = useState(false);
 
@@ -47,6 +47,25 @@ export function SaveStatusIndicator() {
     if (status.lastSaved) return `Saved ${formatTime(status.lastSaved)}`;
     return "Auto-save active";
   };
+
+  if (variant === "badge") {
+    return (
+      <div className={cn(
+        "flex items-center gap-2 px-3 py-1.5 rounded-full border text-xs font-semibold transition-all duration-300",
+        status.error ? "bg-red-50 border-red-100 text-red-600" : 
+        status.isSaving ? "bg-zinc-900 border-zinc-800 text-white" :
+        "bg-emerald-50 border-emerald-100 text-emerald-700"
+      )}>
+        <div className={cn(
+          "h-2 w-2 rounded-full",
+          getStatusColor(),
+          status.isSaving && "animate-pulse",
+          status.error && "animate-ping"
+        )} />
+        {getStatusText()}
+      </div>
+    );
+  }
 
   return (
     <div 
