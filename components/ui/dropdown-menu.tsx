@@ -62,7 +62,7 @@ export function DropdownMenuTrigger({
       },
       "aria-expanded": open,
       "data-state": open ? "open" : "closed",
-    });
+    } as any);
   }
 
   return (
