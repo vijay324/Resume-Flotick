@@ -22,11 +22,11 @@ const styles = StyleSheet.create({
   
   // Header
   header: {
-    marginBottom: 6,
+    marginBottom: 8,
     alignItems: 'center',
     borderBottomWidth: 1,
     borderBottomColor: '#000000',
-    paddingBottom: 16,
+    paddingBottom: 8,
   },
   name: {
     fontSize: 24,
@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     textTransform: 'uppercase',
     borderBottomWidth: 1,
     borderBottomColor: '#000000',
-    marginBottom: 8,
+    marginBottom: 6,
     paddingBottom: 2,
     letterSpacing: 1,
   },
