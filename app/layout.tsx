@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next"
 import "./globals.css";
 import { AIProvider } from "@/context/ai-context";
 import { ResumeProvider } from "@/context/resume-context";
@@ -118,6 +119,7 @@ export default function RootLayout({
           <RoleProfileProvider>
             <ResumeProvider>
               <SiteLayout>{children}</SiteLayout>
+              <Analytics />
             </ResumeProvider>
           </RoleProfileProvider>
         </AIProvider>
