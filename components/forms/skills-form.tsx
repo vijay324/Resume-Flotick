@@ -12,6 +12,8 @@ export function SkillsForm() {
   const { resumeData, updateSection } = useResume();
   const { skills } = resumeData;
   const [newSkill, setNewSkill] = React.useState("");
+  const [editingSkillId, setEditingSkillId] = React.useState<string | null>(null);
+  const [editingValue, setEditingValue] = React.useState("");
 
   const addSkill = () => {
     if (!newSkill.trim()) return;
@@ -32,6 +34,34 @@ export function SkillsForm() {
       e.preventDefault();
       addSkill();
     }
+  };
+
+  const startEditing = (id: string, name: string) => {
+    setEditingSkillId(id);
+    setEditingValue(name);
+  };
+
+  const commitEditing = () => {
+    if (!editingSkillId) return;
+    const trimmed = editingValue.trim();
+    if (!trimmed) {
+      setEditingSkillId(null);
+      setEditingValue("");
+      return;
+    }
+    updateSection(
+      "skills",
+      skills.map((skill) =>
+        skill.id === editingSkillId ? { ...skill, name: trimmed } : skill
+      )
+    );
+    setEditingSkillId(null);
+    setEditingValue("");
+  };
+
+  const cancelEditing = () => {
+    setEditingSkillId(null);
+    setEditingValue("");
   };
 
   const inputClass = "rounded-lg border-zinc-200 bg-zinc-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-11 transition-all duration-200 ease-in-out font-medium text-zinc-800 placeholder:text-zinc-400 text-sm";
@@ -69,9 +99,30 @@ export function SkillsForm() {
                {skills.map((skill) => (
                  <div 
                    key={skill.id} 
-                   className="group bg-white hover:bg-indigo-50 text-zinc-700 hover:text-indigo-700 flex items-center gap-1.5 rounded-lg border border-zinc-200 hover:border-indigo-200 px-3 py-1.5 text-xs font-semibold transition-all shadow-sm"
+                   onDoubleClick={() => startEditing(skill.id, skill.name)}
+                   className="group bg-white hover:bg-indigo-50 text-zinc-700 hover:text-indigo-700 flex items-center gap-1.5 rounded-lg border border-zinc-200 hover:border-indigo-200 px-3 py-1.5 text-xs font-semibold transition-all shadow-sm cursor-text"
                  >
-                   {skill.name}
+                   {editingSkillId === skill.id ? (
+                     <Input
+                       value={editingValue}
+                       onChange={(e) => setEditingValue(e.target.value)}
+                       onBlur={commitEditing}
+                       onKeyDown={(e) => {
+                         if (e.key === "Enter") {
+                           e.preventDefault();
+                           commitEditing();
+                         }
+                         if (e.key === "Escape") {
+                           e.preventDefault();
+                           cancelEditing();
+                         }
+                       }}
+                       className="h-6 w-28 rounded-md border-zinc-200 bg-white px-2 text-xs font-semibold text-zinc-700 shadow-none focus:ring-2 focus:ring-indigo-500/20"
+                       autoFocus
+                     />
+                   ) : (
+                     <span>{skill.name}</span>
+                   )}
                    <button 
                      onClick={() => removeSkill(skill.id)}
                      className="ml-1 text-zinc-400 hover:text-red-500 transition-colors rounded-full p-0.5 hover:bg-red-50"

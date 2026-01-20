@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Plus, Trash2 } from "lucide-react";
+import { GripVertical, Plus, Trash2 } from "lucide-react";
 
 import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 
@@ -14,6 +14,8 @@ export function CertificationForm() {
   const { resumeData, updateSection } = useResume();
   const { certifications } = resumeData;
   const [deleteId, setDeleteId] = React.useState<string | null>(null);
+  const [dragIndex, setDragIndex] = React.useState<number | null>(null);
+  const [dragOverIndex, setDragOverIndex] = React.useState<number | null>(null);
 
   const addCertification = () => {
     const newItem = {
@@ -38,14 +40,67 @@ export function CertificationForm() {
     updateSection("certifications", newItems);
   };
 
+  const handleDragStart = (index: number) => (event: React.DragEvent<HTMLButtonElement>) => {
+    setDragIndex(index);
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", index.toString());
+  };
+
+  const handleDragOver = (index: number) => (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    if (dragOverIndex !== index) {
+      setDragOverIndex(index);
+    }
+  };
+
+  const handleDrop = (index: number) => {
+    if (dragIndex === null || dragIndex === index) {
+      setDragIndex(null);
+      setDragOverIndex(null);
+      return;
+    }
+    const newItems = [...certifications];
+    const [moved] = newItems.splice(dragIndex, 1);
+    newItems.splice(index, 0, moved);
+    updateSection("certifications", newItems);
+    setDragIndex(null);
+    setDragOverIndex(null);
+  };
+
+  const handleDragEnd = () => {
+    setDragIndex(null);
+    setDragOverIndex(null);
+  };
+
   const inputClass = "rounded-lg border-zinc-200 bg-zinc-50/50 focus:bg-white focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 h-10 transition-all duration-200 ease-in-out font-medium text-zinc-800 placeholder:text-zinc-400 text-sm";
   const labelClass = "text-[10px] font-bold text-zinc-500 uppercase tracking-wider mb-1.5 block ml-0.5";
 
 
   return (
     <div className="space-y-4 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      {certifications.length > 1 && (
+        <div className="flex items-center gap-2 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider">
+          <GripVertical className="h-3.5 w-3.5" />
+          Drag to reorder
+        </div>
+      )}
       {certifications.map((item, index) => (
-        <div key={item.id} className="group relative p-5 bg-white border border-zinc-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.05)] transition-all duration-300">
+        <div
+          key={item.id}
+          onDragOver={handleDragOver(index)}
+          onDrop={() => handleDrop(index)}
+          className={`group relative p-5 bg-white border border-zinc-100 rounded-xl shadow-[0_2px_8px_rgba(0,0,0,0.02)] hover:shadow-[0_4px_16px_rgba(0,0,0,0.05)] transition-all duration-300 ${dragOverIndex === index ? "ring-2 ring-indigo-200" : ""}`}
+        >
+             <button
+                type="button"
+                draggable
+                onDragStart={handleDragStart(index)}
+                onDragEnd={handleDragEnd}
+                className="absolute top-3 left-3 p-1.5 text-zinc-300 hover:text-zinc-500 hover:bg-zinc-100 rounded-lg transition-colors opacity-100 cursor-grab active:cursor-grabbing"
+                title="Drag to reorder"
+             >
+                <GripVertical className="h-4 w-4" />
+             </button>
              <button
                 className="absolute top-3 right-3 p-1.5 text-zinc-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors opacity-0 group-hover:opacity-100"
                 onClick={(e) => {
